@@ -1,0 +1,29 @@
+require 'dotenv'
+require_relative 'update_version_and_release'
+Dotenv.load
+
+default_platform(:android)
+
+platform :android do
+  desc "Distribute build with user prompt for version and release note"
+  lane :firebase_distribution do
+    
+    new_version = auto_increment_version
+    UI.message("🔢 Auto-updated to version: #{new_version}")
+
+    new_note = UI.input("📝 Enter release note:")
+    update_fastfile_release_note(new_note)
+
+    sh "flutter build apk --no-tree-shake-icons"
+
+    firebase_app_distribution(
+      app: "1:1087296546308:android:395c62c76c8a1934d57751",
+      firebase_cli_token: ENV["FIREBASE_CLI_TOKEN"],
+      android_artifact_type: "APK",
+      android_artifact_path: "../build/app/outputs/flutter-apk/app-release.apk",
+      testers: "salafydawah2020@gmail.com",
+      release_notes: new_note,
+      upload_timeout: 18000
+    )
+  end
+end

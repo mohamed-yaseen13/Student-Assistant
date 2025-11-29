@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:student_assistant/core/routing/app_routes.dart';
-import 'package:student_assistant/features/home_screen/presentation/widgets/home_screen.dart';
+import 'package:student_assistant/features/home_screen/presentation/screen/home_screen.dart';
 
 class AppRouter {
   static Route<dynamic>? generateRoute(RouteSettings settings) {

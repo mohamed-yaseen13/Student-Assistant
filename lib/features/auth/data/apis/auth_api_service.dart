@@ -1,4 +1,5 @@
 import 'package:student_assistant/core/database/database.dart';
+import 'package:student_assistant/core/helpers/shared_prefs.dart';
 import 'package:student_assistant/core/services/send_email_otp.dart';
 
 class AuthApiService {
@@ -17,5 +18,6 @@ class AuthApiService {
   Future<void> secondStepOfAuth(String email, String otp) async {
     final bool isCorrect = await database.isOtpCorrect(email, otp);
     if (isCorrect) database.deleteOtp(email);
+    await SharedPrefs.setIsUserLoggedIn();
   }
 }

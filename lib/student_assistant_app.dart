@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:student_assistant/core/helpers/shared_prefs.dart';
 import 'package:student_assistant/core/routing/app_router.dart';
 import 'package:student_assistant/core/routing/app_routes.dart';
 import 'package:student_assistant/core/style/app_colors.dart';
@@ -9,6 +10,8 @@ class StudentAssistantApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isUserLoggedIn = SharedPrefs.getIsUserLoggedIn();
+
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       minTextAdapt: true,
@@ -23,7 +26,9 @@ class StudentAssistantApp extends StatelessWidget {
             ),
           ),
           debugShowCheckedModeBanner: false,
-          initialRoute: AppRoutes.entryScreen,
+          initialRoute: isUserLoggedIn
+              ? AppRoutes.homeScreen
+              : AppRoutes.entryScreen,
           onGenerateRoute: AppRouter.generateRoute,
         );
       },

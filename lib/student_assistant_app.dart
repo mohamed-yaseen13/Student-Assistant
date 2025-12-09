@@ -15,7 +15,7 @@ class StudentAssistantApp extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp(
           theme: ThemeData(
-            scaffoldBackgroundColor: const Color(0xFFFFF6E7),
+            scaffoldBackgroundColor: AppColors.backgroundColor,
             appBarTheme: AppBarTheme(
               backgroundColor: AppColors.mainOrange,
               titleTextStyle: TextStyle(fontSize: 18.sp, color: Colors.white),
@@ -23,7 +23,7 @@ class StudentAssistantApp extends StatelessWidget {
             ),
           ),
           debugShowCheckedModeBanner: false,
-          initialRoute: AppRoutes.homeScreen,
+          initialRoute: AppRoutes.entryScreen,
           onGenerateRoute: AppRouter.generateRoute,
         );
       },

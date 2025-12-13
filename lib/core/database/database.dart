@@ -29,6 +29,12 @@ class Database {
     }, SetOptions(merge: true));
   }
 
+  Future<void> saveUsernameToDatabase(String email, String username) async {
+    await getEmailRef(
+      email,
+    ).set({'username': username}, SetOptions(merge: true));
+  }
+
   Future<bool> isOtpCorrect(String email, String otp) async {
     final doc = await getEmailRef(email).get();
     final String savedOtp = doc.data()!['otp'];

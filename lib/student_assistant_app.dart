@@ -28,7 +28,7 @@ class StudentAssistantApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           initialRoute: isUserLoggedIn
               ? AppRoutes.homeScreen
-              : AppRoutes.entryScreen,
+              : AppRoutes.signupScreen,
           onGenerateRoute: AppRouter.generateRoute,
         );
       },

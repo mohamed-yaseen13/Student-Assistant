@@ -7,6 +7,12 @@ class ApiErrorHandler {
     switch (error.toString()) {
       case '[firebase_auth/invalid-email] The email address is badly formatted.':
         return ApiErrorModel(message: 'Please Enter a valid Email');
+      case 'Exception: Email already Exist':
+        return ApiErrorModel(message: 'Email already Exist');
+      case 'Exception: OTP is incorrect':
+        return ApiErrorModel(message: 'OTP is incorrect');
+      case "Exception: Email doesn't Exist":
+        return ApiErrorModel(message: "Email doesn't Exist");
       default:
         return ApiErrorModel(message: 'Somthing went Wrong');
     }

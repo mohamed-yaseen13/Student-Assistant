@@ -2,9 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_it/get_it.dart';
 import 'package:student_assistant/core/database/database.dart';
 import 'package:student_assistant/core/services/send_email_otp.dart';
-import 'package:student_assistant/features/auth/data/apis/auth_api_service.dart';
-import 'package:student_assistant/features/auth/data/repos/auth_repo_imp.dart';
-import 'package:student_assistant/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:student_assistant/features/auth/login/data/apis/login_api_service.dart';
+import 'package:student_assistant/features/auth/login/data/repos/login_repo_imp.dart';
+import 'package:student_assistant/features/auth/login/presentation/cubits/login_cubit.dart';
+import 'package:student_assistant/features/auth/otp/data/apis/otp_api_service.dart';
+import 'package:student_assistant/features/auth/otp/data/repos/otp_repo_imp.dart';
+import 'package:student_assistant/features/auth/otp/presentation/cubits/otp_cubit.dart';
+import 'package:student_assistant/features/auth/signup/data/apis/signup_api_service.dart';
+import 'package:student_assistant/features/auth/signup/data/repos/signup_repo_imp.dart';
+import 'package:student_assistant/features/auth/signup/presentation/cubits/signup_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -22,19 +28,42 @@ Future<void> setupGetIt() async {
   // Send Email OPT Service
   getIt.registerLazySingleton<SendEmailOtp>(() => SendEmailOtp());
 
-  // Auth
-  getIt.registerLazySingleton<AuthApiService>(
-    () => AuthApiService(
+  // Singup
+  getIt.registerLazySingleton<SignupApiService>(
+    () => SignupApiService(
       database: getIt<Database>(),
       sendEmailOtp: getIt<SendEmailOtp>(),
     ),
   );
-
-  getIt.registerLazySingleton<AuthRepoImp>(
-    () => AuthRepoImp(authApiService: getIt<AuthApiService>()),
+  getIt.registerLazySingleton<SignupRepoImp>(
+    () => SignupRepoImp(signupApiService: getIt<SignupApiService>()),
+  );
+  getIt.registerFactory<SignupCubit>(
+    () => SignupCubit(signupRepoImp: getIt<SignupRepoImp>()),
   );
 
-  getIt.registerFactory<AuthCubit>(
-    () => AuthCubit(authRepoImp: getIt<AuthRepoImp>()),
+  // OTP
+  getIt.registerLazySingleton<OtpApiService>(
+    () => OtpApiService(database: getIt<Database>()),
+  );
+  getIt.registerLazySingleton<OtpRepoImp>(
+    () => OtpRepoImp(otpApiService: getIt<OtpApiService>()),
+  );
+  getIt.registerFactory<OtpCubit>(
+    () => OtpCubit(otpRepoImp: getIt<OtpRepoImp>()),
+  );
+
+  // Login
+  getIt.registerLazySingleton<LoginApiService>(
+    () => LoginApiService(
+      database: getIt<Database>(),
+      sendEmailOtp: getIt<SendEmailOtp>(),
+    ),
+  );
+  getIt.registerLazySingleton<LoginRepoImp>(
+    () => LoginRepoImp(loginApiService: getIt<LoginApiService>()),
+  );
+  getIt.registerFactory<LoginCubit>(
+    () => LoginCubit(loginRepoImp: getIt<LoginRepoImp>()),
   );
 }

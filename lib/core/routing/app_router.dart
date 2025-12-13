@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:student_assistant/core/dependency_injection/di.dart';
 import 'package:student_assistant/core/routing/app_routes.dart';
-import 'package:student_assistant/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:student_assistant/features/auth/presentation/screens/entry_screen.dart';
-import 'package:student_assistant/features/auth/presentation/screens/otp_screen.dart';
+import 'package:student_assistant/features/auth/login/presentation/cubits/login_cubit.dart';
+import 'package:student_assistant/features/auth/login/presentation/screens/login_screen.dart';
+import 'package:student_assistant/features/auth/otp/presentation/cubits/otp_cubit.dart';
+import 'package:student_assistant/features/auth/otp/presentation/screens/otp_screen.dart';
+import 'package:student_assistant/features/auth/signup/presentation/cubits/signup_cubit.dart';
+import 'package:student_assistant/features/auth/signup/presentation/screens/signup_screen.dart';
 import 'package:student_assistant/features/home_screen/presentation/screen/home_screen.dart';
 
 class AppRouter {
@@ -16,11 +19,11 @@ class AppRouter {
           settings: settings,
         );
 
-      case AppRoutes.entryScreen:
+      case AppRoutes.signupScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
-            create: (context) => getIt<AuthCubit>(),
-            child: EntryScreen(),
+            create: (context) => getIt<SignupCubit>(),
+            child: SignupScreen(),
           ),
           settings: settings,
         );
@@ -31,8 +34,17 @@ class AppRouter {
 
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
-            create: (context) => getIt<AuthCubit>(),
+            create: (context) => getIt<OtpCubit>(),
             child: OtpScreen(email: email!),
+          ),
+          settings: settings,
+        );
+
+      case AppRoutes.loginScreen:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => getIt<LoginCubit>(),
+            child: LoginScreen(),
           ),
           settings: settings,
         );

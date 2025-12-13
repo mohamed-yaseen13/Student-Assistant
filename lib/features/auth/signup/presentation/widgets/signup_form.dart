@@ -6,18 +6,20 @@ import 'package:student_assistant/core/style/app_colors.dart';
 import 'package:student_assistant/core/style/app_text_styles.dart';
 import 'package:student_assistant/core/widgets/app_button.dart';
 import 'package:student_assistant/core/widgets/email_text_form_field.dart';
-import 'package:student_assistant/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:student_assistant/core/widgets/username_text_form_field.dart';
+import 'package:student_assistant/features/auth/signup/presentation/cubits/signup_cubit.dart';
 
-class EnterForm extends StatefulWidget {
-  const EnterForm({super.key});
+class SignupForm extends StatefulWidget {
+  const SignupForm({super.key});
 
   @override
-  State<EnterForm> createState() => _EnterFormState();
+  State<SignupForm> createState() => _SignupFormState();
 }
 
-class _EnterFormState extends State<EnterForm> {
+class _SignupFormState extends State<SignupForm> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
+  final _usernameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -34,20 +36,22 @@ class _EnterFormState extends State<EnterForm> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Email Address',
-                style: AppTextStyles.blackColor16FontSizeSemiBold,
-              ),
+              Text('Email Address', style: AppTextStyles.blackColor16FontSize),
               verticalSpace(8),
               EmailTextFormField(emailController: _emailController),
+              verticalSpace(12),
+              Text('Username', style: AppTextStyles.blackColor16FontSize),
+              verticalSpace(8),
+              UsernameTextFormField(usernameController: _usernameController),
               verticalSpace(18),
               AppButton(
-                desc: 'Enter',
+                desc: 'Signup',
                 descStyle: AppTextStyles.whiteColor16FontSize,
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    context.read<AuthCubit>().firstStepOfAuth(
+                    context.read<SignupCubit>().signup(
                       _emailController.text,
+                      _usernameController.text,
                     );
                   }
                 },

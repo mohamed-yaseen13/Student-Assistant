@@ -14,12 +14,6 @@ class AppTextStyles {
     fontSize: 16.sp,
   );
 
-  static TextStyle blackColor16FontSizeSemiBold = TextStyle(
-    color: Colors.black,
-    fontSize: 16.sp,
-    fontWeight: FontWeight.w500,
-  );
-
   static TextStyle grayColor16FontSizeRegular = TextStyle(
     color: Colors.grey,
     fontSize: 16.sp,
@@ -28,6 +22,11 @@ class AppTextStyles {
 
   static TextStyle mainOrangeColor16FontSize = TextStyle(
     color: AppColors.mainOrange,
+    fontSize: 16.sp,
+  );
+
+  static TextStyle blackColor16FontSize = TextStyle(
+    color: Colors.black,
     fontSize: 16.sp,
   );
 }

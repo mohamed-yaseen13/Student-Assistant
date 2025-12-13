@@ -6,7 +6,7 @@ import 'package:student_assistant/core/helpers/spacing.dart';
 import 'package:student_assistant/core/style/app_colors.dart';
 import 'package:student_assistant/core/style/app_text_styles.dart';
 import 'package:student_assistant/core/widgets/app_button.dart';
-import 'package:student_assistant/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:student_assistant/features/auth/otp/presentation/cubits/otp_cubit.dart';
 
 class OtpForm extends StatefulWidget {
   final String email;
@@ -18,7 +18,7 @@ class OtpForm extends StatefulWidget {
 }
 
 class _OtpFormState extends State<OtpForm> {
-  late String otp;
+  String otp = '1234';
 
   @override
   Widget build(BuildContext context) {
@@ -63,27 +63,9 @@ class _OtpFormState extends State<OtpForm> {
               desc: 'Verify Code',
               descStyle: AppTextStyles.whiteColor16FontSize,
               onPressed: () {
-                context.read<AuthCubit>().secondStepOfAuth(widget.email, otp);
+                context.read<OtpCubit>().verifyOtp(widget.email, otp);
               },
               backgroundColor: AppColors.mainOrange,
-            ),
-            verticalSpace(12),
-            Center(
-              child: Text(
-                "Didn't receive the code?",
-                style: AppTextStyles.blackColor16FontSizeSemiBold,
-              ),
-            ),
-            Center(
-              child: TextButton(
-                onPressed: () {
-                  context.read<AuthCubit>().firstStepOfAuth(widget.email);
-                },
-                child: Text(
-                  'Resend Code',
-                  style: AppTextStyles.mainOrangeColor16FontSize,
-                ),
-              ),
             ),
           ],
         ),

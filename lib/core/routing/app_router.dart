@@ -8,7 +8,10 @@ import 'package:student_assistant/features/auth/otp/presentation/cubits/otp_cubi
 import 'package:student_assistant/features/auth/otp/presentation/screens/otp_screen.dart';
 import 'package:student_assistant/features/auth/signup/presentation/cubits/signup_cubit.dart';
 import 'package:student_assistant/features/auth/signup/presentation/screens/signup_screen.dart';
-import 'package:student_assistant/features/home_screen/presentation/screen/home_screen.dart';
+import 'package:student_assistant/features/gpa_calculations/presentation/screens/gpa_calculations_screen.dart';
+import 'package:student_assistant/features/home/home_settings/presentation/screens/home_settings_screen.dart';
+import 'package:student_assistant/features/home/presentation/screen/home_screen.dart';
+import 'package:student_assistant/features/home/profile/presentation/screens/profile_screen.dart';
 
 class AppRouter {
   static Route<dynamic>? generateRoute(RouteSettings settings) {
@@ -46,6 +49,24 @@ class AppRouter {
             create: (context) => getIt<LoginCubit>(),
             child: LoginScreen(),
           ),
+          settings: settings,
+        );
+
+      case AppRoutes.profileScreen:
+        return MaterialPageRoute(
+          builder: (_) => ProfileScreen(),
+          settings: settings,
+        );
+
+      case AppRoutes.homeSettingsScreen:
+        return MaterialPageRoute(
+          builder: (_) => HomeSettingsScreen(),
+          settings: settings,
+        );
+
+      case AppRoutes.gpaCalculationsScreen:
+        return MaterialPageRoute(
+          builder: (_) => GpaCalculationsScreen(),
           settings: settings,
         );
 

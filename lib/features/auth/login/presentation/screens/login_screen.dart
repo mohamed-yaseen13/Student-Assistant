@@ -14,6 +14,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       backgroundColor: AppColors.mainOrange,
       body: BlocConsumer<LoginCubit, LoginState>(
         listener: (context, state) {

@@ -16,6 +16,7 @@ class OtpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       backgroundColor: AppColors.mainOrange,
       body: BlocConsumer<OtpCubit, OtpState>(
         listener: (context, state) {

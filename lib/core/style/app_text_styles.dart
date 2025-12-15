@@ -14,6 +14,11 @@ class AppTextStyles {
     fontSize: 32.sp,
   );
 
+  static TextStyle whiteColor24FontSize = TextStyle(
+    color: Colors.white,
+    fontSize: 24.sp,
+  );
+
   static TextStyle whiteColor16FontSize = TextStyle(
     color: Colors.white,
     fontSize: 16.sp,

@@ -4,42 +4,24 @@ import 'package:student_assistant/core/constants/app_constants.dart';
 import 'package:student_assistant/core/helpers/extensions.dart';
 import 'package:student_assistant/core/helpers/spacing.dart';
 import 'package:student_assistant/core/routing/app_routes.dart';
-import 'package:student_assistant/core/style/app_colors.dart';
-import 'package:student_assistant/core/style/app_text_styles.dart';
-import 'package:student_assistant/core/widgets/home_bottom_navigation_bar.dart';
-import 'package:student_assistant/features/home/presentation/widgets/feature_card.dart';
+import 'package:student_assistant/core/widgets/app_bar_title.dart';
+import 'package:student_assistant/features/home/widgets/home_bottom_navigation_bar.dart';
+import 'package:student_assistant/features/home/home_main/presentation/widgets/feature_card.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class HomeMainScreen extends StatelessWidget {
+  const HomeMainScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(toolbarHeight: double.minPositive),
+      appBar: AppBar(
+        toolbarHeight: double.minPositive,
+        automaticallyImplyLeading: false,
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: double.infinity,
-            color: AppColors.mainOrange,
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 18.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Student Assistant',
-                    style: AppTextStyles.whiteColor32FontSize,
-                  ),
-                  verticalSpace(4),
-                  Text(
-                    'Your academic progress',
-                    style: AppTextStyles.lightOrange16FontSize,
-                  ),
-                ],
-              ),
-            ),
-          ),
+          AppBarTitle(title: 'Student Assistant'),
           verticalSpace(12),
           Expanded(
             child: ListView.builder(
@@ -53,7 +35,7 @@ class HomeScreen extends StatelessWidget {
                     onTap: () {
                       switch (index) {
                         case 0:
-                          context.pushNamed(AppRoutes.gpaCalculationsScreen);
+                          context.pushNamed(AppRoutes.gpaMainScreen);
                         case 1:
                           context.pushNamed(AppRoutes.pomodoroTimerScreen);
                         case 2:
@@ -72,7 +54,7 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: HomeBottomNavigationBar(
-        selectedScreen: HomeBottomNavigationBarEnum.home,
+        selectedScreen: HomeBottomNavigationBarEnum.main,
       ),
     );
   }

@@ -8,20 +8,19 @@ import 'package:student_assistant/features/auth/otp/presentation/cubits/otp_cubi
 import 'package:student_assistant/features/auth/otp/presentation/screens/otp_screen.dart';
 import 'package:student_assistant/features/auth/signup/presentation/cubits/signup_cubit.dart';
 import 'package:student_assistant/features/auth/signup/presentation/screens/signup_screen.dart';
-import 'package:student_assistant/features/gpa_calculations/presentation/screens/gpa_calculations_screen.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/screens/gpa_main_screen.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_notes/presentation/screens/gpa_notes_screen.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_scales/presentation/screens/gpa_scales_screen.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_scenarios/presentation/screens/gpa_scenarios_screen.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_settings/presentation/screens/gpa_settings_screen.dart';
 import 'package:student_assistant/features/home/home_settings/presentation/screens/home_settings_screen.dart';
-import 'package:student_assistant/features/home/presentation/screen/home_screen.dart';
-import 'package:student_assistant/features/home/profile/presentation/screens/profile_screen.dart';
+import 'package:student_assistant/features/home/home_main/presentation/screen/home_main_screen.dart';
+import 'package:student_assistant/features/home/home_profile/presentation/screens/home_profile_screen.dart';
 
 class AppRouter {
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case AppRoutes.homeScreen:
-        return MaterialPageRoute(
-          builder: (_) => HomeScreen(),
-          settings: settings,
-        );
-
+      // Auth
       case AppRoutes.signupScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
@@ -30,7 +29,6 @@ class AppRouter {
           ),
           settings: settings,
         );
-
       case AppRoutes.otpScreen:
         final args = settings.arguments as Map<String, String?>;
         final email = args['email'];
@@ -42,7 +40,6 @@ class AppRouter {
           ),
           settings: settings,
         );
-
       case AppRoutes.loginScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
@@ -52,21 +49,47 @@ class AppRouter {
           settings: settings,
         );
 
-      case AppRoutes.profileScreen:
+      // Home
+      case AppRoutes.homeProfileScreen:
         return MaterialPageRoute(
-          builder: (_) => ProfileScreen(),
+          builder: (_) => HomeProfileScreen(),
           settings: settings,
         );
-
+      case AppRoutes.homeMainScreen:
+        return MaterialPageRoute(
+          builder: (_) => HomeMainScreen(),
+          settings: settings,
+        );
       case AppRoutes.homeSettingsScreen:
         return MaterialPageRoute(
           builder: (_) => HomeSettingsScreen(),
           settings: settings,
         );
 
-      case AppRoutes.gpaCalculationsScreen:
+      // GPA Calculations
+      case AppRoutes.gpaNotesScreen:
         return MaterialPageRoute(
-          builder: (_) => GpaCalculationsScreen(),
+          builder: (_) => GpaNotesScreen(),
+          settings: settings,
+        );
+      case AppRoutes.gpaScalesScreen:
+        return MaterialPageRoute(
+          builder: (_) => GpaScalesScreen(),
+          settings: settings,
+        );
+      case AppRoutes.gpaMainScreen:
+        return MaterialPageRoute(
+          builder: (_) => GpaMainScreen(),
+          settings: settings,
+        );
+      case AppRoutes.gpaScenariosScreen:
+        return MaterialPageRoute(
+          builder: (_) => GpaScenariosScreen(),
+          settings: settings,
+        );
+      case AppRoutes.gpaSettingsScreen:
+        return MaterialPageRoute(
+          builder: (_) => GpaSettingsScreen(),
           settings: settings,
         );
 

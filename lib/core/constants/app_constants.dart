@@ -1,44 +1,35 @@
-import 'package:flutter/material.dart';
-import 'package:student_assistant/features/home/presentation/widgets/feature_card.dart';
+import 'package:student_assistant/features/home/home_main/presentation/widgets/feature_card.dart';
 
 class AppConstants {
   static final List<FeatureItem> features = [
     FeatureItem(
-      id: 1,
       title: 'GPA Calculations',
       description: 'Track and calculate your cumulative GPA',
-      icon: Icons.calculate,
-      color: Colors.blue,
+      iconPath: 'assets/icons/calculate.svg',
     ),
     FeatureItem(
-      id: 2,
       title: 'Pomodoro Timer',
       description: 'Focus with timed study sessions',
-      icon: Icons.timer,
-      color: Colors.red,
+      iconPath: 'assets/icons/pomodoro.svg',
     ),
     FeatureItem(
-      id: 3,
       title: 'Calendar',
       description: 'Manage your schedule and deadlines',
-      icon: Icons.calendar_today,
-      color: Colors.green,
+      iconPath: 'assets/icons/calendar.svg',
     ),
     FeatureItem(
-      id: 4,
       title: 'Individual Tasks',
       description: 'Organize your personal assignments',
-      icon: Icons.check_box,
-      color: Colors.purple,
+      iconPath: 'assets/icons/tasks.svg',
     ),
     FeatureItem(
-      id: 5,
       title: 'Group Projects',
       description: 'Collaborate with your team members',
-      icon: Icons.groups,
-      color: Colors.orange,
+      iconPath: 'assets/icons/groups.svg',
     ),
   ];
 }
 
-enum HomeBottomNavigationBarEnum { profile, home, settings }
+enum HomeBottomNavigationBarEnum { profile, main, settings }
+
+enum GpaBottomNavigationBarEnum { notes, scales, main, scenarios, settings }

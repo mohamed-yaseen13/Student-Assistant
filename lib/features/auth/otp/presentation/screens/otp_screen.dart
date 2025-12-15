@@ -16,7 +16,7 @@ class OtpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(automaticallyImplyLeading: false),
       backgroundColor: AppColors.mainOrange,
       body: BlocConsumer<OtpCubit, OtpState>(
         listener: (context, state) {
@@ -26,7 +26,7 @@ class OtpScreen extends StatelessWidget {
 
             case OtpSuccess _:
               Navigator.of(context, rootNavigator: true).pop();
-              context.pushReplacementNamed(AppRoutes.homeScreen);
+              context.pushReplacementNamed(AppRoutes.homeMainScreen);
 
             case OtpError _:
               Navigator.of(context, rootNavigator: true).pop();

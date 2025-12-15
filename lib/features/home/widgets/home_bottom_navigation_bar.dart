@@ -26,9 +26,9 @@ class _HomeBottomNavigationBarState extends State<HomeBottomNavigationBar> {
   String _enumToRoute(HomeBottomNavigationBarEnum screen) {
     switch (screen) {
       case HomeBottomNavigationBarEnum.profile:
-        return AppRoutes.profileScreen;
-      case HomeBottomNavigationBarEnum.home:
-        return AppRoutes.homeScreen;
+        return AppRoutes.homeProfileScreen;
+      case HomeBottomNavigationBarEnum.main:
+        return AppRoutes.homeMainScreen;
       case HomeBottomNavigationBarEnum.settings:
         return AppRoutes.homeSettingsScreen;
     }
@@ -39,7 +39,7 @@ class _HomeBottomNavigationBarState extends State<HomeBottomNavigationBar> {
     return BottomNavigationBar(
       items: [
         BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Main'),
         BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
       ],
       currentIndex: _enumToIndex(widget.selectedScreen),
@@ -51,10 +51,10 @@ class _HomeBottomNavigationBarState extends State<HomeBottomNavigationBar> {
         }
       },
       selectedItemColor: Colors.orange,
-      unselectedItemColor: Colors.grey,
+      unselectedItemColor: Colors.black,
       type: BottomNavigationBarType.fixed,
       elevation: 8,
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: AppColors.lightOrange,
     );
   }
 }

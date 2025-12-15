@@ -73,6 +73,7 @@ flutter:
     - assets/images/
     - assets/fonts/
     - assets/lottie/
+    - assets/icons/
     # - .env
   fonts:
     - family: NotoSansArabic

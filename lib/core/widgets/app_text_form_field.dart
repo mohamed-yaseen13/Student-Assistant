@@ -26,11 +26,11 @@ class AppTextFormField extends StatelessWidget {
         isDense: true,
         contentPadding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey, width: 2.w),
+          borderSide: BorderSide(color: Colors.black, width: 2.w),
           borderRadius: BorderRadius.circular(12.r),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey, width: 2.w),
+          borderSide: BorderSide(color: Colors.black, width: 2.w),
           borderRadius: BorderRadius.circular(12.r),
         ),
         errorBorder: OutlineInputBorder(

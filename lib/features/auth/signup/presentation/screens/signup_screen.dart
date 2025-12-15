@@ -14,7 +14,7 @@ class SignupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(automaticallyImplyLeading: false),
       backgroundColor: AppColors.mainOrange,
       body: BlocConsumer<SignupCubit, SignupState>(
         listener: (context, state) {

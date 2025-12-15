@@ -11,5 +11,6 @@ class OtpApiService {
     if (!isCorrect) throw Exception('OTP is incorrect');
     database.deleteOtp(email);
     await SharedPrefs.setIsUserLoggedIn();
+    await SharedPrefs.setUserEmail(email);
   }
 }

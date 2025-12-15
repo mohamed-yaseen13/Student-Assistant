@@ -19,4 +19,17 @@ class SharedPrefs {
   static bool getIsUserLoggedIn() {
     return _prefs!.getBool(isUserLoggedInKay) ?? false;
   }
+
+  // user email key
+  static const String userEmailKey = 'userEmailKey';
+
+  // set user email
+  static Future<void> setUserEmail(String email) async {
+    await _prefs!.setString(userEmailKey, email);
+  }
+
+  // get user email
+  static String getUserEmail() {
+    return _prefs!.getString(userEmailKey) ?? '';
+  }
 }

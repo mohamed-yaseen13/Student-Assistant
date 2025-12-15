@@ -11,6 +11,9 @@ import 'package:student_assistant/features/auth/otp/presentation/cubits/otp_cubi
 import 'package:student_assistant/features/auth/signup/data/apis/signup_api_service.dart';
 import 'package:student_assistant/features/auth/signup/data/repos/signup_repo_imp.dart';
 import 'package:student_assistant/features/auth/signup/presentation/cubits/signup_cubit.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/data/apis/gpa_main_api_service.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/data/repos/gpa_main_repo_imp.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/gpa_main_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -65,5 +68,16 @@ Future<void> setupGetIt() async {
   );
   getIt.registerFactory<LoginCubit>(
     () => LoginCubit(loginRepoImp: getIt<LoginRepoImp>()),
+  );
+
+  // GPA Main
+  getIt.registerLazySingleton<GpaMainApiService>(
+    () => GpaMainApiService(database: getIt<Database>()),
+  );
+  getIt.registerLazySingleton<GpaMainRepoImp>(
+    () => GpaMainRepoImp(gpaMainApiService: getIt<GpaMainApiService>()),
+  );
+  getIt.registerFactory<GpaMainCubit>(
+    () => GpaMainCubit(gpaMainRepoImp: getIt<GpaMainRepoImp>()),
   );
 }

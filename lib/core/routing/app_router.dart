@@ -8,6 +8,7 @@ import 'package:student_assistant/features/auth/otp/presentation/cubits/otp_cubi
 import 'package:student_assistant/features/auth/otp/presentation/screens/otp_screen.dart';
 import 'package:student_assistant/features/auth/signup/presentation/cubits/signup_cubit.dart';
 import 'package:student_assistant/features/auth/signup/presentation/screens/signup_screen.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/gpa_main_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/screens/gpa_main_screen.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_notes/presentation/screens/gpa_notes_screen.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_scales/presentation/screens/gpa_scales_screen.dart';
@@ -79,7 +80,10 @@ class AppRouter {
         );
       case AppRoutes.gpaMainScreen:
         return MaterialPageRoute(
-          builder: (_) => GpaMainScreen(),
+          builder: (_) => BlocProvider(
+            create: (context) => getIt<GpaMainCubit>(),
+            child: GpaMainScreen(),
+          ),
           settings: settings,
         );
       case AppRoutes.gpaScenariosScreen:

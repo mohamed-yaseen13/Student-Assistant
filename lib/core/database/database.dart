@@ -11,11 +11,6 @@ class Database {
           .collection(DatabaseConstants.emailsCollection)
           .doc(email);
 
-  DocumentReference<Map<String, dynamic>> getMerchantRef(String email) =>
-      FirebaseFirestore.instance
-          .collection(DatabaseConstants.merchantsCollection)
-          .doc(email);
-
   Future<bool> checkIfEmailExist(String email) async {
     final doc = await getEmailRef(email).get();
     return doc.exists;
@@ -47,5 +42,32 @@ class Database {
     await getEmailRef(
       email,
     ).update({'otp': FieldValue.delete(), 'expiresAt': FieldValue.delete()});
+  }
+
+  Future<void> addSemester({
+    required String email,
+    required String semesterName,
+  }) async {
+    await getEmailRef(email).set({
+      'semesters': {
+        'name': semesterName,
+        'gpa': 0.0,
+        'cgpaOriginal': 0.0,
+        'cgpaChanged': 0.0,
+        'attemptedCredits': 0,
+        'earnedCredits': 0,
+        'note': '',
+      },
+    }, SetOptions(merge: true));
+  }
+
+  Future<bool> semesterExists(String email, String semesterName) async {
+    final query = await getEmailRef(email)
+        .collection(DatabaseConstants.semestersCollection)
+        .where('name', isEqualTo: semesterName)
+        .limit(1)
+        .get();
+
+    return query.docs.isNotEmpty;
   }
 }

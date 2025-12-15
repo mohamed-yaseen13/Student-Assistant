@@ -12,6 +12,6 @@ class SignupApiService {
     if (isUserHasAccount) throw Exception('Email already Exist');
     final String otp = await sendEmailOtp.sendEmailOtp(email);
     await database.saveOtpToDatabase(email, otp);
-    await database.saveUsernameToDatabase(email, username);
+    await database.saveStudentToDatabase(email, username);
   }
 }

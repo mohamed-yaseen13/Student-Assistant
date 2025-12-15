@@ -13,6 +13,8 @@ class ApiErrorHandler {
         return ApiErrorModel(message: 'OTP is incorrect');
       case "Exception: Email doesn't Exist":
         return ApiErrorModel(message: "Email doesn't Exist");
+      case "Exception: Semester Name Already Exists":
+        return ApiErrorModel(message: 'Semester Name Already Exists');
       default:
         return ApiErrorModel(message: 'Somthing went Wrong');
     }

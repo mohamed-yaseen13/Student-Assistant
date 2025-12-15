@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:student_assistant/core/constants/app_constants.dart';
 import 'package:student_assistant/core/helpers/spacing.dart';
+import 'package:student_assistant/core/states/states.dart';
 import 'package:student_assistant/core/widgets/app_bar_title.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/gpa_main_cubit.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/gpa_main_state.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/add_semester_button.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/gpa_data_container.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/search_input_field.dart';
@@ -18,17 +22,39 @@ class GpaMainScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         toolbarHeight: double.minPositive,
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AppBarTitle(title: 'GPA Calculation'),
-          verticalSpace(8),
-          SearchInputField(),
-          verticalSpace(12),
-          GpaDataContainer(),
-          verticalSpace(12),
-          Expanded(child: SemestersTable()),
-        ],
+      body: BlocConsumer<GpaMainCubit, GpaMainState>(
+        listener: (context, state) {
+          switch (state) {
+            case GpaMainAddSemesterLoading _:
+              loadingState(context: context);
+            case GpaMainAddSemesterSuccess _:
+              Navigator.of(context, rootNavigator: true).pop();
+              context.read<GpaMainCubit>().getAllSemesters();
+            case GpaMainError _:
+              Navigator.of(context, rootNavigator: true).pop();
+              errorState(
+                context: context,
+                desc: 'Failed To Add Semester',
+                message: state.apiErrorModel.message!,
+              );
+            default:
+              null;
+          }
+        },
+        builder: (context, state) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AppBarTitle(title: 'GPA Calculation'),
+              verticalSpace(8),
+              SearchInputField(),
+              verticalSpace(12),
+              GpaDataContainer(),
+              verticalSpace(12),
+              Expanded(child: SemestersTable()),
+            ],
+          );
+        },
       ),
       bottomNavigationBar: GpaBottomNavigationBar(
         selectedScreen: GpaBottomNavigationBarEnum.main,

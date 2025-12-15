@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_assistant/core/style/app_colors.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/models/semester_model.dart';
 
 class SemesterRow extends StatelessWidget {
-  const SemesterRow({super.key});
+  final int index;
+  final SemesterModel semester;
+
+  const SemesterRow({super.key, required this.index, required this.semester});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +24,7 @@ class SemesterRow extends StatelessWidget {
           Expanded(
             flex: 2,
             child: Text(
-              '1',
+              '${index + 1}',
               style: TextStyle(fontSize: 16.sp),
               textAlign: TextAlign.center,
             ),
@@ -28,7 +32,7 @@ class SemesterRow extends StatelessWidget {
           Expanded(
             flex: 7,
             child: Text(
-              'Term 1',
+              semester.name,
               style: TextStyle(fontSize: 16.sp),
               textAlign: TextAlign.center,
             ),
@@ -36,7 +40,7 @@ class SemesterRow extends StatelessWidget {
           Expanded(
             flex: 6,
             child: Text(
-              '3.54',
+              '${semester.gpa}',
               style: TextStyle(fontSize: 16.sp),
               textAlign: TextAlign.center,
             ),
@@ -44,7 +48,7 @@ class SemesterRow extends StatelessWidget {
           Expanded(
             flex: 6,
             child: Text(
-              '3.54',
+              '${semester.cgpaOriginal}',
               style: TextStyle(fontSize: 16.sp),
               textAlign: TextAlign.center,
             ),

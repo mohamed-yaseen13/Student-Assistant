@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:student_assistant/core/constants/database_constants.dart';
+import 'package:student_assistant/features/auth/signup/models/student_model.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/models/semester_model.dart';
 
 class Database {
   final FirebaseFirestore firestore;
@@ -11,6 +13,7 @@ class Database {
           .collection(DatabaseConstants.emailsCollection)
           .doc(email);
 
+  // Auth
   Future<bool> checkIfEmailExist(String email) async {
     final doc = await getEmailRef(email).get();
     return doc.exists;
@@ -24,10 +27,12 @@ class Database {
     }, SetOptions(merge: true));
   }
 
-  Future<void> saveUsernameToDatabase(String email, String username) async {
-    await getEmailRef(
-      email,
-    ).set({'username': username}, SetOptions(merge: true));
+  Future<void> saveStudentToDatabase(String email, String username) async {
+    final studentMap = {
+      ...StudentModel(name: username).toJson(),
+      'createdAt': FieldValue.serverTimestamp(),
+    };
+    await getEmailRef(email).set(studentMap, SetOptions(merge: true));
   }
 
   Future<bool> isOtpCorrect(String email, String otp) async {
@@ -44,30 +49,50 @@ class Database {
     ).update({'otp': FieldValue.delete(), 'expiresAt': FieldValue.delete()});
   }
 
+  // GPA Main
   Future<void> addSemester({
     required String email,
     required String semesterName,
   }) async {
+    final semesterMap = {
+      ...SemesterModel(name: semesterName).toJson(),
+      'createdAt': FieldValue.serverTimestamp(),
+    };
     await getEmailRef(email).set({
-      'semesters': {
-        'name': semesterName,
-        'gpa': 0.0,
-        'cgpaOriginal': 0.0,
-        'cgpaChanged': 0.0,
-        'attemptedCredits': 0,
-        'earnedCredits': 0,
-        'note': '',
-      },
+      'semesters': {semesterName: semesterMap},
     }, SetOptions(merge: true));
   }
 
   Future<bool> semesterExists(String email, String semesterName) async {
-    final query = await getEmailRef(email)
-        .collection(DatabaseConstants.semestersCollection)
-        .where('name', isEqualTo: semesterName)
-        .limit(1)
-        .get();
+    final doc = await getEmailRef(email).get();
+    final data = doc.data();
+    final semesters = data!['semesters'];
+    if (semesters == null || semesters is! Map<String, dynamic>) {
+      return false;
+    }
+    return semesters.containsKey(semesterName);
+  }
 
-    return query.docs.isNotEmpty;
+  Future<List<SemesterModel>> getAllSemesters(String email) async {
+    final doc = await getEmailRef(email).get();
+    final data = doc.data();
+    final semestersRaw = data!['semesters'];
+    if (semestersRaw == null || semestersRaw is! Map) {
+      return [];
+    }
+    final Map<String, dynamic> semestersMap = Map<String, dynamic>.from(
+      semestersRaw,
+    );
+    final List<MapEntry<String, dynamic>> entries = semestersMap.entries
+        .toList();
+    entries.sort((a, b) {
+      final tsA = a.value['createdAt'] as Timestamp?;
+      final tsB = b.value['createdAt'] as Timestamp?;
+      if (tsA == null || tsB == null) return 0;
+      return tsA.compareTo(tsB);
+    });
+    return entries
+        .map((e) => SemesterModel.fromJson(Map<String, dynamic>.from(e.value)))
+        .toList();
   }
 }

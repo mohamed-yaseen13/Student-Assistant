@@ -81,7 +81,7 @@ class AppRouter {
       case AppRoutes.gpaMainScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
-            create: (context) => getIt<GpaMainCubit>(),
+            create: (context) => getIt<GpaMainCubit>()..getAllSemesters(),
             child: GpaMainScreen(),
           ),
           settings: settings,

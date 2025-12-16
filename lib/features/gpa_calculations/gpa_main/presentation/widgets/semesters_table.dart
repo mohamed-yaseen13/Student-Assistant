@@ -7,8 +7,27 @@ import 'package:student_assistant/features/gpa_calculations/gpa_main/presentatio
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/semester_row.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/semesters_table_header.dart';
 
-class SemestersTable extends StatelessWidget {
+class SemestersTable extends StatefulWidget {
   const SemestersTable({super.key});
+
+  @override
+  State<SemestersTable> createState() => _SemestersTableState();
+}
+
+class _SemestersTableState extends State<SemestersTable> {
+  List<String> selectedSemesters = [];
+  bool isSelectionMode = false;
+
+  void toggleSelection(String semesterName) {
+    setState(() {
+      if (selectedSemesters.contains(semesterName)) {
+        selectedSemesters.remove(semesterName);
+      } else {
+        selectedSemesters.add(semesterName);
+      }
+      isSelectionMode = selectedSemesters.isNotEmpty;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +37,25 @@ class SemestersTable extends StatelessWidget {
         children: [
           SemestersTableHeader(),
           verticalSpace(8),
+          if (isSelectionMode)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.delete, color: Colors.red),
+                  onPressed: () {
+                    context.read<SemestersCubit>().deleteSemesters(
+                      selectedSemesters,
+                    );
+                    context.read<SemestersCubit>().getAllSemesters();
+                    setState(() {
+                      selectedSemesters.clear();
+                      isSelectionMode = false;
+                    });
+                  },
+                ),
+              ],
+            ),
           Expanded(
             child: BlocBuilder<SemestersCubit, SemestersState>(
               buildWhen: (previous, current) =>
@@ -36,6 +74,16 @@ class SemestersTable extends StatelessWidget {
                       return SemesterRow(
                         index: index,
                         semester: state.semesters[index],
+                        isSelected: selectedSemesters.contains(
+                          state.semesters[index].name,
+                        ),
+                        onLongPress: () =>
+                            toggleSelection(state.semesters[index].name),
+                        onTap: () {
+                          if (isSelectionMode) {
+                            toggleSelection(state.semesters[index].name);
+                          }
+                        },
                       );
                     },
                   );

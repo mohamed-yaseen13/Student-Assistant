@@ -101,11 +101,17 @@ class Database {
         .toList();
   }
 
-  // Delete Semester
-  Future<void> deleteSemester(String email, String semesterName) async {
-    await getEmailRef(email).set({
-      'semesters': {semesterName: FieldValue.delete()},
-    }, SetOptions(merge: true));
+  // Delete multiple semesters
+  Future<void> deleteSemesters(
+    String email,
+    List<String> semestersNames,
+  ) async {
+    final Map<String, dynamic> deletionMap = {
+      for (var name in semestersNames) name: FieldValue.delete(),
+    };
+    await getEmailRef(
+      email,
+    ).set({'semesters': deletionMap}, SetOptions(merge: true));
   }
 
   // Get GPA Data

@@ -29,9 +29,9 @@ class SemestersCubit extends Cubit<SemestersState> {
     }
   }
 
-  void deleteSemester(String semesterName) async {
+  void deleteSemesters(List<String> semestersNames) async {
     emit(SemestersDeleteLoading());
-    final result = await gpaMainRepoImp.deleteSemester(semesterName);
+    final result = await gpaMainRepoImp.deleteSemesters(semestersNames);
     if (result is Success<void>) {
       emit(SemestersDeleteSuccess());
     } else if (result is Failure<void>) {

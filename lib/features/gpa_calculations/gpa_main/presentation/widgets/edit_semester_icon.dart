@@ -24,7 +24,7 @@ class EditSemesterIcon extends StatelessWidget {
             context: context,
             content: 'Semester',
             onConfirm: () {
-              context.read<SemestersCubit>().deleteSemester(semesterName);
+              context.read<SemestersCubit>().deleteSemesters([semesterName]);
               context.read<SemestersCubit>().getAllSemesters();
             },
             onCancel: () {},

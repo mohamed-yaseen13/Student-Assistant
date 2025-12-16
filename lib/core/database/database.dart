@@ -107,6 +107,11 @@ class Database {
     final data = doc.data();
     final double cgpa = data!['cgpa'];
     final int totalCredits = data['totalCredits'];
-    return GpaDataModel(cgpa: cgpa, totalCredits: totalCredits);
+    final double maxCgpa = data['maxCgpa'];
+    return GpaDataModel(
+      cgpa: cgpa,
+      totalCredits: totalCredits,
+      maxCgpa: maxCgpa,
+    );
   }
 }

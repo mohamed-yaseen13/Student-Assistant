@@ -46,7 +46,7 @@ class GpaDataContainer extends StatelessWidget {
                 ),
                 verticalSpace(12),
                 Text(
-                  '2.76',
+                  '${state.gpaDataModel.maxCgpa}',
                   style: TextStyle(
                     fontSize: 18.sp,
                     color: AppColors.mainOrange,

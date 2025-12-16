@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_assistant/core/style/app_colors.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/models/semester_model.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/edit_semester_icon.dart';
 
 class SemesterRow extends StatelessWidget {
   final int index;
@@ -53,7 +54,10 @@ class SemesterRow extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
-          Expanded(flex: 2, child: Icon(Icons.more_vert)),
+          Expanded(
+            flex: 2,
+            child: EditSemesterIcon(semesterName: semester.name),
+          ),
         ],
       ),
     );

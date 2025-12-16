@@ -28,4 +28,14 @@ class SemestersCubit extends Cubit<SemestersState> {
       emit(SemestersError(apiErrorModel: result.apiErrorModel));
     }
   }
+
+  void deleteSemester(String semesterName) async {
+    emit(SemestersDeleteLoading());
+    final result = await gpaMainRepoImp.deleteSemester(semesterName);
+    if (result is Success<void>) {
+      emit(SemestersDeleteSuccess());
+    } else if (result is Failure<void>) {
+      emit(SemestersError(apiErrorModel: result.apiErrorModel));
+    }
+  }
 }

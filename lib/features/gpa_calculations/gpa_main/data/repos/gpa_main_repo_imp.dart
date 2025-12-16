@@ -27,6 +27,15 @@ class GpaMainRepoImp {
     }
   }
 
+  Future<ApiResult<void>> deleteSemester(String semesterName) async {
+    try {
+      final response = await gpaMainApiService.deleteSemester(semesterName);
+      return ApiResult.success(response);
+    } catch (error) {
+      return ApiResult.failure(ApiErrorHandler.handle(error));
+    }
+  }
+
   Future<ApiResult<GpaDataModel>> getGpaData() async {
     try {
       final response = await gpaMainApiService.getGpaData();

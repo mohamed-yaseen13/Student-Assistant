@@ -20,6 +20,10 @@ class SemestersTable extends StatelessWidget {
           verticalSpace(8),
           Expanded(
             child: BlocBuilder<SemestersCubit, SemestersState>(
+              buildWhen: (previous, current) =>
+                  current is SemestersGetAllSemestersLoading ||
+                  current is SemestersGetAllSemestersSuccess ||
+                  current is SemestersError,
               builder: (context, state) {
                 if (state is SemestersGetAllSemestersLoading) {
                   return const Center(child: CircularProgressIndicator());

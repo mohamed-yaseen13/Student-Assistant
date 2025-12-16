@@ -23,6 +23,11 @@ class GpaMainApiService {
     return await database.getAllSemesters(email);
   }
 
+  Future<void> deleteSemester(String semesterName) async {
+    final String email = SharedPrefs.getUserEmail();
+    await database.deleteSemester(email, semesterName);
+  }
+
   Future<GpaDataModel> getGpaData() async {
     final String email = SharedPrefs.getUserEmail();
     return await database.getGpaData(email);

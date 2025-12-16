@@ -18,6 +18,11 @@ class SemestersGetAllSemestersSuccess extends SemestersState {
   SemestersGetAllSemestersSuccess({required this.semesters});
 }
 
+// Delete Semester
+class SemestersDeleteLoading extends SemestersState {}
+
+class SemestersDeleteSuccess extends SemestersState {}
+
 class SemestersError extends SemestersState {
   final ApiErrorModel apiErrorModel;
 

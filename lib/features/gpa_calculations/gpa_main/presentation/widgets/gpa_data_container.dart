@@ -24,6 +24,10 @@ class GpaDataContainer extends StatelessWidget {
         ],
       ),
       rightColumn: BlocBuilder<GpaDataCubit, GpaDataState>(
+        buildWhen: (previous, current) =>
+            current is GpaDataLoading ||
+            current is GpaDataSuccess ||
+            current is GpaDataError,
         builder: (context, state) {
           if (state is GpaDataLoading) {
             return const Center(child: CircularProgressIndicator());

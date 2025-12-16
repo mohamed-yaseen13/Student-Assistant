@@ -101,6 +101,13 @@ class Database {
         .toList();
   }
 
+  // Delete Semester
+  Future<void> deleteSemester(String email, String semesterName) async {
+    await getEmailRef(email).set({
+      'semesters': {semesterName: FieldValue.delete()},
+    }, SetOptions(merge: true));
+  }
+
   // Get GPA Data
   Future<GpaDataModel> getGpaData(String email) async {
     final doc = await getEmailRef(email).get();

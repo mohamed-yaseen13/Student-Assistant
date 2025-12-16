@@ -23,6 +23,10 @@ class GpaMainScreen extends StatelessWidget {
         toolbarHeight: double.minPositive,
       ),
       body: BlocConsumer<SemestersCubit, SemestersState>(
+        listenWhen: (previous, current) =>
+            current is SemestersAddSemesterLoading ||
+            current is SemestersAddSemesterSuccess ||
+            current is SemestersError,
         listener: (context, state) {
           switch (state) {
             case SemestersAddSemesterLoading _:

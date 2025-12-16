@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_assistant/core/helpers/spacing.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/gpa_main_cubit.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/gpa_main_state.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_cubit.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_state.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/semester_row.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/semesters_table_header.dart';
 
@@ -19,12 +19,12 @@ class SemestersTable extends StatelessWidget {
           SemestersTableHeader(),
           verticalSpace(8),
           Expanded(
-            child: BlocBuilder<GpaMainCubit, GpaMainState>(
+            child: BlocBuilder<SemestersCubit, SemestersState>(
               builder: (context, state) {
-                if (state is GpaMainGetAllSemestersLoading) {
+                if (state is SemestersGetAllSemestersLoading) {
                   return const Center(child: CircularProgressIndicator());
                 }
-                if (state is GpaMainGetAllSemestersSuccess) {
+                if (state is SemestersGetAllSemestersSuccess) {
                   return ListView.separated(
                     itemCount: state.semesters.length,
                     separatorBuilder: (_, _) => verticalSpace(8),
@@ -36,7 +36,7 @@ class SemestersTable extends StatelessWidget {
                     },
                   );
                 }
-                if (state is GpaMainError) {
+                if (state is SemestersError) {
                   return Center(
                     child: Text(
                       state.apiErrorModel.message ??

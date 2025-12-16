@@ -1,5 +1,6 @@
 import 'package:student_assistant/core/database/database.dart';
 import 'package:student_assistant/core/helpers/shared_prefs.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/models/gpa_data_model.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/models/semester_model.dart';
 
 class GpaMainApiService {
@@ -20,5 +21,10 @@ class GpaMainApiService {
   Future<List<SemesterModel>> getAllSemesters() async {
     final String email = SharedPrefs.getUserEmail();
     return await database.getAllSemesters(email);
+  }
+
+  Future<GpaDataModel> getGpaData() async {
+    final String email = SharedPrefs.getUserEmail();
+    return await database.getGpaData(email);
   }
 }

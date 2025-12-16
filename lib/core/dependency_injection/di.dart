@@ -13,7 +13,8 @@ import 'package:student_assistant/features/auth/signup/data/repos/signup_repo_im
 import 'package:student_assistant/features/auth/signup/presentation/cubits/signup_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/data/apis/gpa_main_api_service.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/data/repos/gpa_main_repo_imp.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/gpa_main_cubit.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/gpa_data_cubit.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -77,7 +78,10 @@ Future<void> setupGetIt() async {
   getIt.registerLazySingleton<GpaMainRepoImp>(
     () => GpaMainRepoImp(gpaMainApiService: getIt<GpaMainApiService>()),
   );
-  getIt.registerFactory<GpaMainCubit>(
-    () => GpaMainCubit(gpaMainRepoImp: getIt<GpaMainRepoImp>()),
+  getIt.registerFactory<SemestersCubit>(
+    () => SemestersCubit(gpaMainRepoImp: getIt<GpaMainRepoImp>()),
+  );
+  getIt.registerFactory<GpaDataCubit>(
+    () => GpaDataCubit(gpaMainRepoImp: getIt<GpaMainRepoImp>()),
   );
 }

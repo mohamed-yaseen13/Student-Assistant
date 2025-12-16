@@ -4,8 +4,8 @@ import 'package:student_assistant/core/constants/app_constants.dart';
 import 'package:student_assistant/core/helpers/spacing.dart';
 import 'package:student_assistant/core/states/states.dart';
 import 'package:student_assistant/core/widgets/app_bar_title.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/gpa_main_cubit.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/gpa_main_state.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_cubit.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_state.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/add_semester_button.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/gpa_data_container.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/search_input_field.dart';
@@ -22,15 +22,15 @@ class GpaMainScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         toolbarHeight: double.minPositive,
       ),
-      body: BlocConsumer<GpaMainCubit, GpaMainState>(
+      body: BlocConsumer<SemestersCubit, SemestersState>(
         listener: (context, state) {
           switch (state) {
-            case GpaMainAddSemesterLoading _:
+            case SemestersAddSemesterLoading _:
               loadingState(context: context);
-            case GpaMainAddSemesterSuccess _:
+            case SemestersAddSemesterSuccess _:
               Navigator.of(context, rootNavigator: true).pop();
-              context.read<GpaMainCubit>().getAllSemesters();
-            case GpaMainError _:
+              context.read<SemestersCubit>().getAllSemesters();
+            case SemestersError _:
               Navigator.of(context, rootNavigator: true).pop();
               errorState(
                 context: context,

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:student_assistant/core/constants/database_constants.dart';
 import 'package:student_assistant/features/auth/signup/models/student_model.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/models/gpa_data_model.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/models/semester_model.dart';
 
 class Database {
@@ -50,6 +51,8 @@ class Database {
   }
 
   // GPA Main
+
+  // Add Semester
   Future<void> addSemester({
     required String email,
     required String semesterName,
@@ -63,6 +66,7 @@ class Database {
     }, SetOptions(merge: true));
   }
 
+  // Check if Semester exists
   Future<bool> semesterExists(String email, String semesterName) async {
     final doc = await getEmailRef(email).get();
     final data = doc.data();
@@ -73,6 +77,7 @@ class Database {
     return semesters.containsKey(semesterName);
   }
 
+  // Get All Semesters
   Future<List<SemesterModel>> getAllSemesters(String email) async {
     final doc = await getEmailRef(email).get();
     final data = doc.data();
@@ -94,5 +99,14 @@ class Database {
     return entries
         .map((e) => SemesterModel.fromJson(Map<String, dynamic>.from(e.value)))
         .toList();
+  }
+
+  // Get GPA Data
+  Future<GpaDataModel> getGpaData(String email) async {
+    final doc = await getEmailRef(email).get();
+    final data = doc.data();
+    final double cgpa = data!['cgpa'];
+    final int totalCredits = data['totalCredits'];
+    return GpaDataModel(cgpa: cgpa, totalCredits: totalCredits);
   }
 }

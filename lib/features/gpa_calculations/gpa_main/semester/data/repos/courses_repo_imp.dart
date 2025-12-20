@@ -1,26 +1,13 @@
 import 'package:student_assistant/core/api/api_error_handler.dart';
 import 'package:student_assistant/core/api/api_result.dart';
+import 'package:student_assistant/core/helpers/shared_prefs.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/models/course_model.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/data/apis/specific_semester_api_service.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/models/semester_data_model.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/data/apis/courses_api_service.dart';
 
-class SpecificSemesterRepoImp {
-  final SpecificSemesterApiService specificSemesterApiService;
+class CoursesRepoImp {
+  CoursesApiService coursesApiService;
 
-  SpecificSemesterRepoImp({required this.specificSemesterApiService});
-
-  Future<ApiResult<SemesterDataModel>> getSpecificSemesterData(
-    String semesterName,
-  ) async {
-    try {
-      final response = await specificSemesterApiService.getSpecificSemesterData(
-        semesterName,
-      );
-      return ApiResult.success(response);
-    } catch (error) {
-      return ApiResult.failure(ApiErrorHandler.handle(error));
-    }
-  }
+  CoursesRepoImp({required this.coursesApiService});
 
   Future<ApiResult<void>> addCourse(
     String semesterName,
@@ -28,8 +15,10 @@ class SpecificSemesterRepoImp {
     double credits,
     String grade,
   ) async {
+    final email = SharedPrefs.getUserEmail();
     try {
-      final response = await specificSemesterApiService.addCourse(
+      final response = await coursesApiService.addCourse(
+        email,
         semesterName,
         courseName,
         credits,
@@ -44,8 +33,10 @@ class SpecificSemesterRepoImp {
   Future<ApiResult<List<CourseModel>>> getAllCourses(
     String semesterName,
   ) async {
+    final email = SharedPrefs.getUserEmail();
     try {
-      final response = await specificSemesterApiService.getAllCourses(
+      final response = await coursesApiService.getAllCourses(
+        email,
         semesterName,
       );
       return ApiResult.success(response);
@@ -58,8 +49,10 @@ class SpecificSemesterRepoImp {
     String semesterName,
     List<String> coursesNames,
   ) async {
+    final email = SharedPrefs.getUserEmail();
     try {
-      final response = await specificSemesterApiService.deleteCourses(
+      final response = await coursesApiService.deleteCourses(
+        email,
         semesterName,
         coursesNames,
       );

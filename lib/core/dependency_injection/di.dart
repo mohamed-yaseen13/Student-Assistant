@@ -1,6 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_it/get_it.dart';
-import 'package:student_assistant/core/database/database.dart';
 import 'package:student_assistant/core/services/send_email_otp.dart';
 import 'package:student_assistant/features/auth/login/data/apis/login_api_service.dart';
 import 'package:student_assistant/features/auth/login/data/repos/login_repo_imp.dart';
@@ -11,37 +9,28 @@ import 'package:student_assistant/features/auth/otp/presentation/cubits/otp_cubi
 import 'package:student_assistant/features/auth/signup/data/apis/signup_api_service.dart';
 import 'package:student_assistant/features/auth/signup/data/repos/signup_repo_imp.dart';
 import 'package:student_assistant/features/auth/signup/presentation/cubits/signup_cubit.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/data/apis/gpa_main_api_service.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/data/repos/gpa_main_repo_imp.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/data/apis/gpa_data_api_service.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/data/apis/semesters_api_service.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/data/repos/gpa_data_repo_imp.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/data/repos/semesters_repo_imp.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/gpa_data_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_cubit.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/data/apis/specific_semester_api_service.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/data/repos/specific_semester_repo_imp.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/data/apis/courses_api_service.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/data/apis/semester_data_api_service.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/data/repos/courses_repo_imp.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/data/repos/semester_data_repo_imp.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/cubits/courses_cubit.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/cubits/specific_semester_cubit.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/cubits/semester_data_cubit.dart';
 
 final getIt = GetIt.instance;
 
 Future<void> setupGetIt() async {
-  // Firebase Firestore
-  getIt.registerLazySingleton<FirebaseFirestore>(
-    () => FirebaseFirestore.instance,
-  );
-
-  // Database
-  getIt.registerLazySingleton<Database>(
-    () => Database(firestore: getIt<FirebaseFirestore>()),
-  );
-
   // Send Email OPT Service
   getIt.registerLazySingleton<SendEmailOtp>(() => SendEmailOtp());
 
   // Singup
   getIt.registerLazySingleton<SignupApiService>(
-    () => SignupApiService(
-      database: getIt<Database>(),
-      sendEmailOtp: getIt<SendEmailOtp>(),
-    ),
+    () => SignupApiService(sendEmailOtp: getIt<SendEmailOtp>()),
   );
   getIt.registerLazySingleton<SignupRepoImp>(
     () => SignupRepoImp(signupApiService: getIt<SignupApiService>()),
@@ -51,9 +40,7 @@ Future<void> setupGetIt() async {
   );
 
   // OTP
-  getIt.registerLazySingleton<OtpApiService>(
-    () => OtpApiService(database: getIt<Database>()),
-  );
+  getIt.registerLazySingleton<OtpApiService>(() => OtpApiService());
   getIt.registerLazySingleton<OtpRepoImp>(
     () => OtpRepoImp(otpApiService: getIt<OtpApiService>()),
   );
@@ -63,10 +50,7 @@ Future<void> setupGetIt() async {
 
   // Login
   getIt.registerLazySingleton<LoginApiService>(
-    () => LoginApiService(
-      database: getIt<Database>(),
-      sendEmailOtp: getIt<SendEmailOtp>(),
-    ),
+    () => LoginApiService(sendEmailOtp: getIt<SendEmailOtp>()),
   );
   getIt.registerLazySingleton<LoginRepoImp>(
     () => LoginRepoImp(loginApiService: getIt<LoginApiService>()),
@@ -75,36 +59,43 @@ Future<void> setupGetIt() async {
     () => LoginCubit(loginRepoImp: getIt<LoginRepoImp>()),
   );
 
-  // GPA Main
-  getIt.registerLazySingleton<GpaMainApiService>(
-    () => GpaMainApiService(database: getIt<Database>()),
-  );
-  getIt.registerLazySingleton<GpaMainRepoImp>(
-    () => GpaMainRepoImp(gpaMainApiService: getIt<GpaMainApiService>()),
-  );
-  getIt.registerFactory<SemestersCubit>(
-    () => SemestersCubit(gpaMainRepoImp: getIt<GpaMainRepoImp>()),
+  // GPA Data
+  getIt.registerLazySingleton<GpaDataApiService>(() => GpaDataApiService());
+  getIt.registerLazySingleton<GpaDataRepoImp>(
+    () => GpaDataRepoImp(gpaDataApiService: getIt<GpaDataApiService>()),
   );
   getIt.registerFactory<GpaDataCubit>(
-    () => GpaDataCubit(gpaMainRepoImp: getIt<GpaMainRepoImp>()),
+    () => GpaDataCubit(gpaDataRepoImp: getIt<GpaDataRepoImp>()),
   );
 
-  // Semester
-  getIt.registerLazySingleton<SpecificSemesterApiService>(
-    () => SpecificSemesterApiService(database: getIt<Database>()),
+  // Semesters
+  getIt.registerLazySingleton<SemestersApiService>(() => SemestersApiService());
+  getIt.registerLazySingleton<SemestersRepoImp>(
+    () => SemestersRepoImp(semestersApiService: getIt<SemestersApiService>()),
   );
-  getIt.registerLazySingleton<SpecificSemesterRepoImp>(
-    () => SpecificSemesterRepoImp(
-      specificSemesterApiService: getIt<SpecificSemesterApiService>(),
+  getIt.registerFactory<SemestersCubit>(
+    () => SemestersCubit(semestersRepoImp: getIt<SemestersRepoImp>()),
+  );
+
+  // Semester Data
+  getIt.registerLazySingleton<SemesterDataApiService>(
+    () => SemesterDataApiService(),
+  );
+  getIt.registerLazySingleton<SemesterDataRepoImp>(
+    () => SemesterDataRepoImp(
+      semesterDataApiService: getIt<SemesterDataApiService>(),
     ),
   );
-  getIt.registerFactory<SpecificSemesterCubit>(
-    () => SpecificSemesterCubit(
-      specificSemesterRepoImp: getIt<SpecificSemesterRepoImp>(),
-    ),
+  getIt.registerFactory<SemesterDataCubit>(
+    () => SemesterDataCubit(semesterDataRepoImp: getIt<SemesterDataRepoImp>()),
+  );
+
+  // Courses
+  getIt.registerLazySingleton<CoursesApiService>(() => CoursesApiService());
+  getIt.registerLazySingleton<CoursesRepoImp>(
+    () => CoursesRepoImp(coursesApiService: getIt<CoursesApiService>()),
   );
   getIt.registerFactory<CoursesCubit>(
-    () =>
-        CoursesCubit(specificSemesterRepoImp: getIt<SpecificSemesterRepoImp>()),
+    () => CoursesCubit(coursesRepoImp: getIt<CoursesRepoImp>()),
   );
 }

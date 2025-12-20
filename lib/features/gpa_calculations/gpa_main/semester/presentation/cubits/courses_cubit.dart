@@ -1,14 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:student_assistant/core/api/api_result.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/models/course_model.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/data/repos/specific_semester_repo_imp.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/data/repos/courses_repo_imp.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/cubits/courses_state.dart';
 
 class CoursesCubit extends Cubit<CoursesState> {
-  final SpecificSemesterRepoImp specificSemesterRepoImp;
+  final CoursesRepoImp coursesRepoImp;
 
-  CoursesCubit({required this.specificSemesterRepoImp})
-    : super(CoursesInitial());
+  CoursesCubit({required this.coursesRepoImp}) : super(CoursesInitial());
 
   void addCourse(
     String semesterName,
@@ -17,7 +16,7 @@ class CoursesCubit extends Cubit<CoursesState> {
     String grade,
   ) async {
     emit(CoursesAddCourseLoading());
-    final result = await specificSemesterRepoImp.addCourse(
+    final result = await coursesRepoImp.addCourse(
       semesterName,
       courseName,
       credits,
@@ -32,7 +31,7 @@ class CoursesCubit extends Cubit<CoursesState> {
 
   void getAllCourses(String semesterName) async {
     emit(CoursesGetAllCoursesLoading());
-    final result = await specificSemesterRepoImp.getAllCourses(semesterName);
+    final result = await coursesRepoImp.getAllCourses(semesterName);
     if (result is Success<List<CourseModel>>) {
       emit(CoursesGetAllCoursesSuccess(courses: result.data));
     } else if (result is Failure<List<CourseModel>>) {
@@ -42,7 +41,7 @@ class CoursesCubit extends Cubit<CoursesState> {
 
   void deleteCourses(String semesterName, List<String> coursesNames) async {
     emit(CoursesDeleteCoursesLoading());
-    final result = await specificSemesterRepoImp.deleteCourses(
+    final result = await coursesRepoImp.deleteCourses(
       semesterName,
       coursesNames,
     );

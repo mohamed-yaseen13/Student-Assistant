@@ -51,7 +51,7 @@ class _CoursesTableState extends State<CoursesTable> {
                       context: context,
                       content: selectedCourses.length > 1
                           ? 'courses'
-                          : 'Courses',
+                          : 'Course',
                       isSingle: selectedCourses.length > 1 ? false : true,
                       onConfirm: () {
                         context.read<CoursesCubit>().deleteCourses(

@@ -46,8 +46,8 @@ class _SemestersTableState extends State<SemestersTable> {
               children: [
                 IconButton(
                   icon: const Icon(Icons.delete, color: Colors.red),
-                  onPressed: () {
-                    showDeleteDialog(
+                  onPressed: () async {
+                    await showDeleteDialog(
                       context: context,
                       content: selectedSemesters.length > 1
                           ? 'semesters'

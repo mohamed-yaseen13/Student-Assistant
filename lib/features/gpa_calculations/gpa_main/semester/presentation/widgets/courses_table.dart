@@ -46,8 +46,8 @@ class _CoursesTableState extends State<CoursesTable> {
               children: [
                 IconButton(
                   icon: const Icon(Icons.delete, color: Colors.red),
-                  onPressed: () {
-                    showDeleteDialog(
+                  onPressed: () async {
+                    await showDeleteDialog(
                       context: context,
                       content: selectedCourses.length > 1
                           ? 'courses'

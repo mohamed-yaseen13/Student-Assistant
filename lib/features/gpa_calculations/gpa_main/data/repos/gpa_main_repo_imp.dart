@@ -2,7 +2,7 @@ import 'package:student_assistant/core/api/api_error_handler.dart';
 import 'package:student_assistant/core/api/api_result.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/data/apis/gpa_main_api_service.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/models/gpa_data_model.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/models/semester_model.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/models/semester_model.dart';
 
 class GpaMainRepoImp {
   final GpaMainApiService gpaMainApiService;

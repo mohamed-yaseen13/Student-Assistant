@@ -11,6 +11,9 @@ import 'package:student_assistant/features/auth/signup/presentation/screens/sign
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/gpa_data_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/screens/gpa_main_screen.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/cubits/courses_cubit.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/cubits/specific_semester_cubit.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/screens/semester_screen.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_notes/presentation/screens/gpa_notes_screen.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_scales/presentation/screens/gpa_scales_screen.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_scenarios/presentation/screens/gpa_scenarios_screen.dart';
@@ -91,6 +94,26 @@ class AppRouter {
               ),
             ],
             child: GpaMainScreen(),
+          ),
+          settings: settings,
+        );
+      case AppRoutes.semesterMainScreen:
+        final args = settings.arguments as Map<String, String?>;
+        final semesterName = args['semesterName'];
+        return MaterialPageRoute(
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) =>
+                    getIt<SpecificSemesterCubit>()
+                      ..getSpecificSemesterData(semesterName!),
+              ),
+              BlocProvider(
+                create: (context) =>
+                    getIt<CoursesCubit>()..getAllCourses(semesterName!),
+              ),
+            ],
+            child: SemesterScreen(semesterName: semesterName!),
           ),
           settings: settings,
         );

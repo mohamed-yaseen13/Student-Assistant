@@ -16,6 +16,10 @@ class AppRoutes {
   static const String gpaScenariosScreen = 'gpaScenariosScreen';
   static const String gpaSettingsScreen = 'gpaSettingsScreen';
 
+  // Semester
+  static const String semesterMainScreen = 'semesterMainScreen';
+  static const String semesterNotesScreen = 'semesterNotesScreen';
+
   // Pomodoro
   static const String pomodoroTimerScreen = 'pomodoroTimerScreen';
 

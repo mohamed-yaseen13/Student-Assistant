@@ -7,7 +7,7 @@ class CourseModel {
   bool isRepeated;
   bool isChanged;
   String newGrade;
-  List<SectionModel> sections;
+  final Map<String, SectionModel> sections;
   bool isFailedBefore;
 
   CourseModel({
@@ -17,7 +17,7 @@ class CourseModel {
     this.isRepeated = false,
     this.isChanged = false,
     this.newGrade = '--',
-    this.sections = const [],
+    this.sections = const {},
     this.isFailedBefore = false,
   });
 
@@ -28,22 +28,31 @@ class CourseModel {
     'isRepeated': isRepeated,
     'isChanged': isChanged,
     'newGrade': newGrade,
-    'sections': sections.map((s) => s.toJson()).toList(),
+    'sections': sections.map((k, v) => MapEntry(k, v.toJson())),
     'isFailedBefore': isFailedBefore,
   };
 
-  factory CourseModel.fromJson(Map<String, dynamic> json) => CourseModel(
-    name: json['name'] as String,
-    grade: json['grade'] as String,
-    credits: (json['credits'] as num).toDouble(),
-    isRepeated: json['isRepeated'] as bool,
-    isChanged: json['isChanged'] as bool,
-    newGrade: json['newGrade'] as String,
-    sections: (json['sections'] as List)
-        .map((s) => SectionModel.fromJson(s as Map<String, dynamic>))
-        .toList(),
-    isFailedBefore: json['isFailedBefore'] as bool,
-  );
+  factory CourseModel.fromJson(Map<String, dynamic> json) {
+    final rawSections = json['sections'];
+
+    return CourseModel(
+      name: json['name'] as String,
+      grade: json['grade'] as String? ?? '--',
+      credits: (json['credits'] as num).toDouble(),
+      isRepeated: json['isRepeated'] as bool? ?? false,
+      isChanged: json['isChanged'] as bool? ?? false,
+      newGrade: json['newGrade'] as String? ?? '--',
+      isFailedBefore: json['isFailedBefore'] as bool? ?? false,
+      sections: rawSections is Map
+          ? rawSections.map(
+              (k, v) => MapEntry(
+                k,
+                SectionModel.fromJson(Map<String, dynamic>.from(v)),
+              ),
+            )
+          : {},
+    );
+  }
 
   CourseModel copyWith({
     String? name,
@@ -52,7 +61,7 @@ class CourseModel {
     bool? isRepeated,
     bool? isChanged,
     String? newGrade,
-    List<SectionModel>? sections,
+    Map<String, SectionModel>? sections,
     bool? isFailedBefore,
   }) {
     return CourseModel(
@@ -62,7 +71,7 @@ class CourseModel {
       isRepeated: isRepeated ?? this.isRepeated,
       isChanged: isChanged ?? this.isChanged,
       newGrade: newGrade ?? this.newGrade,
-      sections: sections ?? List<SectionModel>.from(this.sections),
+      sections: sections ?? Map<String, SectionModel>.from(this.sections),
       isFailedBefore: isFailedBefore ?? this.isFailedBefore,
     );
   }

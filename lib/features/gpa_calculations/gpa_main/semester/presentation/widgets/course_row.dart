@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_assistant/core/style/app_colors.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/models/semester_model.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/edit_semester_icon.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/models/course_model.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/widgets/edit_course_icon.dart';
 
-class SemesterRow extends StatelessWidget {
+class CourseRow extends StatelessWidget {
   final int index;
-  final SemesterModel semester;
+  final CourseModel course;
   final bool isSelected;
   final VoidCallback? onLongPress;
   final VoidCallback? onTap;
+  final String semesterName;
 
-  const SemesterRow({
+  const CourseRow({
     super.key,
     required this.index,
-    required this.semester,
+    required this.course,
+    required this.semesterName,
     this.isSelected = false,
     this.onLongPress,
     this.onTap,
@@ -55,7 +57,7 @@ class SemesterRow extends StatelessWidget {
             Expanded(
               flex: 7,
               child: Text(
-                semester.name,
+                course.name,
                 style: TextStyle(fontSize: 16.sp),
                 textAlign: TextAlign.center,
               ),
@@ -63,7 +65,7 @@ class SemesterRow extends StatelessWidget {
             Expanded(
               flex: 6,
               child: Text(
-                '${semester.gpa}',
+                course.grade,
                 style: TextStyle(fontSize: 16.sp),
                 textAlign: TextAlign.center,
               ),
@@ -71,14 +73,17 @@ class SemesterRow extends StatelessWidget {
             Expanded(
               flex: 6,
               child: Text(
-                '${semester.cgpaOriginal}',
+                '${course.credits}',
                 style: TextStyle(fontSize: 16.sp),
                 textAlign: TextAlign.center,
               ),
             ),
             Expanded(
               flex: 2,
-              child: EditSemesterIcon(semesterName: semester.name),
+              child: EditCourseIcon(
+                semesterName: semesterName,
+                courseName: course.name,
+              ),
             ),
           ],
         ),

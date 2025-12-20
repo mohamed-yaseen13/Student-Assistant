@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:student_assistant/core/dialogs/delete_dialog.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_cubit.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/cubits/courses_cubit.dart';
 
-class EditSemesterIcon extends StatelessWidget {
+class EditCourseIcon extends StatelessWidget {
   final String semesterName;
+  final String courseName;
 
-  const EditSemesterIcon({super.key, required this.semesterName});
+  const EditCourseIcon({
+    super.key,
+    required this.semesterName,
+    required this.courseName,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +27,13 @@ class EditSemesterIcon extends StatelessWidget {
         if (value == 2) {
           showDeleteDialog(
             context: context,
-            content: 'Semester',
+            content: 'Course',
             isSingle: true,
             onConfirm: () {
-              context.read<SemestersCubit>().deleteSemesters([semesterName]);
-              context.read<SemestersCubit>().getAllSemesters();
+              context.read<CoursesCubit>().deleteCourses(semesterName, [
+                courseName,
+              ]);
+              context.read<CoursesCubit>().getAllCourses(semesterName);
             },
             onCancel: () {},
           );

@@ -4,35 +4,35 @@ import 'package:student_assistant/core/helpers/extensions.dart';
 import 'package:student_assistant/core/routing/app_routes.dart';
 import 'package:student_assistant/core/style/app_colors.dart';
 
-class GpaBottomNavigationBar extends StatefulWidget {
-  final GpaBottomNavigationBarEnum selectedScreen;
+class SemesterBottomNavigationBar extends StatefulWidget {
+  final SemesterBottomNavigationBarEnum selectedScreen;
 
-  const GpaBottomNavigationBar({super.key, required this.selectedScreen});
+  const SemesterBottomNavigationBar({super.key, required this.selectedScreen});
 
   @override
-  State<GpaBottomNavigationBar> createState() => _GpaBottomNavigationBarState();
+  State<SemesterBottomNavigationBar> createState() =>
+      _SemesterBottomNavigationBarState();
 }
 
-class _GpaBottomNavigationBarState extends State<GpaBottomNavigationBar> {
-  int _enumToIndex(GpaBottomNavigationBarEnum screen) {
-    return GpaBottomNavigationBarEnum.values.indexOf(screen);
+class _SemesterBottomNavigationBarState
+    extends State<SemesterBottomNavigationBar> {
+  int _enumToIndex(SemesterBottomNavigationBarEnum screen) {
+    return SemesterBottomNavigationBarEnum.values.indexOf(screen);
   }
 
-  GpaBottomNavigationBarEnum _indexToEnum(int index) {
-    return GpaBottomNavigationBarEnum.values[index];
+  SemesterBottomNavigationBarEnum _indexToEnum(int index) {
+    return SemesterBottomNavigationBarEnum.values[index];
   }
 
-  String _enumToRoute(GpaBottomNavigationBarEnum screen) {
+  String _enumToRoute(SemesterBottomNavigationBarEnum screen) {
     switch (screen) {
-      case GpaBottomNavigationBarEnum.notes:
-        return AppRoutes.gpaNotesScreen;
-      case GpaBottomNavigationBarEnum.scales:
+      case SemesterBottomNavigationBarEnum.notes:
+        return AppRoutes.semesterNotesScreen;
+      case SemesterBottomNavigationBarEnum.scales:
         return AppRoutes.gpaScalesScreen;
-      case GpaBottomNavigationBarEnum.main:
-        return AppRoutes.gpaMainScreen;
-      case GpaBottomNavigationBarEnum.scenarios:
-        return AppRoutes.gpaScenariosScreen;
-      case GpaBottomNavigationBarEnum.settings:
+      case SemesterBottomNavigationBarEnum.main:
+        return AppRoutes.semesterMainScreen;
+      case SemesterBottomNavigationBarEnum.settings:
         return AppRoutes.gpaSettingsScreen;
     }
   }
@@ -41,15 +41,11 @@ class _GpaBottomNavigationBarState extends State<GpaBottomNavigationBar> {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       items: [
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Main'),
         BottomNavigationBarItem(icon: Icon(Icons.note), label: 'Notes'),
         BottomNavigationBarItem(
           icon: Icon(Icons.text_increase),
           label: 'Sclaes',
-        ),
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Main'),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.auto_awesome_motion_rounded),
-          label: 'Scenarios',
         ),
         BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
       ],

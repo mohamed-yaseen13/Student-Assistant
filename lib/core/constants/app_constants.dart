@@ -1,7 +1,7 @@
 import 'package:student_assistant/features/home/home_main/presentation/widgets/feature_card.dart';
 
 class AppConstants {
-  static final List<FeatureItem> features = [
+  static List<FeatureItem> features = [
     FeatureItem(
       title: 'GPA Calculations',
       description: 'Track and calculate your cumulative GPA',
@@ -28,8 +28,26 @@ class AppConstants {
       iconPath: 'assets/icons/groups.svg',
     ),
   ];
+
+  static List<String> defaultGrades = [
+    '--',
+    'A+',
+    'A',
+    'A-',
+    'B+',
+    'B',
+    'B-',
+    'C+',
+    'C',
+    'C-',
+    'D+',
+    'D',
+    'F',
+  ];
 }
 
 enum HomeBottomNavigationBarEnum { profile, main, settings }
 
 enum GpaBottomNavigationBarEnum { notes, scales, main, scenarios, settings }
+
+enum SemesterBottomNavigationBarEnum { main, notes, scales, settings }

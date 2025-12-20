@@ -1,0 +1,68 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:student_assistant/core/constants/app_constants.dart';
+import 'package:student_assistant/core/helpers/spacing.dart';
+import 'package:student_assistant/core/states/states.dart';
+import 'package:student_assistant/core/widgets/app_bar_title.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/cubits/courses_cubit.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/cubits/courses_state.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/widgets/add_course_button.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/widgets/courses_table.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/widgets/semester_bottom_navigation_bar.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/widgets/semester_data_container.dart';
+
+class SemesterScreen extends StatelessWidget {
+  final String semesterName;
+
+  const SemesterScreen({super.key, required this.semesterName});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        toolbarHeight: double.minPositive,
+      ),
+      body: BlocConsumer<CoursesCubit, CoursesState>(
+        listenWhen: (previous, current) =>
+            current is CoursesAddCourseLoading ||
+            current is CoursesAddCourseSuccess ||
+            current is CoursesAddCourseError,
+        listener: (context, state) {
+          switch (state) {
+            case CoursesAddCourseLoading _:
+              loadingState(context: context);
+            case CoursesAddCourseSuccess _:
+              Navigator.of(context, rootNavigator: true).pop();
+              context.read<CoursesCubit>().getAllCourses(semesterName);
+            case CoursesAddCourseError _:
+              Navigator.of(context, rootNavigator: true).pop();
+              errorState(
+                context: context,
+                desc: 'Failed To Add Course',
+                message: state.apiErrorModel.message!,
+              );
+            default:
+              null;
+          }
+        },
+        builder: (context, state) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AppBarTitle(title: semesterName),
+              verticalSpace(12),
+              SemesterDataContainer(),
+              verticalSpace(12),
+              Expanded(child: CoursesTable(semesterName: semesterName)),
+            ],
+          );
+        },
+      ),
+      bottomNavigationBar: SemesterBottomNavigationBar(
+        selectedScreen: SemesterBottomNavigationBarEnum.main,
+      ),
+      floatingActionButton: AddCourseButton(semesterName: semesterName),
+    );
+  }
+}

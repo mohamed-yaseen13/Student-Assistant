@@ -15,6 +15,10 @@ import 'package:student_assistant/features/gpa_calculations/gpa_main/data/apis/g
 import 'package:student_assistant/features/gpa_calculations/gpa_main/data/repos/gpa_main_repo_imp.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/gpa_data_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_cubit.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/data/apis/specific_semester_api_service.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/data/repos/specific_semester_repo_imp.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/cubits/courses_cubit.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/cubits/specific_semester_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -83,5 +87,24 @@ Future<void> setupGetIt() async {
   );
   getIt.registerFactory<GpaDataCubit>(
     () => GpaDataCubit(gpaMainRepoImp: getIt<GpaMainRepoImp>()),
+  );
+
+  // Semester
+  getIt.registerLazySingleton<SpecificSemesterApiService>(
+    () => SpecificSemesterApiService(database: getIt<Database>()),
+  );
+  getIt.registerLazySingleton<SpecificSemesterRepoImp>(
+    () => SpecificSemesterRepoImp(
+      specificSemesterApiService: getIt<SpecificSemesterApiService>(),
+    ),
+  );
+  getIt.registerFactory<SpecificSemesterCubit>(
+    () => SpecificSemesterCubit(
+      specificSemesterRepoImp: getIt<SpecificSemesterRepoImp>(),
+    ),
+  );
+  getIt.registerFactory<CoursesCubit>(
+    () =>
+        CoursesCubit(specificSemesterRepoImp: getIt<SpecificSemesterRepoImp>()),
   );
 }

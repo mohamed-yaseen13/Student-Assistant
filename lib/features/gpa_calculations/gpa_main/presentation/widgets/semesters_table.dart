@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:student_assistant/core/dialogs/delete_dialog.dart';
+import 'package:student_assistant/core/helpers/extensions.dart';
 import 'package:student_assistant/core/helpers/spacing.dart';
+import 'package:student_assistant/core/routing/app_routes.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_state.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/semester_row.dart';
@@ -44,10 +47,20 @@ class _SemestersTableState extends State<SemestersTable> {
                 IconButton(
                   icon: const Icon(Icons.delete, color: Colors.red),
                   onPressed: () {
-                    context.read<SemestersCubit>().deleteSemesters(
-                      selectedSemesters,
+                    showDeleteDialog(
+                      context: context,
+                      content: selectedSemesters.length > 1
+                          ? 'semesters'
+                          : 'Semester',
+                      isSingle: selectedSemesters.length > 1 ? false : true,
+                      onConfirm: () {
+                        context.read<SemestersCubit>().deleteSemesters(
+                          selectedSemesters,
+                        );
+                        context.read<SemestersCubit>().getAllSemesters();
+                      },
+                      onCancel: () {},
                     );
-                    context.read<SemestersCubit>().getAllSemesters();
                     setState(() {
                       selectedSemesters.clear();
                       isSelectionMode = false;
@@ -61,7 +74,7 @@ class _SemestersTableState extends State<SemestersTable> {
               buildWhen: (previous, current) =>
                   current is SemestersGetAllSemestersLoading ||
                   current is SemestersGetAllSemestersSuccess ||
-                  current is SemestersError,
+                  current is SemestersGetAllSemestersError,
               builder: (context, state) {
                 if (state is SemestersGetAllSemestersLoading) {
                   return const Center(child: CircularProgressIndicator());
@@ -82,13 +95,20 @@ class _SemestersTableState extends State<SemestersTable> {
                         onTap: () {
                           if (isSelectionMode) {
                             toggleSelection(state.semesters[index].name);
+                          } else {
+                            context.pushNamed(
+                              AppRoutes.semesterMainScreen,
+                              arguments: {
+                                'semesterName': state.semesters[index].name,
+                              },
+                            );
                           }
                         },
                       );
                     },
                   );
                 }
-                if (state is SemestersError) {
+                if (state is SemestersGetAllSemestersError) {
                   return Center(
                     child: Text(
                       state.apiErrorModel.message ??

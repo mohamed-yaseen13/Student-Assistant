@@ -9,7 +9,7 @@ class GpaDataCubit extends Cubit<GpaDataState> {
 
   GpaDataCubit({required this.gpaMainRepoImp}) : super(GpaDataInitial());
 
-  Future<void> getGpaData() async {
+  void getGpaData() async {
     emit(GpaDataLoading());
     final result = await gpaMainRepoImp.getGpaData();
 

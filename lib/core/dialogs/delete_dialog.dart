@@ -6,12 +6,15 @@ Future<void> showDeleteDialog({
   required String content,
   required VoidCallback onConfirm,
   required VoidCallback onCancel,
+  required bool isSingle,
 }) async {
   final result = await showDialog<bool>(
     context: context,
     builder: (context) => AlertDialog(
       title: Text('Delete $content'),
-      content: Text('Do you actually need to delete these $content'),
+      content: Text(
+        'Do you actually need to delete ${isSingle ? 'this' : 'these'} $content',
+      ),
       actions: [
         TextButton(
           onPressed: () => context.pop(false),

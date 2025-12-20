@@ -26,7 +26,7 @@ class GpaMainScreen extends StatelessWidget {
         listenWhen: (previous, current) =>
             current is SemestersAddSemesterLoading ||
             current is SemestersAddSemesterSuccess ||
-            current is SemestersError,
+            current is SemestersAddSemesterError,
         listener: (context, state) {
           switch (state) {
             case SemestersAddSemesterLoading _:
@@ -34,7 +34,7 @@ class GpaMainScreen extends StatelessWidget {
             case SemestersAddSemesterSuccess _:
               Navigator.of(context, rootNavigator: true).pop();
               context.read<SemestersCubit>().getAllSemesters();
-            case SemestersError _:
+            case SemestersAddSemesterError _:
               Navigator.of(context, rootNavigator: true).pop();
               errorState(
                 context: context,

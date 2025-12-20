@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:student_assistant/core/style/app_colors.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_cubit.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/add_semester_bottom_sheet.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/cubits/courses_cubit.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/widgets/add_course_bottom_sheet.dart';
 
-class AddSemesterButton extends StatelessWidget {
-  const AddSemesterButton({super.key});
+class AddCourseButton extends StatelessWidget {
+  final String semesterName;
+
+  const AddCourseButton({super.key, required this.semesterName});
 
   @override
   Widget build(BuildContext context) {
@@ -18,22 +20,27 @@ class AddSemesterButton extends StatelessWidget {
         shape: CircleBorder(),
         backgroundColor: AppColors.lightOrange,
         onPressed: () async {
-          final semestersCubit = context.read<SemestersCubit>();
+          final coursesCubit = context.read<CoursesCubit>();
           final result = await showModalBottomSheet<Map<String, dynamic>>(
             context: context,
             isScrollControlled: true,
             builder: (bottomSheetContext) => BlocProvider.value(
-              value: semestersCubit,
+              value: coursesCubit,
               child: Padding(
                 padding: EdgeInsets.only(
                   bottom: MediaQuery.of(bottomSheetContext).viewInsets.bottom,
                 ),
-                child: const AddSemesterBottomSheet(),
+                child: const AddCourseBottomSheet(),
               ),
             ),
           );
           if (result != null) {
-            semestersCubit.addSemester(result['name']);
+            coursesCubit.addCourse(
+              semesterName,
+              result['name'],
+              result['credits'],
+              result['grade'],
+            );
           }
         },
         child: Icon(Icons.add, color: Colors.black),

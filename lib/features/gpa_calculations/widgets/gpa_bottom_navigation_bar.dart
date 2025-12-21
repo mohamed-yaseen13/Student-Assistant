@@ -26,14 +26,11 @@ class _GpaBottomNavigationBarState extends State<GpaBottomNavigationBar> {
     switch (screen) {
       case GpaBottomNavigationBarEnum.notes:
         return AppRoutes.gpaNotesScreen;
-      case GpaBottomNavigationBarEnum.scales:
-        return AppRoutes.gpaScalesScreen;
+
       case GpaBottomNavigationBarEnum.main:
         return AppRoutes.gpaMainScreen;
       case GpaBottomNavigationBarEnum.scenarios:
         return AppRoutes.gpaScenariosScreen;
-      case GpaBottomNavigationBarEnum.settings:
-        return AppRoutes.gpaSettingsScreen;
     }
   }
 
@@ -41,17 +38,12 @@ class _GpaBottomNavigationBarState extends State<GpaBottomNavigationBar> {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       items: [
-        BottomNavigationBarItem(icon: Icon(Icons.note), label: 'Notes'),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.text_increase),
-          label: 'Sclaes',
-        ),
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Main'),
         BottomNavigationBarItem(
           icon: Icon(Icons.auto_awesome_motion_rounded),
           label: 'Scenarios',
         ),
-        BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Main'),
+        BottomNavigationBarItem(icon: Icon(Icons.note), label: 'Notes'),
       ],
       currentIndex: _enumToIndex(widget.selectedScreen),
       onTap: (index) {

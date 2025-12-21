@@ -48,6 +48,6 @@ class AppConstants {
 
 enum HomeBottomNavigationBarEnum { profile, main, settings }
 
-enum GpaBottomNavigationBarEnum { notes, scales, main, scenarios, settings }
+enum GpaBottomNavigationBarEnum { scenarios, main, notes }
 
-enum SemesterBottomNavigationBarEnum { main, notes, scales, settings }
+enum SemesterBottomNavigationBarEnum { scenarios, main, notes }

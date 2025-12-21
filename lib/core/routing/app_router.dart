@@ -14,10 +14,10 @@ import 'package:student_assistant/features/gpa_calculations/gpa_main/presentatio
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/cubits/courses_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/cubits/semester_data_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/screens/semester_screen.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_notes/presentation/screens/semester_notes_screen.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_scenarios/presentation/screens/semester_scenarios_screen.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_notes/presentation/screens/gpa_notes_screen.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_scales/presentation/screens/gpa_scales_screen.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_scenarios/presentation/screens/gpa_scenarios_screen.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_settings/presentation/screens/gpa_settings_screen.dart';
 import 'package:student_assistant/features/home/home_settings/presentation/screens/home_settings_screen.dart';
 import 'package:student_assistant/features/home/home_main/presentation/screen/home_main_screen.dart';
 import 'package:student_assistant/features/home/home_profile/presentation/screens/home_profile_screen.dart';
@@ -72,16 +72,12 @@ class AppRouter {
         );
 
       // GPA Calculations
-      case AppRoutes.gpaNotesScreen:
+      case AppRoutes.gpaScenariosScreen:
         return MaterialPageRoute(
-          builder: (_) => GpaNotesScreen(),
+          builder: (_) => GpaScenariosScreen(),
           settings: settings,
         );
-      case AppRoutes.gpaScalesScreen:
-        return MaterialPageRoute(
-          builder: (_) => GpaScalesScreen(),
-          settings: settings,
-        );
+
       case AppRoutes.gpaMainScreen:
         return MaterialPageRoute(
           builder: (_) => MultiBlocProvider(
@@ -95,6 +91,21 @@ class AppRouter {
             ],
             child: GpaMainScreen(),
           ),
+          settings: settings,
+        );
+
+      case AppRoutes.gpaNotesScreen:
+        return MaterialPageRoute(
+          builder: (_) => GpaNotesScreen(),
+          settings: settings,
+        );
+
+      // Semester
+      case AppRoutes.semesterNotesScreen:
+        final args = settings.arguments as Map<String, String?>;
+        final semesterName = args['semesterName'];
+        return MaterialPageRoute(
+          builder: (_) => SemesterNotesScreen(semesterName: semesterName!),
           settings: settings,
         );
       case AppRoutes.semesterMainScreen:
@@ -117,14 +128,11 @@ class AppRouter {
           ),
           settings: settings,
         );
-      case AppRoutes.gpaScenariosScreen:
+      case AppRoutes.semesterScenariosScreen:
+        final args = settings.arguments as Map<String, String?>;
+        final semesterName = args['semesterName'];
         return MaterialPageRoute(
-          builder: (_) => GpaScenariosScreen(),
-          settings: settings,
-        );
-      case AppRoutes.gpaSettingsScreen:
-        return MaterialPageRoute(
-          builder: (_) => GpaSettingsScreen(),
+          builder: (_) => SemesterScenariosScreen(semesterName: semesterName!),
           settings: settings,
         );
 

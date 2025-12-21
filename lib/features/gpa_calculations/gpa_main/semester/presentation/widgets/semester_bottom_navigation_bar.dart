@@ -5,9 +5,14 @@ import 'package:student_assistant/core/routing/app_routes.dart';
 import 'package:student_assistant/core/style/app_colors.dart';
 
 class SemesterBottomNavigationBar extends StatefulWidget {
+  final String semesterName;
   final SemesterBottomNavigationBarEnum selectedScreen;
 
-  const SemesterBottomNavigationBar({super.key, required this.selectedScreen});
+  const SemesterBottomNavigationBar({
+    super.key,
+    required this.selectedScreen,
+    required this.semesterName,
+  });
 
   @override
   State<SemesterBottomNavigationBar> createState() =>
@@ -26,14 +31,12 @@ class _SemesterBottomNavigationBarState
 
   String _enumToRoute(SemesterBottomNavigationBarEnum screen) {
     switch (screen) {
-      case SemesterBottomNavigationBarEnum.notes:
-        return AppRoutes.semesterNotesScreen;
-      case SemesterBottomNavigationBarEnum.scales:
-        return AppRoutes.gpaScalesScreen;
+      case SemesterBottomNavigationBarEnum.scenarios:
+        return AppRoutes.semesterScenariosScreen;
       case SemesterBottomNavigationBarEnum.main:
         return AppRoutes.semesterMainScreen;
-      case SemesterBottomNavigationBarEnum.settings:
-        return AppRoutes.gpaSettingsScreen;
+      case SemesterBottomNavigationBarEnum.notes:
+        return AppRoutes.semesterNotesScreen;
     }
   }
 
@@ -41,20 +44,22 @@ class _SemesterBottomNavigationBarState
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       items: [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.auto_awesome_motion_rounded),
+          label: 'Scenarios',
+        ),
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Main'),
         BottomNavigationBarItem(icon: Icon(Icons.note), label: 'Notes'),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.text_increase),
-          label: 'Sclaes',
-        ),
-        BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
       ],
       currentIndex: _enumToIndex(widget.selectedScreen),
       onTap: (index) {
         final selected = _indexToEnum(index);
 
         if (selected != widget.selectedScreen) {
-          context.pushNamed(_enumToRoute(selected));
+          context.pushNamed(
+            _enumToRoute(selected),
+            arguments: {'semesterName': widget.semesterName},
+          );
         }
       },
       selectedItemColor: Colors.orange,

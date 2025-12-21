@@ -7,7 +7,7 @@ import 'package:student_assistant/core/helpers/spacing.dart';
 import 'package:student_assistant/core/routing/app_routes.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_state.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/delete_semesters_button.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/widgets/delete_button.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/semester_row.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/semesters_table_header.dart';
 
@@ -41,13 +41,13 @@ class _SemestersTableState extends State<SemestersTable> {
       onConfirm: () {
         context.read<SemestersCubit>().deleteSemesters(selectedSemesters);
         context.read<SemestersCubit>().getAllSemesters();
-        setState(() {
-          selectedSemesters.clear();
-          isSelectionMode = false;
-        });
       },
       onCancel: () {},
     );
+    setState(() {
+      selectedSemesters.clear();
+      isSelectionMode = false;
+    });
   }
 
   @override
@@ -116,7 +116,7 @@ class _SemestersTableState extends State<SemestersTable> {
         ),
       ),
       floatingActionButton: isSelectionMode
-          ? DeleteSemestersButton(onPressed: deleteSelectedSemesters)
+          ? DeleteButton(onPressed: deleteSelectedSemesters)
           : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
     );

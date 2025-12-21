@@ -61,8 +61,10 @@ class SemesterScreen extends StatelessWidget {
       ),
       bottomNavigationBar: SemesterBottomNavigationBar(
         selectedScreen: SemesterBottomNavigationBarEnum.main,
+        semesterName: semesterName,
       ),
       floatingActionButton: AddCourseButton(semesterName: semesterName),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:student_assistant/core/style/app_colors.dart';
 
-class DeleteSemestersButton extends StatelessWidget {
+class DeleteButton extends StatelessWidget {
   final VoidCallback onPressed;
-  const DeleteSemestersButton({super.key, required this.onPressed});
+  const DeleteButton({super.key, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {

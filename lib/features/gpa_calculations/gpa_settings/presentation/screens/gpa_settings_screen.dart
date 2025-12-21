@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:student_assistant/core/constants/app_constants.dart';
-import 'package:student_assistant/features/gpa_calculations/widgets/gpa_bottom_navigation_bar.dart';
+//import 'package:student_assistant/core/constants/app_constants.dart';
+//import 'package:student_assistant/features/gpa_calculations/widgets/gpa_bottom_navigation_bar.dart';
 
 class GpaSettingsScreen extends StatelessWidget {
   const GpaSettingsScreen({super.key});
@@ -10,9 +10,9 @@ class GpaSettingsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(automaticallyImplyLeading: false),
       body: Center(child: Text('data')),
-      bottomNavigationBar: GpaBottomNavigationBar(
-        selectedScreen: GpaBottomNavigationBarEnum.settings,
-      ),
+      //bottomNavigationBar: GpaBottomNavigationBar(
+      //  selectedScreen: GpaBottomNavigationBarEnum.settings,
+      //),
     );
   }
 }

@@ -10,15 +10,14 @@ class AppRoutes {
   static const String homeSettingsScreen = 'homeSettingsScreen';
 
   // GPA Calculation
+  static const String gpaScenariosScreen = 'gpaScenariosScreen';
   static const String gpaMainScreen = 'gpaMainScreen';
   static const String gpaNotesScreen = 'gpaNotesScreen';
-  static const String gpaScalesScreen = 'gpaScalesScreen';
-  static const String gpaScenariosScreen = 'gpaScenariosScreen';
-  static const String gpaSettingsScreen = 'gpaSettingsScreen';
 
   // Semester
   static const String semesterMainScreen = 'semesterMainScreen';
   static const String semesterNotesScreen = 'semesterNotesScreen';
+  static const String semesterScenariosScreen = 'semesterScenariosScreen';
 
   // Pomodoro
   static const String pomodoroTimerScreen = 'pomodoroTimerScreen';

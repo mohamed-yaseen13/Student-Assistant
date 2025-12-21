@@ -39,7 +39,7 @@ class _SemestersTableState extends State<SemestersTable> {
       child: Column(
         children: [
           SemestersTableHeader(),
-          verticalSpace(8),
+          verticalSpace(18),
           if (isSelectionMode)
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -82,7 +82,7 @@ class _SemestersTableState extends State<SemestersTable> {
                 if (state is SemestersGetAllSemestersSuccess) {
                   return ListView.separated(
                     itemCount: state.semesters.length,
-                    separatorBuilder: (_, _) => verticalSpace(8),
+                    separatorBuilder: (_, _) => verticalSpace(18),
                     itemBuilder: (context, index) {
                       return SemesterRow(
                         index: index,

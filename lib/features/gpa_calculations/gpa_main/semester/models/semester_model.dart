@@ -4,7 +4,7 @@ class SemesterModel {
   String name;
   double gpa;
   double maxGpa;
-  final Map<String, CourseModel> courses;
+  Map<String, CourseModel> courses;
   double cgpaOriginal;
   double cgpaChanged;
   double attemptedCredits;

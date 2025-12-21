@@ -5,7 +5,7 @@ class StudentModel {
   double cgpa;
   double totalCredits;
   double maxCgpa;
-  final Map<String, SemesterModel> semesters;
+  Map<String, SemesterModel> semesters;
 
   StudentModel({
     required this.name,

@@ -8,7 +8,7 @@ import 'package:student_assistant/features/gpa_calculations/gpa_main/presentatio
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_state.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/add_semester_button.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/gpa_data_container.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/search_input_field.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/search_for_course_bar.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/semesters_table.dart';
 import 'package:student_assistant/features/gpa_calculations/widgets/gpa_bottom_navigation_bar.dart';
 
@@ -51,7 +51,7 @@ class GpaMainScreen extends StatelessWidget {
             children: [
               AppBarTitle(title: 'GPA Calculation'),
               verticalSpace(8),
-              SearchInputField(),
+              SearchForCourseBar(),
               verticalSpace(12),
               GpaDataContainer(),
               verticalSpace(12),

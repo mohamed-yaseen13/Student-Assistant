@@ -2,16 +2,18 @@ import 'package:student_assistant/features/gpa_calculations/gpa_main/models/sect
 
 class CourseModel {
   String name;
+  String searchName;
   String grade;
   double credits;
   bool isRepeated;
   bool isChanged;
   String newGrade;
-  final Map<String, SectionModel> sections;
+  Map<String, SectionModel> sections;
   bool isFailedBefore;
 
   CourseModel({
     required this.name,
+    required this.searchName,
     required this.credits,
     this.grade = '--',
     this.isRepeated = false,
@@ -23,6 +25,7 @@ class CourseModel {
 
   Map<String, dynamic> toJson() => {
     'name': name,
+    'searchName': searchName,
     'grade': grade,
     'credits': credits,
     'isRepeated': isRepeated,
@@ -37,6 +40,7 @@ class CourseModel {
 
     return CourseModel(
       name: json['name'] as String,
+      searchName: json['searchName'] as String,
       grade: json['grade'] as String? ?? '--',
       credits: (json['credits'] as num).toDouble(),
       isRepeated: json['isRepeated'] as bool? ?? false,
@@ -56,6 +60,7 @@ class CourseModel {
 
   CourseModel copyWith({
     String? name,
+    String? searchName,
     String? grade,
     double? credits,
     bool? isRepeated,
@@ -66,6 +71,7 @@ class CourseModel {
   }) {
     return CourseModel(
       name: name ?? this.name,
+      searchName: searchName ?? this.searchName,
       grade: grade ?? this.grade,
       credits: credits ?? this.credits,
       isRepeated: isRepeated ?? this.isRepeated,

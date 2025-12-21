@@ -40,7 +40,12 @@ class CoursesApiService {
     );
     if (isCourseExist) throw Exception('Course Already Exist');
     final courseMap = {
-      ...CourseModel(name: courseName, credits: credits, grade: grade).toJson(),
+      ...CourseModel(
+        name: courseName,
+        searchName: courseName.toLowerCase().replaceAll(RegExp(r'\s+'), ''),
+        credits: credits,
+        grade: grade,
+      ).toJson(),
       'createdAt': FieldValue.serverTimestamp(),
     };
     await getEmailRef(email).set({

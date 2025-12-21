@@ -69,4 +69,19 @@ class SemestersApiService {
       email,
     ).set({'semesters': deletionMap}, SetOptions(merge: true));
   }
+
+  Future<List<SemesterModel>> searchForCourse(
+    String email,
+    String searchName,
+  ) async {
+    final semesters = await getAllSemesters(email);
+    final filtered = semesters.where((semester) {
+      final hasMatch = semester.courses.values.any((course) {
+        final match = course.searchName.contains(searchName);
+        return match;
+      });
+      return hasMatch;
+    }).toList();
+    return filtered;
+  }
 }

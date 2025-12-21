@@ -84,4 +84,33 @@ class SemestersApiService {
     }).toList();
     return filtered;
   }
+
+  Future<void> editSemesterName(
+    String email,
+    String oldSemesterName,
+    String newSemesterName,
+  ) async {
+    final docRef = getEmailRef(email);
+
+    await FirebaseFirestore.instance.runTransaction((transaction) async {
+      final snapshot = await transaction.get(docRef);
+      final data = snapshot.data();
+      final Map<String, dynamic> semesters = Map<String, dynamic>.from(
+        data!['semesters'],
+      );
+      if (semesters.containsKey(newSemesterName)) {
+        throw Exception('Semester Name Already Exists');
+      }
+      final Map<String, dynamic> semesterData = Map<String, dynamic>.from(
+        semesters[oldSemesterName],
+      );
+      semesterData['name'] = newSemesterName;
+      transaction.set(docRef, {
+        'semesters': {newSemesterName: semesterData},
+      }, SetOptions(merge: true));
+      transaction.set(docRef, {
+        'semesters': {oldSemesterName: FieldValue.delete()},
+      }, SetOptions(merge: true));
+    });
+  }
 }

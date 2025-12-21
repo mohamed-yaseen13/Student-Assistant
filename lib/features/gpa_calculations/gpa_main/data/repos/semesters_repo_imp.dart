@@ -67,4 +67,20 @@ class SemestersRepoImp {
       return ApiResult.failure(ApiErrorHandler.handle(error));
     }
   }
+
+  Future<ApiResult<void>> editSemesterName(
+    String oldSemesterName,
+    String newSemesterName,
+  ) async {
+    try {
+      final response = await semestersApiService.editSemesterName(
+        email,
+        oldSemesterName,
+        newSemesterName,
+      );
+      return ApiResult.success(response);
+    } catch (error) {
+      return ApiResult.failure(ApiErrorHandler.handle(error));
+    }
+  }
 }

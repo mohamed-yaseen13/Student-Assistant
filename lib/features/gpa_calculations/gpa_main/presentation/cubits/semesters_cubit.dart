@@ -49,4 +49,20 @@ class SemestersCubit extends Cubit<SemestersState> {
       emit(SemestersSearchForCourseError(apiErrorModel: result.apiErrorModel));
     }
   }
+
+  Future<void> editSemesterName(
+    String oldSemesterName,
+    String newSemesterName,
+  ) async {
+    emit(SemestersEditSemesterNameLoading());
+    final result = await semestersRepoImp.editSemesterName(
+      oldSemesterName,
+      newSemesterName,
+    );
+    if (result is Success<void>) {
+      emit(SemestersEditSemesterNameSuccess());
+    } else if (result is Failure<void>) {
+      emit(SemestersEditSemesterNameError(apiErrorModel: result.apiErrorModel));
+    }
+  }
 }

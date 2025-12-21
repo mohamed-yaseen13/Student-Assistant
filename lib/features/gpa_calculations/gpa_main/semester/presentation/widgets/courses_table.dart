@@ -84,6 +84,7 @@ class _CoursesTableState extends State<CoursesTable> {
                 }
                 if (state is CoursesGetAllCoursesSuccess) {
                   return ListView.separated(
+                    physics: ScrollPhysics(parent: BouncingScrollPhysics()),
                     itemCount: state.courses.length,
                     separatorBuilder: (_, _) => verticalSpace(8),
                     itemBuilder: (context, index) {

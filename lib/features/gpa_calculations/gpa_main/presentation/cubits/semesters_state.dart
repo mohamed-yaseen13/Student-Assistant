@@ -51,3 +51,13 @@ class SemestersSearchForCourseError extends SemestersState {
   final ApiErrorModel apiErrorModel;
   SemestersSearchForCourseError({required this.apiErrorModel});
 }
+
+// Edit Semester Name
+class SemestersEditSemesterNameLoading extends SemestersState {}
+
+class SemestersEditSemesterNameSuccess extends SemestersState {}
+
+class SemestersEditSemesterNameError extends SemestersState {
+  final ApiErrorModel apiErrorModel;
+  SemestersEditSemesterNameError({required this.apiErrorModel});
+}

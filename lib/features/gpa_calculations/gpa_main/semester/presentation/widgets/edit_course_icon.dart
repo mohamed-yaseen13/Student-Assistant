@@ -23,9 +23,9 @@ class EditCourseIcon extends StatelessWidget {
       ],
       menuPadding: EdgeInsets.zero,
       padding: EdgeInsets.zero,
-      onSelected: (value) {
+      onSelected: (value) async {
         if (value == 2) {
-          showDeleteDialog(
+          await showDeleteDialog(
             context: context,
             content: 'Course',
             isSingle: true,

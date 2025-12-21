@@ -4,7 +4,7 @@ import 'package:student_assistant/core/helpers/shared_prefs.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/data/apis/semesters_api_service.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/data/mappers/searched_course_mapper.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/models/searched_course_model.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/models/semester_model.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/models/semester_model.dart';
 
 class SemestersRepoImp {
   SemestersApiService semestersApiService;

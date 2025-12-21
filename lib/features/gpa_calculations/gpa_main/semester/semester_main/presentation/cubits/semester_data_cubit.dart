@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:student_assistant/core/api/api_result.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/data/repos/semester_data_repo_imp.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/models/semester_data_model.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/cubits/semester_data_state.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/data/repos/semester_data_repo_imp.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/models/semester_data_model.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/cubits/semester_data_state.dart';
 
 class SemesterDataCubit extends Cubit<SemesterDataState> {
   final SemesterDataRepoImp semesterDataRepoImp;

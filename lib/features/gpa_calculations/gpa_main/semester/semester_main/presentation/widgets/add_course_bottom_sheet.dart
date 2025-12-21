@@ -3,9 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_assistant/core/helpers/extensions.dart';
 import 'package:student_assistant/core/helpers/spacing.dart';
 import 'package:student_assistant/core/style/app_colors.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/widgets/course_credits_text_form_field.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/widgets/course_grade_dropdown.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/widgets/course_name_text_form_field.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/widgets/course_credits_text_form_field.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/widgets/course_grade_dropdown.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/widgets/course_name_text_form_field.dart';
 
 class AddCourseBottomSheet extends StatefulWidget {
   const AddCourseBottomSheet({super.key});

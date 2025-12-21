@@ -4,10 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_assistant/core/dialogs/delete_dialog.dart';
 import 'package:student_assistant/core/helpers/spacing.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/widgets/delete_button.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/cubits/courses_cubit.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/cubits/courses_state.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/widgets/course_row.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/widgets/courses_table_header.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/cubits/courses_cubit.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/cubits/courses_state.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/widgets/course_row.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/widgets/courses_table_header.dart';
 
 class CoursesTable extends StatefulWidget {
   final String semesterName;

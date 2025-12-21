@@ -1,8 +1,8 @@
 import 'package:student_assistant/core/api/api_error_handler.dart';
 import 'package:student_assistant/core/api/api_result.dart';
 import 'package:student_assistant/core/helpers/shared_prefs.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/data/apis/semester_data_api_service.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/models/semester_data_model.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/data/apis/semester_data_api_service.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/models/semester_data_model.dart';
 
 class SemesterDataRepoImp {
   final SemesterDataApiService semesterDataApiService;

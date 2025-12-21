@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:student_assistant/core/constants/database_constants.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/models/semester_model.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/models/semester_model.dart';
 
 class SemestersApiService {
   SemestersApiService();

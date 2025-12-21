@@ -15,12 +15,12 @@ import 'package:student_assistant/features/gpa_calculations/gpa_main/data/repos/
 import 'package:student_assistant/features/gpa_calculations/gpa_main/data/repos/semesters_repo_imp.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/gpa_data_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_cubit.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/data/apis/courses_api_service.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/data/apis/semester_data_api_service.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/data/repos/courses_repo_imp.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/data/repos/semester_data_repo_imp.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/cubits/courses_cubit.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/cubits/semester_data_cubit.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/data/apis/courses_api_service.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/data/apis/semester_data_api_service.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/data/repos/courses_repo_imp.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/data/repos/semester_data_repo_imp.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/cubits/courses_cubit.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/cubits/semester_data_cubit.dart';
 
 final getIt = GetIt.instance;
 

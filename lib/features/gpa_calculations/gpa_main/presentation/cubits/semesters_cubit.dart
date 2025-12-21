@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:student_assistant/core/api/api_result.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/data/repos/semesters_repo_imp.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/models/searched_course_model.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/models/semester_model.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/models/semester_model.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_state.dart';
 
 class SemestersCubit extends Cubit<SemestersState> {

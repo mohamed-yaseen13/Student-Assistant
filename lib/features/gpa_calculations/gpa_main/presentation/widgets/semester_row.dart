@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_assistant/core/style/app_colors.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/models/semester_model.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/models/semester_model.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/edit_semester_icon.dart';
 
 class SemesterRow extends StatelessWidget {

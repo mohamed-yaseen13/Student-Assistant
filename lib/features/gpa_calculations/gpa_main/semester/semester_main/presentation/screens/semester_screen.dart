@@ -4,12 +4,12 @@ import 'package:student_assistant/core/constants/app_constants.dart';
 import 'package:student_assistant/core/helpers/spacing.dart';
 import 'package:student_assistant/core/states/states.dart';
 import 'package:student_assistant/core/widgets/app_bar_title.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/cubits/courses_cubit.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/cubits/courses_state.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/widgets/add_course_button.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/widgets/courses_table.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/widgets/semester_bottom_navigation_bar.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/widgets/semester_data_container.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/cubits/courses_cubit.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/cubits/courses_state.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/widgets/add_course_button.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/widgets/courses_table.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/widgets/semester_bottom_navigation_bar.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/widgets/semester_data_container.dart';
 
 class SemesterScreen extends StatelessWidget {
   final String semesterName;

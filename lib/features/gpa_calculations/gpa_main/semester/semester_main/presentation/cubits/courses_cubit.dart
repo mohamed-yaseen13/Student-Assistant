@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:student_assistant/core/api/api_result.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/models/course_model.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/data/repos/courses_repo_imp.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/presentation/cubits/courses_state.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/data/repos/courses_repo_imp.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/cubits/courses_state.dart';
 
 class CoursesCubit extends Cubit<CoursesState> {
   final CoursesRepoImp coursesRepoImp;

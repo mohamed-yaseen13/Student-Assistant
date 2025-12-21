@@ -64,6 +64,7 @@ class GpaMainScreen extends StatelessWidget {
         selectedScreen: GpaBottomNavigationBarEnum.main,
       ),
       floatingActionButton: AddSemesterButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

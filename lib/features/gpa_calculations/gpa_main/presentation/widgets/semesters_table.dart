@@ -7,6 +7,7 @@ import 'package:student_assistant/core/helpers/spacing.dart';
 import 'package:student_assistant/core/routing/app_routes.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_state.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/delete_semesters_button.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/semester_row.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/semesters_table_header.dart';
 
@@ -32,97 +33,92 @@ class _SemestersTableState extends State<SemestersTable> {
     });
   }
 
+  void deleteSelectedSemesters() async {
+    await showDeleteDialog(
+      context: context,
+      content: selectedSemesters.length > 1 ? 'semesters' : 'Semester',
+      isSingle: selectedSemesters.length == 1,
+      onConfirm: () {
+        context.read<SemestersCubit>().deleteSemesters(selectedSemesters);
+        context.read<SemestersCubit>().getAllSemesters();
+        setState(() {
+          selectedSemesters.clear();
+          isSelectionMode = false;
+        });
+      },
+      onCancel: () {},
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-      child: Column(
-        children: [
-          SemestersTableHeader(),
-          verticalSpace(18),
-          if (isSelectionMode)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.delete, color: Colors.red),
-                  onPressed: () async {
-                    await showDeleteDialog(
-                      context: context,
-                      content: selectedSemesters.length > 1
-                          ? 'semesters'
-                          : 'Semester',
-                      isSingle: selectedSemesters.length > 1 ? false : true,
-                      onConfirm: () {
-                        context.read<SemestersCubit>().deleteSemesters(
-                          selectedSemesters,
+    return Scaffold(
+      body: Padding(
+        padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 16.h),
+        child: Column(
+          children: [
+            SemestersTableHeader(),
+            verticalSpace(18),
+            Expanded(
+              child: BlocBuilder<SemestersCubit, SemestersState>(
+                buildWhen: (previous, current) =>
+                    current is SemestersGetAllSemestersLoading ||
+                    current is SemestersGetAllSemestersSuccess ||
+                    current is SemestersGetAllSemestersError,
+                builder: (context, state) {
+                  if (state is SemestersGetAllSemestersLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (state is SemestersGetAllSemestersSuccess) {
+                    return ListView.separated(
+                      physics: ScrollPhysics(parent: BouncingScrollPhysics()),
+                      itemCount: state.semesters.length,
+                      padding: EdgeInsets.only(bottom: 24.h),
+                      separatorBuilder: (_, _) => verticalSpace(18),
+                      itemBuilder: (context, index) {
+                        return SemesterRow(
+                          index: index,
+                          semester: state.semesters[index],
+                          isSelected: selectedSemesters.contains(
+                            state.semesters[index].name,
+                          ),
+                          onLongPress: () =>
+                              toggleSelection(state.semesters[index].name),
+                          onTap: () {
+                            if (isSelectionMode) {
+                              toggleSelection(state.semesters[index].name);
+                            } else {
+                              context.pushNamed(
+                                AppRoutes.semesterMainScreen,
+                                arguments: {
+                                  'semesterName': state.semesters[index].name,
+                                },
+                              );
+                            }
+                          },
                         );
-                        context.read<SemestersCubit>().getAllSemesters();
                       },
-                      onCancel: () {},
                     );
-                    setState(() {
-                      selectedSemesters.clear();
-                      isSelectionMode = false;
-                    });
-                  },
-                ),
-              ],
+                  }
+                  if (state is SemestersGetAllSemestersError) {
+                    return Center(
+                      child: Text(
+                        state.apiErrorModel.message ??
+                            'Failed to get your semesters',
+                      ),
+                    );
+                  }
+                  return const SizedBox.shrink();
+                },
+              ),
             ),
-          Expanded(
-            child: BlocBuilder<SemestersCubit, SemestersState>(
-              buildWhen: (previous, current) =>
-                  current is SemestersGetAllSemestersLoading ||
-                  current is SemestersGetAllSemestersSuccess ||
-                  current is SemestersGetAllSemestersError,
-              builder: (context, state) {
-                if (state is SemestersGetAllSemestersLoading) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                if (state is SemestersGetAllSemestersSuccess) {
-                  return ListView.separated(
-                    physics: ScrollPhysics(parent: BouncingScrollPhysics()),
-                    itemCount: state.semesters.length,
-                    separatorBuilder: (_, _) => verticalSpace(18),
-                    itemBuilder: (context, index) {
-                      return SemesterRow(
-                        index: index,
-                        semester: state.semesters[index],
-                        isSelected: selectedSemesters.contains(
-                          state.semesters[index].name,
-                        ),
-                        onLongPress: () =>
-                            toggleSelection(state.semesters[index].name),
-                        onTap: () {
-                          if (isSelectionMode) {
-                            toggleSelection(state.semesters[index].name);
-                          } else {
-                            context.pushNamed(
-                              AppRoutes.semesterMainScreen,
-                              arguments: {
-                                'semesterName': state.semesters[index].name,
-                              },
-                            );
-                          }
-                        },
-                      );
-                    },
-                  );
-                }
-                if (state is SemestersGetAllSemestersError) {
-                  return Center(
-                    child: Text(
-                      state.apiErrorModel.message ??
-                          'Failed to get your semesters',
-                    ),
-                  );
-                }
-                return const SizedBox.shrink();
-              },
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
+      floatingActionButton: isSelectionMode
+          ? DeleteSemestersButton(onPressed: deleteSelectedSemesters)
+          : null,
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
     );
   }
 }

@@ -19,7 +19,7 @@ class CourseGradeDropdown extends StatelessWidget {
         labelText: 'Grade',
         border: OutlineInputBorder(),
       ),
-      items: AppConstants.defaultGrades
+      items: AppConstants.defaultGrades.keys
           .map(
             (grade) =>
                 DropdownMenuItem<String>(value: grade, child: Text(grade)),

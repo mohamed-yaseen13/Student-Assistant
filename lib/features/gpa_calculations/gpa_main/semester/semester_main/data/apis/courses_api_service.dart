@@ -39,14 +39,21 @@ class CoursesApiService {
       courseName,
     );
     if (isCourseExist) throw Exception('Course Already Exist');
+    final doc = await getEmailRef(email).get();
+    final data = doc.data()!;
+    final courses =
+        data['semesters']?[semesterName]?['courses'] as Map<String, dynamic>? ??
+        {};
+
+    final nextIndex = courses.length;
     final courseMap = {
       ...CourseModel(
         name: courseName,
         searchName: courseName.toLowerCase().replaceAll(RegExp(r'\s+'), ''),
         credits: credits,
         grade: grade,
+        index: nextIndex,
       ).toJson(),
-      'createdAt': FieldValue.serverTimestamp(),
     };
     await getEmailRef(email).set({
       'semesters': {
@@ -62,26 +69,13 @@ class CoursesApiService {
     String semesterName,
   ) async {
     final doc = await getEmailRef(email).get();
-    final data = doc.data();
-    final semesters = data!['semesters'];
-    final semester = semesters[semesterName];
-    final coursesRow = semester['courses'];
-    if (coursesRow == null || coursesRow is! Map) {
-      return [];
-    }
-    final Map<String, dynamic> coursesMap = Map<String, dynamic>.from(
-      coursesRow,
-    );
-    final List<MapEntry<String, dynamic>> entries = coursesMap.entries.toList();
-    entries.sort((a, b) {
-      final tsA = a.value['createdAt'] as Timestamp?;
-      final tsB = b.value['createdAt'] as Timestamp?;
-      if (tsA == null || tsB == null) return 0;
-      return tsA.compareTo(tsB);
-    });
-    return entries
-        .map((e) => CourseModel.fromJson(Map<String, dynamic>.from(e.value)))
+    final coursesRaw = doc.data()?['semesters']?[semesterName]?['courses'];
+    if (coursesRaw == null || coursesRaw is! Map) return [];
+    final list = coursesRaw.values
+        .map((e) => CourseModel.fromJson(Map<String, dynamic>.from(e)))
         .toList();
+    list.sort((a, b) => a.index.compareTo(b.index));
+    return list;
   }
 
   Future<void> deleteCourses(

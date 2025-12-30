@@ -2,6 +2,7 @@ import 'package:student_assistant/features/gpa_calculations/gpa_main/models/sect
 
 class CourseModel {
   String name;
+  int index;
   String searchName;
   String grade;
   double credits;
@@ -13,6 +14,7 @@ class CourseModel {
 
   CourseModel({
     required this.name,
+    required this.index,
     required this.searchName,
     required this.credits,
     this.grade = '--',
@@ -25,6 +27,7 @@ class CourseModel {
 
   Map<String, dynamic> toJson() => {
     'name': name,
+    'index': index,
     'searchName': searchName,
     'grade': grade,
     'credits': credits,
@@ -40,6 +43,7 @@ class CourseModel {
 
     return CourseModel(
       name: json['name'] as String,
+      index: json['index'] ?? 0,
       searchName: json['searchName'] as String,
       grade: json['grade'] as String? ?? '--',
       credits: (json['credits'] as num).toDouble(),
@@ -60,6 +64,7 @@ class CourseModel {
 
   CourseModel copyWith({
     String? name,
+    int? index,
     String? searchName,
     String? grade,
     double? credits,
@@ -71,6 +76,7 @@ class CourseModel {
   }) {
     return CourseModel(
       name: name ?? this.name,
+      index: index ?? this.index,
       searchName: searchName ?? this.searchName,
       grade: grade ?? this.grade,
       credits: credits ?? this.credits,

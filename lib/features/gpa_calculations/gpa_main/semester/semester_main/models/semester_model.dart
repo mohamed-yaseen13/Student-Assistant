@@ -2,6 +2,7 @@ import 'package:student_assistant/features/gpa_calculations/gpa_main/models/cour
 
 class SemesterModel {
   String name;
+  int index;
   double gpa;
   double maxGpa;
   Map<String, CourseModel> courses;
@@ -13,6 +14,7 @@ class SemesterModel {
 
   SemesterModel({
     required this.name,
+    required this.index,
     this.courses = const {},
     this.gpa = 0.0,
     this.maxGpa = 0.0,
@@ -25,6 +27,7 @@ class SemesterModel {
 
   Map<String, dynamic> toJson() => {
     'name': name,
+    'index': index,
     'gpa': gpa,
     'maxGpa': maxGpa,
     'courses': courses.map((k, v) => MapEntry(k, v.toJson())),
@@ -40,6 +43,7 @@ class SemesterModel {
 
     return SemesterModel(
       name: json['name'] as String,
+      index: json['index'] ?? 0,
       gpa: (json['gpa'] as num?)?.toDouble() ?? 0,
       maxGpa: (json['maxGpa'] as num?)?.toDouble() ?? 0,
       cgpaOriginal: (json['cgpaOriginal'] as num?)?.toDouble() ?? 0,
@@ -60,6 +64,7 @@ class SemesterModel {
 
   SemesterModel copyWith({
     String? name,
+    int? index,
     double? gpa,
     double? maxGpa,
     Map<String, CourseModel>? courses,
@@ -71,6 +76,7 @@ class SemesterModel {
   }) {
     return SemesterModel(
       name: name ?? this.name,
+      index: index ?? this.index,
       gpa: gpa ?? this.gpa,
       maxGpa: maxGpa ?? this.maxGpa,
       courses: courses ?? Map<String, CourseModel>.from(this.courses),

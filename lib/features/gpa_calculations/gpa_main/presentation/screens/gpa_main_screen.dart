@@ -4,16 +4,45 @@ import 'package:student_assistant/core/constants/app_constants.dart';
 import 'package:student_assistant/core/helpers/spacing.dart';
 import 'package:student_assistant/core/states/states.dart';
 import 'package:student_assistant/core/widgets/app_bar_title.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/gpa_data_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_state.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/add_semester_button.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/gpa_data_container.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/search_for_course_bar.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/semesters_table.dart';
-import 'package:student_assistant/features/gpa_calculations/widgets/gpa_bottom_navigation_bar.dart';
+import 'package:student_assistant/features/gpa_calculations/presentation/widgets/gpa_bottom_navigation_bar.dart';
+import 'package:student_assistant/main.dart';
 
-class GpaMainScreen extends StatelessWidget {
+class GpaMainScreen extends StatefulWidget {
   const GpaMainScreen({super.key});
+
+  @override
+  State<GpaMainScreen> createState() => _GpaMainScreenState();
+}
+
+class _GpaMainScreenState extends State<GpaMainScreen> with RouteAware {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context)!);
+  }
+
+  @override
+  void dispose() {
+    routeObserver.unsubscribe(this);
+    super.dispose();
+  }
+
+  // Called when coming back to this screen
+  @override
+  void didPopNext() {
+    final semestersCubit = context.read<SemestersCubit>();
+    final gpaCubit = context.read<GpaDataCubit>();
+
+    semestersCubit.getAllSemesters();
+    gpaCubit.getGpaData();
+  }
 
   @override
   Widget build(BuildContext context) {

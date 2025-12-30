@@ -13,8 +13,13 @@ import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/se
 
 class SemesterScreen extends StatelessWidget {
   final String semesterName;
+  final int semesterIndex;
 
-  const SemesterScreen({super.key, required this.semesterName});
+  const SemesterScreen({
+    super.key,
+    required this.semesterName,
+    required this.semesterIndex,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +59,12 @@ class SemesterScreen extends StatelessWidget {
               verticalSpace(12),
               SemesterDataContainer(),
               verticalSpace(12),
-              Expanded(child: CoursesTable(semesterName: semesterName)),
+              Expanded(
+                child: CoursesTable(
+                  semesterName: semesterName,
+                  semesterIndex: semesterIndex,
+                ),
+              ),
             ],
           );
         },
@@ -63,7 +73,10 @@ class SemesterScreen extends StatelessWidget {
         selectedScreen: SemesterBottomNavigationBarEnum.main,
         semesterName: semesterName,
       ),
-      floatingActionButton: AddCourseButton(semesterName: semesterName),
+      floatingActionButton: AddCourseButton(
+        semesterName: semesterName,
+        semesterIndex: semesterIndex,
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }

@@ -11,12 +11,14 @@ class CourseRow extends StatelessWidget {
   final VoidCallback? onLongPress;
   final VoidCallback? onTap;
   final String semesterName;
+  final int semesterIndex;
 
   const CourseRow({
     super.key,
     required this.index,
     required this.course,
     required this.semesterName,
+    required this.semesterIndex,
     this.isSelected = false,
     this.onLongPress,
     this.onTap,
@@ -84,6 +86,7 @@ class CourseRow extends StatelessWidget {
               child: EditCourseIcon(
                 semesterName: semesterName,
                 courseName: course.name,
+                semesterIndex: semesterIndex,
               ),
             ),
           ],

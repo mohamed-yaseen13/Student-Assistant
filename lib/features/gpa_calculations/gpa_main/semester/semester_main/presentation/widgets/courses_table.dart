@@ -8,11 +8,17 @@ import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/se
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/cubits/courses_state.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/widgets/course_row.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/widgets/courses_table_header.dart';
+//import 'package:student_assistant/features/gpa_calculations/presentation/cubits/gpa_calculations_cubit.dart';
 
 class CoursesTable extends StatefulWidget {
   final String semesterName;
+  final int semesterIndex;
 
-  const CoursesTable({super.key, required this.semesterName});
+  const CoursesTable({
+    super.key,
+    required this.semesterName,
+    required this.semesterIndex,
+  });
 
   @override
   State<CoursesTable> createState() => _CoursesTableState();
@@ -38,11 +44,13 @@ class _CoursesTableState extends State<CoursesTable> {
       context: context,
       content: selectedCourses.length > 1 ? 'courses' : 'Course',
       isSingle: selectedCourses.length > 1 ? false : true,
-      onConfirm: () {
+      onConfirm: () async {
         context.read<CoursesCubit>().deleteCourses(
           widget.semesterName,
           selectedCourses,
+          widget.semesterIndex,
         );
+        //await context.read<GpaCalculationsCubit>().calculateGpaAndCgpa();
         context.read<CoursesCubit>().getAllCourses(widget.semesterName);
       },
       onCancel: () {},
@@ -80,6 +88,7 @@ class _CoursesTableState extends State<CoursesTable> {
                       itemBuilder: (context, index) {
                         return CourseRow(
                           index: index,
+                          semesterIndex: widget.semesterIndex,
                           course: state.courses[index],
                           semesterName: widget.semesterName,
                           isSelected: selectedCourses.contains(

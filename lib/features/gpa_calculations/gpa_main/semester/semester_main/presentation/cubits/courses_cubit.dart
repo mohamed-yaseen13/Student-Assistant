@@ -9,11 +9,23 @@ class CoursesCubit extends Cubit<CoursesState> {
 
   CoursesCubit({required this.coursesRepoImp}) : super(CoursesInitial());
 
-  void addCourse(
+  Future<bool> checkRepeatedCourse(String courseName, int semesterIndex) async {
+    final result = await coursesRepoImp.checkRepeatedCourse(
+      courseName,
+      semesterIndex,
+    );
+    if (result is Success<bool>) {
+      return result.data;
+    }
+    return false;
+  }
+
+  Future<void> addCourse(
     String semesterName,
     String courseName,
     double credits,
     String grade,
+    int semesterIndex,
   ) async {
     emit(CoursesAddCourseLoading());
     final result = await coursesRepoImp.addCourse(
@@ -21,6 +33,7 @@ class CoursesCubit extends Cubit<CoursesState> {
       courseName,
       credits,
       grade,
+      semesterIndex,
     );
     if (result is Success<void>) {
       emit(CoursesAddCourseSuccess());
@@ -39,11 +52,16 @@ class CoursesCubit extends Cubit<CoursesState> {
     }
   }
 
-  void deleteCourses(String semesterName, List<String> coursesNames) async {
+  void deleteCourses(
+    String semesterName,
+    List<String> coursesNames,
+    int semesterIndex,
+  ) async {
     emit(CoursesDeleteCoursesLoading());
     final result = await coursesRepoImp.deleteCourses(
       semesterName,
       coursesNames,
+      semesterIndex,
     );
     if (result is Success<void>) {
       emit(CoursesDeleteCoursesSuccess());

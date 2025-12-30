@@ -9,6 +9,8 @@ import 'package:student_assistant/features/auth/otp/presentation/cubits/otp_cubi
 import 'package:student_assistant/features/auth/signup/data/apis/signup_api_service.dart';
 import 'package:student_assistant/features/auth/signup/data/repos/signup_repo_imp.dart';
 import 'package:student_assistant/features/auth/signup/presentation/cubits/signup_cubit.dart';
+import 'package:student_assistant/features/gpa_calculations/data/apis/gpa_calculations_api_service.dart';
+import 'package:student_assistant/features/gpa_calculations/data/repos/gpa_calculations_repo_imp.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/data/apis/gpa_data_api_service.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/data/apis/semesters_api_service.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/data/repos/gpa_data_repo_imp.dart';
@@ -21,6 +23,7 @@ import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/se
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/data/repos/semester_data_repo_imp.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/cubits/courses_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/cubits/semester_data_cubit.dart';
+import 'package:student_assistant/features/gpa_calculations/presentation/cubits/gpa_calculations_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -97,5 +100,20 @@ Future<void> setupGetIt() async {
   );
   getIt.registerFactory<CoursesCubit>(
     () => CoursesCubit(coursesRepoImp: getIt<CoursesRepoImp>()),
+  );
+
+  // Gpa Calculations
+  getIt.registerLazySingleton<GpaCalculationsApiService>(
+    () => GpaCalculationsApiService(),
+  );
+  getIt.registerLazySingleton<GpaCalculationsRepoImp>(
+    () => GpaCalculationsRepoImp(
+      gpaCalculationsApiService: getIt<GpaCalculationsApiService>(),
+    ),
+  );
+  getIt.registerFactory<GpaCalculationsCubit>(
+    () => GpaCalculationsCubit(
+      gpaCalculationsRepoImp: getIt<GpaCalculationsRepoImp>(),
+    ),
   );
 }

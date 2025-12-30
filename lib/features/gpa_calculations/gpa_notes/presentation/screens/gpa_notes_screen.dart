@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:student_assistant/core/constants/app_constants.dart';
-import 'package:student_assistant/features/gpa_calculations/widgets/gpa_bottom_navigation_bar.dart';
+import 'package:student_assistant/features/gpa_calculations/presentation/widgets/gpa_bottom_navigation_bar.dart';
 
 class GpaNotesScreen extends StatelessWidget {
   const GpaNotesScreen({super.key});

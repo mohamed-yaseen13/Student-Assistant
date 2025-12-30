@@ -92,6 +92,7 @@ class _SemestersTableState extends State<SemestersTable> {
                                 AppRoutes.semesterMainScreen,
                                 arguments: {
                                   'semesterName': state.semesters[index].name,
+                                  'semesterIndex': state.semesters[index].index,
                                 },
                               );
                             }

@@ -76,10 +76,7 @@ class SemesterRow extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            Expanded(
-              flex: 2,
-              child: EditSemesterIcon(semesterName: semester.name),
-            ),
+            Expanded(flex: 2, child: EditSemesterIcon(semester: semester)),
           ],
         ),
       ),

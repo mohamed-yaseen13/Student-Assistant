@@ -85,8 +85,8 @@ class CourseRow extends StatelessWidget {
               flex: 2,
               child: EditCourseIcon(
                 semesterName: semesterName,
-                courseName: course.name,
                 semesterIndex: semesterIndex,
+                course: course,
               ),
             ),
           ],

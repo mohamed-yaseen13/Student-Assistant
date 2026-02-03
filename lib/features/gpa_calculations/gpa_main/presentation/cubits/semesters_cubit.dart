@@ -20,7 +20,7 @@ class SemestersCubit extends Cubit<SemestersState> {
     }
   }
 
-  void getAllSemesters() async {
+  Future<void> getAllSemesters() async {
     emit(SemestersGetAllSemestersLoading());
     final result = await semestersRepoImp.getAllSemesters();
     if (result is Success<List<SemesterModel>>) {
@@ -30,7 +30,7 @@ class SemestersCubit extends Cubit<SemestersState> {
     }
   }
 
-  void deleteSemesters(List<String> semestersNames) async {
+  Future<void> deleteSemesters(List<SemesterModel> semestersNames) async {
     emit(SemestersDeleteLoading());
     final result = await semestersRepoImp.deleteSemesters(semestersNames);
     if (result is Success<void>) {

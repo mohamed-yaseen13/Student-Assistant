@@ -10,7 +10,7 @@ class SemesterDataCubit extends Cubit<SemesterDataState> {
   SemesterDataCubit({required this.semesterDataRepoImp})
     : super(SemesterDataInitial());
 
-  void getSpecificSemesterData(String semesterName) async {
+  Future<void> getSpecificSemesterData(String semesterName) async {
     emit(SemesterDataLoading());
     final result = await semesterDataRepoImp.getSemesterData(semesterName);
     if (result is Success<SemesterDataModel>) {

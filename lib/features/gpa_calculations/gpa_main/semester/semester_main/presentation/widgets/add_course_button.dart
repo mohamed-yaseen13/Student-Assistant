@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:student_assistant/core/style/app_colors.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/cubits/courses_cubit.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/cubits/semester_data_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/widgets/add_course_bottom_sheet.dart';
-import 'package:student_assistant/features/gpa_calculations/presentation/cubits/gpa_calculations_cubit.dart';
 
 class AddCourseButton extends StatelessWidget {
   final String semesterName;
@@ -28,8 +26,6 @@ class AddCourseButton extends StatelessWidget {
         backgroundColor: AppColors.lightOrange,
         onPressed: () async {
           final coursesCubit = context.read<CoursesCubit>();
-          final gpaCubit = context.read<GpaCalculationsCubit>();
-          final semesterDataCubit = context.read<SemesterDataCubit>();
           final result = await showModalBottomSheet<Map<String, dynamic>>(
             context: context,
             isScrollControlled: true,
@@ -82,14 +78,13 @@ class AddCourseButton extends StatelessWidget {
             if (!proceed) return;
           }
           await coursesCubit.addCourse(
-            semesterName,
-            result['name'],
-            result['credits'],
-            result['grade'],
-            semesterIndex,
+            semesterName: semesterName,
+            courseName: result['name'],
+            credits: result['credits'],
+            grade: result['grade'],
+            semesterIndex: semesterIndex,
+            isRepeated: existsBefore,
           );
-          await gpaCubit.calculateGpaAndCgpa();
-          semesterDataCubit.getSpecificSemesterData(semesterName);
         },
         child: Icon(Icons.add, color: Colors.black),
       ),

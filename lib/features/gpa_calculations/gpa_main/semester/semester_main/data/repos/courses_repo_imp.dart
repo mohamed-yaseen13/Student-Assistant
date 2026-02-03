@@ -27,22 +27,24 @@ class CoursesRepoImp {
     }
   }
 
-  Future<ApiResult<void>> addCourse(
-    String semesterName,
-    String courseName,
-    double credits,
-    String grade,
-    int semesterIndex,
-  ) async {
+  Future<ApiResult<void>> addCourse({
+    required String semesterName,
+    required String courseName,
+    required double credits,
+    required String grade,
+    required int semesterIndex,
+    required bool isRepeated,
+  }) async {
     final email = SharedPrefs.getUserEmail();
     try {
       final response = await coursesApiService.addCourse(
-        email,
-        semesterName,
-        courseName,
-        credits,
-        grade,
-        semesterIndex,
+        email: email,
+        semesterName: semesterName,
+        courseName: courseName,
+        credits: credits,
+        grade: grade,
+        semesterIndex: semesterIndex,
+        isRepeated: isRepeated,
       );
       return ApiResult.success(response);
     } catch (error) {
@@ -67,7 +69,7 @@ class CoursesRepoImp {
 
   Future<ApiResult<void>> deleteCourses(
     String semesterName,
-    List<String> coursesNames,
+    List<CourseModel> coursesNames,
     int semesterIndex,
   ) async {
     final email = SharedPrefs.getUserEmail();
@@ -77,6 +79,35 @@ class CoursesRepoImp {
         semesterName,
         coursesNames,
         semesterIndex,
+      );
+      return ApiResult.success(response);
+    } catch (error) {
+      return ApiResult.failure(ApiErrorHandler.handle(error));
+    }
+  }
+
+  Future<ApiResult<void>> editCourse({
+    required String semesterName,
+    required String courseName,
+    required int courseIndex,
+    required bool isRepeated,
+    required int semesterIndex,
+    required String grade,
+    required String oldCourseName,
+    required double credits,
+  }) async {
+    final email = SharedPrefs.getUserEmail();
+    try {
+      final response = await coursesApiService.editCourse(
+        email: email,
+        semesterName: semesterName,
+        courseName: courseName,
+        semesterIndex: semesterIndex,
+        courseIndex: courseIndex,
+        isRepeated: isRepeated,
+        grade: grade,
+        credits: credits,
+        oldCourseName: oldCourseName,
       );
       return ApiResult.success(response);
     } catch (error) {

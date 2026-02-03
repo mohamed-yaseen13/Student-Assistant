@@ -37,3 +37,13 @@ class CoursesDeleteCoursesError extends CoursesState {
   final ApiErrorModel apiErrorModel;
   CoursesDeleteCoursesError({required this.apiErrorModel});
 }
+
+// Edit Course
+class CoursesEditCourseLoading extends CoursesState {}
+
+class CoursesEditCourseSuccess extends CoursesState {}
+
+class CoursesEditCourseError extends CoursesState {
+  final ApiErrorModel apiErrorModel;
+  CoursesEditCourseError({required this.apiErrorModel});
+}

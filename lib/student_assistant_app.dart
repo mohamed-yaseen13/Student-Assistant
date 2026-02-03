@@ -4,7 +4,6 @@ import 'package:student_assistant/core/helpers/shared_prefs.dart';
 import 'package:student_assistant/core/routing/app_router.dart';
 import 'package:student_assistant/core/routing/app_routes.dart';
 import 'package:student_assistant/core/style/app_colors.dart';
-import 'package:student_assistant/main.dart';
 
 class StudentAssistantApp extends StatelessWidget {
   const StudentAssistantApp({super.key});
@@ -18,7 +17,6 @@ class StudentAssistantApp extends StatelessWidget {
       minTextAdapt: true,
       builder: (context, child) {
         return MaterialApp(
-          navigatorObservers: [routeObserver],
           theme: ThemeData(
             scaffoldBackgroundColor: AppColors.backgroundColor,
             appBarTheme: AppBarTheme(

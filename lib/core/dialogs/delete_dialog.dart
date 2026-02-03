@@ -29,6 +29,7 @@ Future<void> showDeleteDialog({
   );
   if (result == true) {
     onConfirm();
+  } else {
+    onCancel();
   }
-  onCancel();
 }

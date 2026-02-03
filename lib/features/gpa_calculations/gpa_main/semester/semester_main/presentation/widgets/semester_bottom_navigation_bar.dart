@@ -6,12 +6,14 @@ import 'package:student_assistant/core/style/app_colors.dart';
 
 class SemesterBottomNavigationBar extends StatefulWidget {
   final String semesterName;
+  final int semesterIndex;
   final SemesterBottomNavigationBarEnum selectedScreen;
 
   const SemesterBottomNavigationBar({
     super.key,
     required this.selectedScreen,
     required this.semesterName,
+    required this.semesterIndex,
   });
 
   @override
@@ -58,7 +60,10 @@ class _SemesterBottomNavigationBarState
         if (selected != widget.selectedScreen) {
           context.pushNamed(
             _enumToRoute(selected),
-            arguments: {'semesterName': widget.semesterName},
+            arguments: {
+              'semesterName': widget.semesterName,
+              'semesterIndex': widget.semesterIndex,
+            },
           );
         }
       },

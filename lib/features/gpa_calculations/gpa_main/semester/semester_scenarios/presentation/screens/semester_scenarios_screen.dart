@@ -4,8 +4,13 @@ import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/se
 
 class SemesterScenariosScreen extends StatelessWidget {
   final String semesterName;
+  final int semesterIndex;
 
-  const SemesterScenariosScreen({super.key, required this.semesterName});
+  const SemesterScenariosScreen({
+    super.key,
+    required this.semesterName,
+    required this.semesterIndex,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +19,7 @@ class SemesterScenariosScreen extends StatelessWidget {
       body: Center(child: Text('$semesterName Scenarios Screen')),
       bottomNavigationBar: SemesterBottomNavigationBar(
         semesterName: semesterName,
+        semesterIndex: semesterIndex,
         selectedScreen: SemesterBottomNavigationBarEnum.scenarios,
       ),
     );

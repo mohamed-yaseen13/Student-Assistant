@@ -36,7 +36,7 @@ class AppRouter {
           settings: settings,
         );
       case AppRoutes.otpScreen:
-        final args = settings.arguments as Map<String, String?>;
+        final args = settings.arguments as Map<String, dynamic>;
         final email = args['email'];
 
         return MaterialPageRoute(
@@ -89,6 +89,7 @@ class AppRouter {
               BlocProvider(
                 create: (context) => getIt<GpaDataCubit>()..getGpaData(),
               ),
+              BlocProvider(create: (context) => getIt<GpaCalculationsCubit>()),
             ],
             child: GpaMainScreen(),
           ),
@@ -103,16 +104,21 @@ class AppRouter {
 
       // Semester
       case AppRoutes.semesterNotesScreen:
-        final args = settings.arguments as Map<String, String?>;
+        final args = settings.arguments as Map<String, dynamic>;
         final semesterName = args['semesterName'];
+        final semesterIndex = args['semesterIndex'] as int;
         return MaterialPageRoute(
-          builder: (_) => SemesterNotesScreen(semesterName: semesterName!),
+          builder: (_) => SemesterNotesScreen(
+            semesterName: semesterName!,
+            semesterIndex: semesterIndex,
+          ),
           settings: settings,
         );
       case AppRoutes.semesterMainScreen:
         final args = settings.arguments as Map<String, dynamic>;
         final semesterName = args['semesterName'];
         final semesterIndex = args['semesterIndex'];
+        final gpaCubit = args['gpaCubit'] as GpaCalculationsCubit;
         return MaterialPageRoute(
           builder: (_) => MultiBlocProvider(
             providers: [
@@ -125,7 +131,7 @@ class AppRouter {
                 create: (context) =>
                     getIt<CoursesCubit>()..getAllCourses(semesterName!),
               ),
-              BlocProvider(create: (context) => getIt<GpaCalculationsCubit>()),
+              BlocProvider.value(value: gpaCubit),
             ],
             child: SemesterScreen(
               semesterName: semesterName!,
@@ -135,10 +141,14 @@ class AppRouter {
           settings: settings,
         );
       case AppRoutes.semesterScenariosScreen:
-        final args = settings.arguments as Map<String, String?>;
+        final args = settings.arguments as Map<String, dynamic>;
         final semesterName = args['semesterName'];
+        final semesterIndex = args['semesterIndex'] as int;
         return MaterialPageRoute(
-          builder: (_) => SemesterScenariosScreen(semesterName: semesterName!),
+          builder: (_) => SemesterScenariosScreen(
+            semesterName: semesterName!,
+            semesterIndex: semesterIndex,
+          ),
           settings: settings,
         );
 

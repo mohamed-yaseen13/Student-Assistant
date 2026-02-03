@@ -34,7 +34,9 @@ class SemestersRepoImp {
     }
   }
 
-  Future<ApiResult<void>> deleteSemesters(List<String> semestersNames) async {
+  Future<ApiResult<void>> deleteSemesters(
+    List<SemesterModel> semestersNames,
+  ) async {
     try {
       final response = await semestersApiService.deleteSemesters(
         email,

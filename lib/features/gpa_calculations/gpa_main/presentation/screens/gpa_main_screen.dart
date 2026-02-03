@@ -11,38 +11,12 @@ import 'package:student_assistant/features/gpa_calculations/gpa_main/presentatio
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/gpa_data_container.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/search_for_course_bar.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/semesters_table.dart';
+import 'package:student_assistant/features/gpa_calculations/presentation/cubits/gpa_calculations_cubit.dart';
+import 'package:student_assistant/features/gpa_calculations/presentation/cubits/gpa_calculations_state.dart';
 import 'package:student_assistant/features/gpa_calculations/presentation/widgets/gpa_bottom_navigation_bar.dart';
-import 'package:student_assistant/main.dart';
 
-class GpaMainScreen extends StatefulWidget {
+class GpaMainScreen extends StatelessWidget {
   const GpaMainScreen({super.key});
-
-  @override
-  State<GpaMainScreen> createState() => _GpaMainScreenState();
-}
-
-class _GpaMainScreenState extends State<GpaMainScreen> with RouteAware {
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    routeObserver.subscribe(this, ModalRoute.of(context)!);
-  }
-
-  @override
-  void dispose() {
-    routeObserver.unsubscribe(this);
-    super.dispose();
-  }
-
-  // Called when coming back to this screen
-  @override
-  void didPopNext() {
-    final semestersCubit = context.read<SemestersCubit>();
-    final gpaCubit = context.read<GpaDataCubit>();
-
-    semestersCubit.getAllSemesters();
-    gpaCubit.getGpaData();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,43 +25,62 @@ class _GpaMainScreenState extends State<GpaMainScreen> with RouteAware {
         automaticallyImplyLeading: false,
         toolbarHeight: double.minPositive,
       ),
-      body: BlocConsumer<SemestersCubit, SemestersState>(
-        listenWhen: (previous, current) =>
-            current is SemestersAddSemesterLoading ||
-            current is SemestersAddSemesterSuccess ||
-            current is SemestersAddSemesterError,
-        listener: (context, state) {
-          switch (state) {
-            case SemestersAddSemesterLoading _:
-              loadingState(context: context);
-            case SemestersAddSemesterSuccess _:
-              Navigator.of(context, rootNavigator: true).pop();
-              context.read<SemestersCubit>().getAllSemesters();
-            case SemestersAddSemesterError _:
-              Navigator.of(context, rootNavigator: true).pop();
-              errorState(
-                context: context,
-                desc: 'Failed To Add Semester',
-                message: state.apiErrorModel.message!,
-              );
-            default:
-              null;
-          }
-        },
-        builder: (context, state) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AppBarTitle(title: 'GPA Calculation'),
-              verticalSpace(8),
-              SearchForCourseBar(),
-              verticalSpace(12),
-              GpaDataContainer(),
-              verticalSpace(12),
-              Expanded(child: SemestersTable()),
-            ],
-          );
-        },
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<GpaCalculationsCubit, GpaCalculationsState>(
+            listener: (context, state) {
+              if (state is GpaCalculationsSuccess) {
+                context.read<SemestersCubit>().getAllSemesters();
+                context.read<GpaDataCubit>().getGpaData();
+              }
+            },
+          ),
+          BlocListener<SemestersCubit, SemestersState>(
+            listener: (context, state) {
+              if (state is SemestersEditSemesterNameSuccess) {
+                context.read<SemestersCubit>().getAllSemesters();
+              }
+            },
+          ),
+        ],
+        child: BlocConsumer<SemestersCubit, SemestersState>(
+          listenWhen: (previous, current) =>
+              current is SemestersAddSemesterLoading ||
+              current is SemestersAddSemesterSuccess ||
+              current is SemestersAddSemesterError,
+          listener: (context, state) {
+            switch (state) {
+              case SemestersAddSemesterLoading _:
+                loadingState(context: context);
+              case SemestersAddSemesterSuccess _:
+                Navigator.of(context, rootNavigator: true).pop();
+                context.read<SemestersCubit>().getAllSemesters();
+              case SemestersAddSemesterError _:
+                Navigator.of(context, rootNavigator: true).pop();
+                errorState(
+                  context: context,
+                  desc: 'Failed To Add Semester',
+                  message: state.apiErrorModel.message!,
+                );
+              default:
+                null;
+            }
+          },
+          builder: (context, state) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AppBarTitle(title: 'GPA Calculation'),
+                verticalSpace(8),
+                SearchForCourseBar(),
+                verticalSpace(12),
+                GpaDataContainer(),
+                verticalSpace(12),
+                Expanded(child: SemestersTable()),
+              ],
+            );
+          },
+        ),
       ),
       bottomNavigationBar: GpaBottomNavigationBar(
         selectedScreen: GpaBottomNavigationBarEnum.main,

@@ -11,6 +11,7 @@ class SemesterModel {
   double attemptedCredits;
   double earnedCredits;
   String note;
+  int repeatedCourses;
 
   SemesterModel({
     required this.name,
@@ -23,7 +24,21 @@ class SemesterModel {
     this.attemptedCredits = 0.0,
     this.earnedCredits = 0.0,
     this.note = '',
+    this.repeatedCourses = 0,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'index': index,
+      'gpa': gpa,
+      'maxGpa': maxGpa,
+      'cgpaOriginal': cgpaOriginal,
+      'cgpaChanged': cgpaChanged,
+      'courses': courses.map((key, course) => MapEntry(key, course.toMap())),
+      'repeatedCourses': repeatedCourses,
+    };
+  }
 
   Map<String, dynamic> toJson() => {
     'name': name,
@@ -36,6 +51,7 @@ class SemesterModel {
     'attemptedCredits': attemptedCredits,
     'earnedCredits': earnedCredits,
     'note': note,
+    'repeatedCourses': repeatedCourses,
   };
 
   factory SemesterModel.fromJson(Map<String, dynamic> json) {
@@ -59,6 +75,7 @@ class SemesterModel {
               ),
             )
           : {},
+      repeatedCourses: json['repeatedCourses'] ?? 0,
     );
   }
 
@@ -73,6 +90,7 @@ class SemesterModel {
     double? attemptedCredits,
     double? earnedCredits,
     String? note,
+    int? repeatedCourses,
   }) {
     return SemesterModel(
       name: name ?? this.name,
@@ -85,6 +103,7 @@ class SemesterModel {
       attemptedCredits: attemptedCredits ?? this.attemptedCredits,
       earnedCredits: earnedCredits ?? this.earnedCredits,
       note: note ?? this.note,
+      repeatedCourses: repeatedCourses ?? this.repeatedCourses,
     );
   }
 }

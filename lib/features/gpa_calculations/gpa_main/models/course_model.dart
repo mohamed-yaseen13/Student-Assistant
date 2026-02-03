@@ -25,6 +25,23 @@ class CourseModel {
     this.isFailedBefore = false,
   });
 
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'index': index,
+      'searchName': searchName,
+      'grade': grade,
+      'credits': credits,
+      'isRepeated': isRepeated,
+      'isChanged': isChanged,
+      'newGrade': newGrade,
+      'isFailedBefore': isFailedBefore,
+      'sections': sections.map(
+        (key, section) => MapEntry(key, section.toMap()),
+      ),
+    };
+  }
+
   Map<String, dynamic> toJson() => {
     'name': name,
     'index': index,

@@ -11,6 +11,15 @@ class SectionModel {
     this.fullMark = 0,
   });
 
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'index': index,
+      'obtainedMark': obtainedMark,
+      'fullMark': fullMark,
+    };
+  }
+
   Map<String, dynamic> toJson() => {
     'name': name,
     'index': index,

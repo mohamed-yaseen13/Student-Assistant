@@ -20,20 +20,22 @@ class CoursesCubit extends Cubit<CoursesState> {
     return false;
   }
 
-  Future<void> addCourse(
-    String semesterName,
-    String courseName,
-    double credits,
-    String grade,
-    int semesterIndex,
-  ) async {
+  Future<void> addCourse({
+    required String semesterName,
+    required String courseName,
+    required double credits,
+    required String grade,
+    required int semesterIndex,
+    required bool isRepeated,
+  }) async {
     emit(CoursesAddCourseLoading());
     final result = await coursesRepoImp.addCourse(
-      semesterName,
-      courseName,
-      credits,
-      grade,
-      semesterIndex,
+      semesterName: semesterName,
+      courseName: courseName,
+      credits: credits,
+      grade: grade,
+      semesterIndex: semesterIndex,
+      isRepeated: isRepeated,
     );
     if (result is Success<void>) {
       emit(CoursesAddCourseSuccess());
@@ -42,7 +44,7 @@ class CoursesCubit extends Cubit<CoursesState> {
     }
   }
 
-  void getAllCourses(String semesterName) async {
+  Future<void> getAllCourses(String semesterName) async {
     emit(CoursesGetAllCoursesLoading());
     final result = await coursesRepoImp.getAllCourses(semesterName);
     if (result is Success<List<CourseModel>>) {
@@ -52,9 +54,9 @@ class CoursesCubit extends Cubit<CoursesState> {
     }
   }
 
-  void deleteCourses(
+  Future<void> deleteCourses(
     String semesterName,
-    List<String> coursesNames,
+    List<CourseModel> coursesNames,
     int semesterIndex,
   ) async {
     emit(CoursesDeleteCoursesLoading());
@@ -67,6 +69,34 @@ class CoursesCubit extends Cubit<CoursesState> {
       emit(CoursesDeleteCoursesSuccess());
     } else if (result is Failure<void>) {
       emit(CoursesDeleteCoursesError(apiErrorModel: result.apiErrorModel));
+    }
+  }
+
+  Future<void> editCourse({
+    required String semesterName,
+    required String courseName,
+    required int courseIndex,
+    required bool isRepeated,
+    required int semesterIndex,
+    required String grade,
+    required String oldCourseName,
+    required double credits,
+  }) async {
+    emit(CoursesEditCourseLoading());
+    final result = await coursesRepoImp.editCourse(
+      semesterIndex: semesterIndex,
+      semesterName: semesterName,
+      courseIndex: courseIndex,
+      courseName: courseName,
+      oldCourseName: oldCourseName,
+      grade: grade,
+      credits: credits,
+      isRepeated: isRepeated,
+    );
+    if (result is Success<void>) {
+      emit(CoursesEditCourseSuccess());
+    } else if (result is Failure<void>) {
+      emit(CoursesEditCourseError(apiErrorModel: result.apiErrorModel));
     }
   }
 }

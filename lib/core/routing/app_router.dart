@@ -18,7 +18,6 @@ import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/se
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_scenarios/presentation/screens/semester_scenarios_screen.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_notes/presentation/screens/gpa_notes_screen.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_scenarios/presentation/screens/gpa_scenarios_screen.dart';
-import 'package:student_assistant/features/gpa_calculations/presentation/cubits/gpa_calculations_cubit.dart';
 import 'package:student_assistant/features/home/home_settings/presentation/screens/home_settings_screen.dart';
 import 'package:student_assistant/features/home/home_main/presentation/screen/home_main_screen.dart';
 import 'package:student_assistant/features/home/home_profile/presentation/screens/home_profile_screen.dart';
@@ -89,7 +88,6 @@ class AppRouter {
               BlocProvider(
                 create: (context) => getIt<GpaDataCubit>()..getGpaData(),
               ),
-              BlocProvider(create: (context) => getIt<GpaCalculationsCubit>()),
             ],
             child: GpaMainScreen(),
           ),
@@ -118,7 +116,6 @@ class AppRouter {
         final args = settings.arguments as Map<String, dynamic>;
         final semesterName = args['semesterName'];
         final semesterIndex = args['semesterIndex'];
-        final gpaCubit = args['gpaCubit'] as GpaCalculationsCubit;
         return MaterialPageRoute(
           builder: (_) => MultiBlocProvider(
             providers: [
@@ -131,7 +128,6 @@ class AppRouter {
                 create: (context) =>
                     getIt<CoursesCubit>()..getAllCourses(semesterName!),
               ),
-              BlocProvider.value(value: gpaCubit),
             ],
             child: SemesterScreen(
               semesterName: semesterName!,

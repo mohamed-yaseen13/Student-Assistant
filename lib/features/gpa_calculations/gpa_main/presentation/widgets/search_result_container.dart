@@ -44,6 +44,8 @@ class SearchResultContainer extends StatelessWidget {
                       arguments: {
                         'semesterName':
                             state.searchedCourseResults[i].semesterName,
+                        'semesterIndex':
+                            state.searchedCourseResults[i].semesterIndex,
                       },
                     );
                   },

@@ -102,15 +102,12 @@ class _SemestersTableState extends State<SemestersTable> {
                               if (isSelectionMode) {
                                 toggleSelection(semester);
                               } else {
-                                final gpaCubit = context
-                                    .read<GpaCalculationsCubit>();
                                 context.pushNamed(
                                   AppRoutes.semesterMainScreen,
                                   arguments: {
                                     'semesterName': state.semesters[index].name,
                                     'semesterIndex':
                                         state.semesters[index].index,
-                                    'gpaCubit': gpaCubit,
                                   },
                                 );
                               }

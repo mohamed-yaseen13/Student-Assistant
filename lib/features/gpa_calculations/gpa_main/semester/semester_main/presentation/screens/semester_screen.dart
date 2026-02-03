@@ -43,7 +43,6 @@ class SemesterScreen extends StatelessWidget {
               }
             },
           ),
-          // edit course success state
           BlocListener<CoursesCubit, CoursesState>(
             listener: (context, state) {
               if (state is CoursesEditCourseSuccess) {
@@ -64,7 +63,6 @@ class SemesterScreen extends StatelessWidget {
               case CoursesAddCourseSuccess _:
                 Navigator.of(context, rootNavigator: true).pop();
                 context.read<GpaCalculationsCubit>().calculateGpaAndCgpa();
-                context.read<CoursesCubit>().getAllCourses(semesterName);
               case CoursesAddCourseError _:
                 Navigator.of(context, rootNavigator: true).pop();
                 errorState(

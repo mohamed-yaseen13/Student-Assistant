@@ -15,6 +15,7 @@ class SearchedCourseMapper {
             SearchedCourseModel(
               semesterName: semester.name,
               courseName: course.name,
+              semesterIndex: semester.index,
             ),
           );
         }

@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:student_assistant/core/constants/app_constants.dart';
 import 'package:student_assistant/core/helpers/spacing.dart';
 import 'package:student_assistant/core/states/states.dart';
-import 'package:student_assistant/core/widgets/app_bar_title.dart';
+import 'package:student_assistant/core/style/app_text_styles.dart';
+import 'package:student_assistant/core/widgets/home_app_drawer.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/gpa_data_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_state.dart';
@@ -22,9 +23,12 @@ class GpaMainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        toolbarHeight: double.minPositive,
+        title: Text(
+          'GPA Calculations',
+          style: AppTextStyles.whiteColor24FontSize,
+        ),
       ),
+      drawer: HomeAppDrawer(selectedRoute: HomeDrawerEnum.gpa),
       body: MultiBlocListener(
         listeners: [
           BlocListener<GpaCalculationsCubit, GpaCalculationsState>(
@@ -70,7 +74,6 @@ class GpaMainScreen extends StatelessWidget {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                AppBarTitle(title: 'GPA Calculation'),
                 verticalSpace(8),
                 SearchForCourseBar(),
                 verticalSpace(12),

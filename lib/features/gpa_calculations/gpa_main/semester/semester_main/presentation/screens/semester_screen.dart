@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:student_assistant/core/constants/app_constants.dart';
 import 'package:student_assistant/core/helpers/spacing.dart';
 import 'package:student_assistant/core/states/states.dart';
-import 'package:student_assistant/core/widgets/app_bar_title.dart';
+import 'package:student_assistant/core/style/app_text_styles.dart';
+import 'package:student_assistant/core/widgets/home_app_drawer.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/cubits/courses_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/cubits/courses_state.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/cubits/semester_data_cubit.dart';
@@ -28,9 +29,9 @@ class SemesterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        toolbarHeight: double.minPositive,
+        title: Text(semesterName, style: AppTextStyles.whiteColor24FontSize),
       ),
+      drawer: HomeAppDrawer(selectedRoute: HomeDrawerEnum.gpa),
       body: MultiBlocListener(
         listeners: [
           BlocListener<GpaCalculationsCubit, GpaCalculationsState>(
@@ -78,7 +79,6 @@ class SemesterScreen extends StatelessWidget {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                AppBarTitle(title: semesterName),
                 verticalSpace(12),
                 SemesterDataContainer(),
                 verticalSpace(12),

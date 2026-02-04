@@ -51,3 +51,5 @@ enum HomeBottomNavigationBarEnum { profile, main, settings }
 enum GpaBottomNavigationBarEnum { scenarios, main, notes }
 
 enum SemesterBottomNavigationBarEnum { scenarios, main, notes }
+
+enum HomeDrawerEnum { main, gpa, pomodoro, calendar, tasks, projects }

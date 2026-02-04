@@ -4,7 +4,8 @@ import 'package:student_assistant/core/constants/app_constants.dart';
 import 'package:student_assistant/core/helpers/extensions.dart';
 import 'package:student_assistant/core/helpers/spacing.dart';
 import 'package:student_assistant/core/routing/app_routes.dart';
-import 'package:student_assistant/core/widgets/app_bar_title.dart';
+import 'package:student_assistant/core/style/app_text_styles.dart';
+import 'package:student_assistant/core/widgets/home_app_drawer.dart';
 import 'package:student_assistant/features/home/widgets/home_bottom_navigation_bar.dart';
 import 'package:student_assistant/features/home/home_main/presentation/widgets/feature_card.dart';
 
@@ -15,13 +16,15 @@ class HomeMainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: double.minPositive,
-        automaticallyImplyLeading: false,
+        title: Text(
+          'Student Assistant',
+          style: AppTextStyles.whiteColor24FontSize,
+        ),
       ),
+      drawer: HomeAppDrawer(selectedRoute: HomeDrawerEnum.main),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          AppBarTitle(title: 'Student Assistant'),
           verticalSpace(12),
           Expanded(
             child: ListView.builder(

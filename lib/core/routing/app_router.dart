@@ -8,6 +8,7 @@ import 'package:student_assistant/features/auth/otp/presentation/cubits/otp_cubi
 import 'package:student_assistant/features/auth/otp/presentation/screens/otp_screen.dart';
 import 'package:student_assistant/features/auth/signup/presentation/cubits/signup_cubit.dart';
 import 'package:student_assistant/features/auth/signup/presentation/screens/signup_screen.dart';
+import 'package:student_assistant/features/calendar/presentation/screens/calendar_screen.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/gpa_data_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/screens/gpa_main_screen.dart';
@@ -21,6 +22,9 @@ import 'package:student_assistant/features/gpa_calculations/gpa_scenarios/presen
 import 'package:student_assistant/features/home/home_settings/presentation/screens/home_settings_screen.dart';
 import 'package:student_assistant/features/home/home_main/presentation/screen/home_main_screen.dart';
 import 'package:student_assistant/features/home/home_profile/presentation/screens/home_profile_screen.dart';
+import 'package:student_assistant/features/pomodoro/presentation/screens/pomodoro_screen.dart';
+import 'package:student_assistant/features/projects/presentation/screens/projects_screen.dart';
+import 'package:student_assistant/features/tasks/presentation/screens/tasks_screen.dart';
 
 class AppRouter {
   static Route<dynamic>? generateRoute(RouteSettings settings) {
@@ -37,7 +41,6 @@ class AppRouter {
       case AppRoutes.otpScreen:
         final args = settings.arguments as Map<String, dynamic>;
         final email = args['email'];
-
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) => getIt<OtpCubit>(),
@@ -77,7 +80,6 @@ class AppRouter {
           builder: (_) => GpaScenariosScreen(),
           settings: settings,
         );
-
       case AppRoutes.gpaMainScreen:
         return MaterialPageRoute(
           builder: (_) => MultiBlocProvider(
@@ -93,7 +95,6 @@ class AppRouter {
           ),
           settings: settings,
         );
-
       case AppRoutes.gpaNotesScreen:
         return MaterialPageRoute(
           builder: (_) => GpaNotesScreen(),
@@ -147,6 +148,41 @@ class AppRouter {
           ),
           settings: settings,
         );
+
+      // course
+
+      // pomodoro
+      case AppRoutes.pomodoroTimerScreen:
+        return MaterialPageRoute(
+          builder: (_) => PomodoroScreen(),
+          settings: settings,
+        );
+
+      // routes inside pomodoro feature
+
+      // calendar
+      case AppRoutes.calendarScreen:
+        return MaterialPageRoute(
+          builder: (_) => CalendarScreen(),
+          settings: settings,
+        );
+      // routes inside calendar feature
+
+      // tasks
+      case AppRoutes.tasksScreen:
+        return MaterialPageRoute(
+          builder: (_) => TasksScreen(),
+          settings: settings,
+        );
+      // routes inside tasks feature
+
+      // projects
+      case AppRoutes.projectsScreen:
+        return MaterialPageRoute(
+          builder: (_) => ProjectsScreen(),
+          settings: settings,
+        );
+      // routes inside projects feature
 
       default:
         return null;

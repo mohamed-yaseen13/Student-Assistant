@@ -24,9 +24,8 @@ class _GpaBottomNavigationBarState extends State<GpaBottomNavigationBar> {
 
   String _enumToRoute(GpaBottomNavigationBarEnum screen) {
     switch (screen) {
-      case GpaBottomNavigationBarEnum.notes:
-        return AppRoutes.gpaNotesScreen;
-
+      case GpaBottomNavigationBarEnum.settings:
+        return AppRoutes.gpaSettingsScreen;
       case GpaBottomNavigationBarEnum.main:
         return AppRoutes.gpaMainScreen;
       case GpaBottomNavigationBarEnum.scenarios:
@@ -43,7 +42,7 @@ class _GpaBottomNavigationBarState extends State<GpaBottomNavigationBar> {
           label: 'Scenarios',
         ),
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Main'),
-        BottomNavigationBarItem(icon: Icon(Icons.note), label: 'Notes'),
+        BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
       ],
       currentIndex: _enumToIndex(widget.selectedScreen),
       onTap: (index) {

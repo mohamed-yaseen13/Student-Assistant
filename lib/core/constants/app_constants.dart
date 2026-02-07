@@ -1,3 +1,4 @@
+import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/models/scale_model.dart';
 import 'package:student_assistant/features/home/home_main/presentation/widgets/feature_card.dart';
 
 class AppConstants {
@@ -44,11 +45,31 @@ class AppConstants {
     'D': 1,
     'F': 0,
   };
+
+  static ScaleModel defaultScale = ScaleModel(
+    isSelected: true,
+    title: 'Faculty of Engineering Scale',
+    grades: {
+      '97-100': {'A+': 4.0},
+      '93-97': {'A': 4.0},
+      '89-93': {'A-': 3.7},
+      '84-89': {'B+': 3.3},
+      '80-84': {'B': 3.0},
+      '76-80': {'B-': 2.7},
+      '73-76': {'C+': 2.3},
+      '70-73': {'C': 2.0},
+      '67-70': {'C-': 1.7},
+      '64-67': {'D+': 1.3},
+      '60-64': {'D': 1.0},
+      '00-60': {'F': 0.0},
+      '00-00': {'Fr': 0.0},
+    },
+  );
 }
 
 enum HomeBottomNavigationBarEnum { profile, main, settings }
 
-enum GpaBottomNavigationBarEnum { scenarios, main, notes }
+enum GpaBottomNavigationBarEnum { scenarios, main, settings }
 
 enum SemesterBottomNavigationBarEnum { scenarios, main, notes }
 

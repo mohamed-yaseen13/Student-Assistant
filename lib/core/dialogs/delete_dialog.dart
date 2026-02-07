@@ -3,17 +3,18 @@ import 'package:student_assistant/core/helpers/extensions.dart';
 
 Future<void> showDeleteDialog({
   required BuildContext context,
-  required String content,
+  String? content,
   required VoidCallback onConfirm,
   required VoidCallback onCancel,
-  required bool isSingle,
+  bool? isSingle = true,
+  bool? isScale = false,
 }) async {
   final result = await showDialog<bool>(
     context: context,
     builder: (context) => AlertDialog(
-      title: Text('Delete $content'),
+      title: Text('Delete ${isScale == true ? 'Scale' : content}'),
       content: Text(
-        'Do you actually need to delete ${isSingle ? 'this' : 'these'} $content',
+        'Do you actually need to delete ${isSingle == true ? 'this' : 'these'} ${isScale == true ? 'Scale' : content}',
       ),
       actions: [
         TextButton(

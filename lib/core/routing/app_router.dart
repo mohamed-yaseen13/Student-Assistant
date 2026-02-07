@@ -17,8 +17,12 @@ import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/se
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/screens/semester_screen.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_notes/presentation/screens/semester_notes_screen.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_scenarios/presentation/screens/semester_scenarios_screen.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_notes/presentation/screens/gpa_notes_screen.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_scenarios/presentation/screens/gpa_scenarios_screen.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/models/scale_model.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/presentation/cubits/scales_cubit.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/presentation/screens/custom_scale_screen.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/presentation/screens/scales_screen.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_settings/presentation/screens/gpa_settings_screen.dart';
 import 'package:student_assistant/features/home/home_settings/presentation/screens/home_settings_screen.dart';
 import 'package:student_assistant/features/home/home_main/presentation/screen/home_main_screen.dart';
 import 'package:student_assistant/features/home/home_profile/presentation/screens/home_profile_screen.dart';
@@ -30,6 +34,7 @@ class AppRouter {
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     switch (settings.name) {
       // Auth
+      // Signup
       case AppRoutes.signupScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
@@ -38,6 +43,7 @@ class AppRouter {
           ),
           settings: settings,
         );
+      // OTP
       case AppRoutes.otpScreen:
         final args = settings.arguments as Map<String, dynamic>;
         final email = args['email'];
@@ -48,6 +54,7 @@ class AppRouter {
           ),
           settings: settings,
         );
+      // Login
       case AppRoutes.loginScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
@@ -75,11 +82,13 @@ class AppRouter {
         );
 
       // GPA Calculations
+      // GPA Scenarios
       case AppRoutes.gpaScenariosScreen:
         return MaterialPageRoute(
           builder: (_) => GpaScenariosScreen(),
           settings: settings,
         );
+      // GPA Main
       case AppRoutes.gpaMainScreen:
         return MaterialPageRoute(
           builder: (_) => MultiBlocProvider(
@@ -95,13 +104,8 @@ class AppRouter {
           ),
           settings: settings,
         );
-      case AppRoutes.gpaNotesScreen:
-        return MaterialPageRoute(
-          builder: (_) => GpaNotesScreen(),
-          settings: settings,
-        );
-
       // Semester
+      // Semester Notes
       case AppRoutes.semesterNotesScreen:
         final args = settings.arguments as Map<String, dynamic>;
         final semesterName = args['semesterName'];
@@ -113,6 +117,7 @@ class AppRouter {
           ),
           settings: settings,
         );
+      // Semester Main
       case AppRoutes.semesterMainScreen:
         final args = settings.arguments as Map<String, dynamic>;
         final semesterName = args['semesterName'];
@@ -137,6 +142,8 @@ class AppRouter {
           ),
           settings: settings,
         );
+      // Course
+      // Semester Scenarios
       case AppRoutes.semesterScenariosScreen:
         final args = settings.arguments as Map<String, dynamic>;
         final semesterName = args['semesterName'];
@@ -148,8 +155,33 @@ class AppRouter {
           ),
           settings: settings,
         );
-
-      // course
+      // GPA Settings
+      case AppRoutes.gpaSettingsScreen:
+        return MaterialPageRoute(
+          builder: (_) => GpaSettingsScreen(),
+          settings: settings,
+        );
+      // GPA Sclaes
+      case AppRoutes.gpaScalesScreen:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => getIt<ScalesCubit>()..getAllScales(),
+            child: ScalesScreen(),
+          ),
+          settings: settings,
+        );
+      // GPA Custom Scale
+      case AppRoutes.gpaCustomScaleScreen:
+        final args = settings.arguments as Map<String, dynamic>;
+        final scalesCubit = args['scalesCubit'] as ScalesCubit;
+        final ScaleModel? scale = args['scale'];
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider.value(
+            value: scalesCubit,
+            child: CustomScaleScreen(scale: scale),
+          ),
+          settings: settings,
+        );
 
       // pomodoro
       case AppRoutes.pomodoroTimerScreen:

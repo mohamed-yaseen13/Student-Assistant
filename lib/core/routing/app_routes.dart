@@ -12,7 +12,9 @@ class AppRoutes {
   // GPA Calculation
   static const String gpaScenariosScreen = 'gpaScenariosScreen';
   static const String gpaMainScreen = 'gpaMainScreen';
-  static const String gpaNotesScreen = 'gpaNotesScreen';
+  static const String gpaSettingsScreen = 'gpaSettingsScreen';
+  static const String gpaScalesScreen = 'gpaScalesScreen';
+  static const String gpaCustomScaleScreen = 'gpaCustomScaleScreen';
 
   // Semester
   static const String semesterMainScreen = 'semesterMainScreen';

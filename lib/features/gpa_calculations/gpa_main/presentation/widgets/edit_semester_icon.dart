@@ -47,7 +47,6 @@ class EditSemesterIcon extends StatelessWidget {
           await showDeleteDialog(
             context: context,
             content: 'Semester',
-            isSingle: true,
             onConfirm: () async {
               await semestersCubit.deleteSemesters([semester]);
             },

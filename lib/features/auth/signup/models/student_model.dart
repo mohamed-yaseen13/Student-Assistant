@@ -1,4 +1,5 @@
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/models/semester_model.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/models/scale_model.dart';
 
 class StudentModel {
   String name;
@@ -6,6 +7,7 @@ class StudentModel {
   double totalCredits;
   double maxCgpa;
   Map<String, SemesterModel> semesters;
+  Map<String, ScaleModel> scales;
 
   StudentModel({
     required this.name,
@@ -13,6 +15,7 @@ class StudentModel {
     this.semesters = const {},
     this.totalCredits = 0.0,
     this.maxCgpa = 0,
+    this.scales = const {},
   });
 
   Map<String, dynamic> toJson() => {
@@ -21,10 +24,12 @@ class StudentModel {
     'totalCredits': totalCredits,
     'semesters': semesters.map((k, v) => MapEntry(k, v.toJson())),
     'maxCgpa': maxCgpa,
+    'scales': scales.map((k, v) => MapEntry(k, v.toJson())),
   };
 
   factory StudentModel.fromJson(Map<String, dynamic> json) {
     final rawSemesters = json['semesters'];
+    final rawScales = json['scales'];
 
     return StudentModel(
       name: json['name'],
@@ -39,6 +44,14 @@ class StudentModel {
               ),
             )
           : {},
+      scales: rawScales is Map
+          ? rawScales.map(
+              (k, v) => MapEntry(
+                k,
+                ScaleModel.fromJson(Map<String, dynamic>.from(v)),
+              ),
+            )
+          : {},
     );
   }
 
@@ -48,6 +61,7 @@ class StudentModel {
     double? totalCredits,
     double? maxCgpa,
     Map<String, SemesterModel>? semesters,
+    Map<String, ScaleModel>? scales,
   }) {
     return StudentModel(
       name: name ?? this.name,
@@ -55,6 +69,7 @@ class StudentModel {
       totalCredits: totalCredits ?? this.totalCredits,
       maxCgpa: maxCgpa ?? this.maxCgpa,
       semesters: semesters ?? Map<String, SemesterModel>.from(this.semesters),
+      scales: scales ?? Map<String, ScaleModel>.from(this.scales),
     );
   }
 }

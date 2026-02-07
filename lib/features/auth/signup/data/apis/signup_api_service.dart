@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:student_assistant/core/constants/app_constants.dart';
 import 'package:student_assistant/core/constants/database_constants.dart';
 import 'package:student_assistant/core/services/send_email_otp.dart';
 import 'package:student_assistant/features/auth/signup/models/student_model.dart';
@@ -28,7 +29,10 @@ class SignupApiService {
 
   Future<void> saveStudentToDatabase(String email, String username) async {
     final studentMap = {
-      ...StudentModel(name: username).toJson(),
+      ...StudentModel(
+        name: username,
+        scales: {AppConstants.defaultScale.title: AppConstants.defaultScale},
+      ).toJson(),
       'createdAt': FieldValue.serverTimestamp(),
     };
     await getEmailRef(email).set(studentMap, SetOptions(merge: true));

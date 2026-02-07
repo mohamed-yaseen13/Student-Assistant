@@ -100,7 +100,6 @@ class EditCourseIcon extends StatelessWidget {
           await showDeleteDialog(
             context: context,
             content: 'Course',
-            isSingle: true,
             onConfirm: () async {
               await coursesCubit.deleteCourses(semesterName, [
                 course,

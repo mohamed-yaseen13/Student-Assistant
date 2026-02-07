@@ -23,6 +23,9 @@ import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/se
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/data/repos/semester_data_repo_imp.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/cubits/courses_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/cubits/semester_data_cubit.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/data/apis/scales_api_service.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/data/repos/scales_repo_imp.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/presentation/cubits/scales_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/presentation/cubits/gpa_calculations_cubit.dart';
 
 final getIt = GetIt.instance;
@@ -115,5 +118,14 @@ Future<void> setupGetIt() async {
     () => GpaCalculationsCubit(
       gpaCalculationsRepoImp: getIt<GpaCalculationsRepoImp>(),
     ),
+  );
+
+  // GPA Scales
+  getIt.registerLazySingleton<ScalesApiService>(() => ScalesApiService());
+  getIt.registerLazySingleton<ScalesRepoImp>(
+    () => ScalesRepoImp(scalesApiService: getIt<ScalesApiService>()),
+  );
+  getIt.registerFactory<ScalesCubit>(
+    () => ScalesCubit(scalesRepoImp: getIt<ScalesRepoImp>()),
   );
 }

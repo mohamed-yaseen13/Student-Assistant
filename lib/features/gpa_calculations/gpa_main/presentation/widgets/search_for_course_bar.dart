@@ -49,7 +49,7 @@ class _SearchForCourseBarState extends State<SearchForCourseBar> {
 
     _overlayEntry = OverlayEntry(
       builder: (overlayContext) {
-        final appBarCubit = context.read<SemestersCubit>();
+        final semesterCubit = context.read<SemestersCubit>();
         return Positioned(
           width: MediaQuery.of(context).size.width - 24.w,
           child: CompositedTransformFollower(
@@ -57,7 +57,7 @@ class _SearchForCourseBarState extends State<SearchForCourseBar> {
             offset: Offset(12.w, 52.h),
             showWhenUnlinked: false,
             child: BlocProvider.value(
-              value: appBarCubit,
+              value: semesterCubit,
               child: const SearchResultContainer(),
             ),
           ),

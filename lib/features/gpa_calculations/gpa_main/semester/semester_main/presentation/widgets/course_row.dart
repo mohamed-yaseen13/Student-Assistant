@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_assistant/core/style/app_colors.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/models/course_model.dart';
+import 'package:student_assistant/core/models/course_model.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/widgets/edit_course_icon.dart';
 
 class CourseRow extends StatelessWidget {
@@ -62,7 +62,7 @@ class CourseRow extends StatelessWidget {
                 course.name,
                 style: TextStyle(fontSize: 16.sp),
                 textAlign: TextAlign.center,
-                overflow: .ellipsis,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
             Expanded(

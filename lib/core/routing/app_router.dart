@@ -9,16 +9,14 @@ import 'package:student_assistant/features/auth/otp/presentation/screens/otp_scr
 import 'package:student_assistant/features/auth/signup/presentation/cubits/signup_cubit.dart';
 import 'package:student_assistant/features/auth/signup/presentation/screens/signup_screen.dart';
 import 'package:student_assistant/features/calendar/presentation/screens/calendar_screen.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/gpa_data_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/screens/gpa_main_screen.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/cubits/courses_cubit.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/cubits/semester_data_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/screens/semester_screen.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_notes/presentation/screens/semester_notes_screen.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_scenarios/presentation/screens/semester_scenarios_screen.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_scenarios/presentation/screens/gpa_scenarios_screen.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/models/scale_model.dart';
+import 'package:student_assistant/core/models/scale_model.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/presentation/cubits/scales_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/presentation/screens/custom_scale_screen.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/presentation/screens/scales_screen.dart';
@@ -93,12 +91,7 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => MultiBlocProvider(
             providers: [
-              BlocProvider(
-                create: (context) => getIt<SemestersCubit>()..getAllSemesters(),
-              ),
-              BlocProvider(
-                create: (context) => getIt<GpaDataCubit>()..getGpaData(),
-              ),
+              BlocProvider(create: (context) => getIt<SemestersCubit>()),
             ],
             child: GpaMainScreen(),
           ),
@@ -108,11 +101,11 @@ class AppRouter {
       // Semester Notes
       case AppRoutes.semesterNotesScreen:
         final args = settings.arguments as Map<String, dynamic>;
-        final semesterName = args['semesterName'];
+        final semesterName = args['semesterName'] as String;
         final semesterIndex = args['semesterIndex'] as int;
         return MaterialPageRoute(
           builder: (_) => SemesterNotesScreen(
-            semesterName: semesterName!,
+            semesterName: semesterName,
             semesterIndex: semesterIndex,
           ),
           settings: settings,
@@ -120,24 +113,16 @@ class AppRouter {
       // Semester Main
       case AppRoutes.semesterMainScreen:
         final args = settings.arguments as Map<String, dynamic>;
-        final semesterName = args['semesterName'];
-        final semesterIndex = args['semesterIndex'];
+        final semesterName = args['semesterName'] as String;
+        final semesterIndex = args['semesterIndex'] as int;
         return MaterialPageRoute(
           builder: (_) => MultiBlocProvider(
             providers: [
-              BlocProvider(
-                create: (context) =>
-                    getIt<SemesterDataCubit>()
-                      ..getSpecificSemesterData(semesterName!),
-              ),
-              BlocProvider(
-                create: (context) =>
-                    getIt<CoursesCubit>()..getAllCourses(semesterName!),
-              ),
+              BlocProvider(create: (context) => getIt<CoursesCubit>()),
             ],
             child: SemesterScreen(
-              semesterName: semesterName!,
-              semesterIndex: semesterIndex!,
+              semesterName: semesterName,
+              semesterIndex: semesterIndex,
             ),
           ),
           settings: settings,
@@ -165,7 +150,7 @@ class AppRouter {
       case AppRoutes.gpaScalesScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
-            create: (context) => getIt<ScalesCubit>()..getAllScales(),
+            create: (context) => getIt<ScalesCubit>(),
             child: ScalesScreen(),
           ),
           settings: settings,

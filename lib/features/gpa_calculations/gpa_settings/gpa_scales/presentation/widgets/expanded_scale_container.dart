@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/models/scale_model.dart';
+import 'package:student_assistant/core/models/scale_model.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/presentation/widgets/delete_scale_button.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/presentation/widgets/edit_scale_button.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/presentation/widgets/scale_table.dart';

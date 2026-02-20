@@ -1,4 +1,6 @@
-import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/models/scale_model.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:student_assistant/core/models/scale_model.dart';
+import 'package:student_assistant/core/models/student_model.dart';
 import 'package:student_assistant/features/home/home_main/presentation/widgets/feature_card.dart';
 
 class AppConstants {
@@ -65,6 +67,10 @@ class AppConstants {
       '00-00': {'Fr': 0.0},
     },
   );
+
+  static const String studentBox = 'studentBox';
+
+  static Box<StudentModel> box = Hive.box<StudentModel>(studentBox);
 }
 
 enum HomeBottomNavigationBarEnum { profile, main, settings }

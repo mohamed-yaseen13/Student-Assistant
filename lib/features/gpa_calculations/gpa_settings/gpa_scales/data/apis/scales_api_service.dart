@@ -1,24 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:student_assistant/core/constants/database_constants.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/models/scale_model.dart';
+import 'package:student_assistant/core/constants/app_constants.dart';
+import 'package:student_assistant/core/helpers/functions.dart';
+import 'package:student_assistant/core/models/scale_model.dart';
 
 class ScalesApiService {
   ScalesApiService();
-
-  DocumentReference<Map<String, dynamic>> getEmailRef(String email) =>
-      FirebaseFirestore.instance
-          .collection(DatabaseConstants.emailsCollection)
-          .doc(email);
-
-  Future<List<ScaleModel>> getAllScales(String email) async {
-    final doc = await getEmailRef(email).get();
-    final scalesRaw = doc.data()?['scales'];
-    if (scalesRaw == null || scalesRaw is! Map) return [];
-
-    return scalesRaw.values
-        .map((e) => ScaleModel.fromJson(Map<String, dynamic>.from(e)))
-        .toList();
-  }
 
   Future<void> saveScale(
     String email,
@@ -26,19 +12,51 @@ class ScalesApiService {
     String? oldTitle,
   ) async {
     final docRef = getEmailRef(email);
+    final box = AppConstants.box;
+    final student = box.values.first;
+    final updatedScales = Map<String, ScaleModel>.from(box.values.first.scales);
+    bool isSelected = false;
     if (oldTitle != null) {
+      isSelected = true;
+      // local
+      updatedScales.remove(oldTitle);
+      // firestore
       await docRef.update({'scales.$oldTitle': FieldValue.delete()});
     }
-    await docRef.update({'scales.${scale.title}': scale.toMap()});
+    // local
+    updatedScales[scale.title] = scale;
+    updatedScales[scale.title]!.isSelected = isSelected;
+    await box.put(email, student.copyWith(scales: updatedScales));
+    // firestore
+    await docRef.update({
+      'scales.${scale.title}': scale.toJson(),
+      'scales.${scale.title}.isSelected': isSelected,
+    });
   }
 
   Future<void> deleteScale(String email, String title) async {
+    // local
+    final box = AppConstants.box;
+    final student = box.values.first;
+    final updatedScales = Map<String, ScaleModel>.from(box.values.first.scales);
+    updatedScales.remove(title);
+    await box.put(email, student.copyWith(scales: updatedScales));
+    // firestore
     await getEmailRef(email).update({'scales.$title': FieldValue.delete()});
   }
 
   Future<void> changeScale(String email, String title) async {
-    final scales = await getAllScales(email);
-    final selectedScale = scales.firstWhere((s) => s.isSelected);
+    final box = AppConstants.box;
+    final student = box.values.first;
+    final updatedScales = Map<String, ScaleModel>.from(box.values.first.scales);
+    final selectedScale = box.values.first.scales.values.firstWhere(
+      (s) => s.isSelected,
+    );
+    // local
+    updatedScales[selectedScale.title]!.isSelected = false;
+    updatedScales[title]!.isSelected = true;
+    await box.put(email, student.copyWith(scales: updatedScales));
+    // firestore
     await getEmailRef(
       email,
     ).update({'scales.${selectedScale.title}.isSelected': false});

@@ -18,13 +18,8 @@ class SearchResultContainer extends StatelessWidget {
       borderRadius: BorderRadius.circular(8.r),
       child: BlocBuilder<SemestersCubit, SemestersState>(
         buildWhen: (previous, current) =>
-            current is SemestersSearchForCourseLoading ||
-            current is SemestersSearchForCourseSuccess ||
-            current is SemestersSearchForCourseError,
+            current is SemestersSearchForCourseSuccess,
         builder: (context, state) {
-          if (state is SemestersSearchForCourseLoading) {
-            return const Center(child: CircularProgressIndicator());
-          }
           if (state is SemestersSearchForCourseSuccess) {
             return SizedBox(
               height: state.searchedCourseResults.isEmpty
@@ -52,13 +47,6 @@ class SearchResultContainer extends StatelessWidget {
                   title: Text(state.searchedCourseResults[i].courseName),
                   subtitle: Text(state.searchedCourseResults[i].semesterName),
                 ),
-              ),
-            );
-          }
-          if (state is SemestersSearchForCourseError) {
-            return Center(
-              child: Text(
-                state.apiErrorModel.message ?? 'Failed to get your semesters',
               ),
             );
           }

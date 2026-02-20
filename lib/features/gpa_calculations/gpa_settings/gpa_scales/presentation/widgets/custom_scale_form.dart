@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_assistant/core/helpers/spacing.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/models/scale_model.dart';
+import 'package:student_assistant/core/models/scale_model.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/presentation/widgets/add_or_delete_row_button.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/presentation/widgets/grade_text_form_field.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/presentation/widgets/points_text_form_field.dart';

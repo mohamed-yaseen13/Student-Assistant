@@ -1,15 +1,29 @@
-import 'package:student_assistant/features/gpa_calculations/gpa_main/models/section_model.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:student_assistant/core/models/section_model.dart';
 
-class CourseModel {
+part 'course_model.g.dart';
+
+@HiveType(typeId: 1)
+class CourseModel extends HiveObject {
+  @HiveField(0)
   String name;
+  @HiveField(1)
   int index;
+  @HiveField(2)
   String searchName;
+  @HiveField(3)
   String grade;
+  @HiveField(4)
   double credits;
+  @HiveField(5)
   bool isRepeated;
+  @HiveField(6)
   bool isChanged;
+  @HiveField(7)
   String newGrade;
+  @HiveField(8)
   Map<String, SectionModel> sections;
+  @HiveField(9)
   bool isFailedBefore;
 
   CourseModel({
@@ -24,23 +38,6 @@ class CourseModel {
     this.sections = const {},
     this.isFailedBefore = false,
   });
-
-  Map<String, dynamic> toMap() {
-    return {
-      'name': name,
-      'index': index,
-      'searchName': searchName,
-      'grade': grade,
-      'credits': credits,
-      'isRepeated': isRepeated,
-      'isChanged': isChanged,
-      'newGrade': newGrade,
-      'isFailedBefore': isFailedBefore,
-      'sections': sections.map(
-        (key, section) => MapEntry(key, section.toMap()),
-      ),
-    };
-  }
 
   Map<String, dynamic> toJson() => {
     'name': name,

@@ -33,7 +33,7 @@ class OtpScreen extends StatelessWidget {
               errorState(
                 context: context,
                 desc: "Error",
-                message: state.apiErrorModel.message!,
+                message: state.apiErrorModel.message,
               );
 
             default:

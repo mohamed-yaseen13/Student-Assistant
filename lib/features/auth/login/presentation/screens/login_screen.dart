@@ -27,7 +27,7 @@ class LoginScreen extends StatelessWidget {
               return errorState(
                 context: context,
                 desc: 'Signup Failed',
-                message: state.apiErrorModel.message!,
+                message: state.apiErrorModel.message,
               );
 
             case LoginSuccess _:

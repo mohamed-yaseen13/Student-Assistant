@@ -1,4 +1,9 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:student_assistant/core/dependency_injection/di.dart';
+import 'package:student_assistant/core/helpers/setup_hive.dart';
+import 'package:student_assistant/core/helpers/shared_prefs.dart';
+import 'package:student_assistant/firebase_options.dart';
 import 'package:student_assistant/splash_screen.dart';
 import 'package:student_assistant/student_assistant_app.dart';
 
@@ -16,22 +21,34 @@ class _AppControllerState extends State<AppController>
   bool _showSplash = true;
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
-
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 800),
     );
     _animation = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
-
     _controller.forward();
     _initializeApp();
   }
 
   Future<void> _initializeApp() async {
-    await Future.delayed(const Duration(seconds: 5));
-
+    try {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+      await setupGetIt();
+      await setupHive();
+      await SharedPrefs.init();
+    } catch (error) {
+      debugPrint('Initialization error: $error');
+    }
     if (mounted) {
       setState(() {
         _showSplash = false;
@@ -45,7 +62,7 @@ class _AppControllerState extends State<AppController>
       debugShowCheckedModeBanner: false,
       home: _showSplash
           ? FadeTransition(opacity: _animation, child: const SplashScreen())
-          : StudentAssistantApp(),
+          : const StudentAssistantApp(),
     );
   }
 }

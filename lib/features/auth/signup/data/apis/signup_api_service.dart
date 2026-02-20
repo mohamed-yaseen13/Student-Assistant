@@ -1,18 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:student_assistant/core/constants/app_constants.dart';
-import 'package:student_assistant/core/constants/database_constants.dart';
+import 'package:student_assistant/core/helpers/functions.dart';
 import 'package:student_assistant/core/services/send_email_otp.dart';
-import 'package:student_assistant/features/auth/signup/models/student_model.dart';
+import 'package:student_assistant/core/models/student_model.dart';
 
 class SignupApiService {
   final SendEmailOtp sendEmailOtp;
 
   SignupApiService({required this.sendEmailOtp});
-
-  DocumentReference<Map<String, dynamic>> getEmailRef(String email) =>
-      FirebaseFirestore.instance
-          .collection(DatabaseConstants.emailsCollection)
-          .doc(email);
 
   Future<bool> checkIfEmailExist(String email) async {
     final doc = await getEmailRef(email).get();
@@ -28,14 +23,19 @@ class SignupApiService {
   }
 
   Future<void> saveStudentToDatabase(String email, String username) async {
+    final student = StudentModel(
+      name: username,
+      scales: {AppConstants.defaultScale.title: AppConstants.defaultScale},
+    );
+    // firebase database
     final studentMap = {
-      ...StudentModel(
-        name: username,
-        scales: {AppConstants.defaultScale.title: AppConstants.defaultScale},
-      ).toJson(),
+      ...student.toJson(),
       'createdAt': FieldValue.serverTimestamp(),
     };
     await getEmailRef(email).set(studentMap, SetOptions(merge: true));
+    // local database
+    final box = AppConstants.box;
+    await box.put(email, student);
   }
 
   Future<void> signup(String email, String username) async {

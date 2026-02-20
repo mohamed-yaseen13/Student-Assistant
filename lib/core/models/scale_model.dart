@@ -1,6 +1,14 @@
-class ScaleModel {
+import 'package:hive_flutter/hive_flutter.dart';
+
+part 'scale_model.g.dart';
+
+@HiveType(typeId: 2)
+class ScaleModel extends HiveObject {
+  @HiveField(0)
   Map<String, Map<String, double>> grades;
+  @HiveField(1)
   bool isSelected;
+  @HiveField(2)
   String title;
 
   ScaleModel({
@@ -9,11 +17,11 @@ class ScaleModel {
     this.isSelected = false,
   });
 
-  Map<String, dynamic> toMap() {
-    return {"title": title, "isSelected": isSelected, "grades": grades};
-  }
-
-  Map<String, dynamic> toJson() => toMap();
+  Map<String, dynamic> toJson() => {
+    "title": title,
+    "isSelected": isSelected,
+    "grades": grades,
+  };
 
   factory ScaleModel.fromJson(Map<String, dynamic> json) {
     return ScaleModel(

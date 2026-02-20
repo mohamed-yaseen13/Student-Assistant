@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:student_assistant/core/constants/app_constants.dart';
 import 'package:student_assistant/core/helpers/extensions.dart';
 import 'package:student_assistant/core/helpers/spacing.dart';
+import 'package:student_assistant/core/models/student_model.dart';
 import 'package:student_assistant/core/routing/app_routes.dart';
 
 class ScalesRow extends StatelessWidget {
@@ -28,6 +31,16 @@ class ScalesRow extends StatelessWidget {
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w500,
                   ),
+                ),
+                verticalSpace(4),
+                ValueListenableBuilder(
+                  valueListenable: AppConstants.box.listenable(),
+                  builder: (context, Box<StudentModel> box, _) {
+                    final scaleTitle = box.values.first.scales.values
+                        .firstWhere((s) => s.isSelected)
+                        .title;
+                    return Text(scaleTitle);
+                  },
                 ),
               ],
             ),

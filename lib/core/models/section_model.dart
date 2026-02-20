@@ -1,7 +1,16 @@
-class SectionModel {
+import 'package:hive_flutter/hive_flutter.dart';
+
+part 'section_model.g.dart';
+
+@HiveType(typeId: 0)
+class SectionModel extends HiveObject {
+  @HiveField(0)
   String name;
+  @HiveField(1)
   int index;
+  @HiveField(2)
   double obtainedMark;
+  @HiveField(3)
   int fullMark;
 
   SectionModel({
@@ -10,15 +19,6 @@ class SectionModel {
     this.obtainedMark = 0,
     this.fullMark = 0,
   });
-
-  Map<String, dynamic> toMap() {
-    return {
-      'name': name,
-      'index': index,
-      'obtainedMark': obtainedMark,
-      'fullMark': fullMark,
-    };
-  }
 
   Map<String, dynamic> toJson() => {
     'name': name,

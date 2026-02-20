@@ -1,19 +1,19 @@
 import 'package:student_assistant/core/api/api_error_handler.dart';
 import 'package:student_assistant/core/api/api_result.dart';
 import 'package:student_assistant/core/helpers/shared_prefs.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/models/course_model.dart';
+import 'package:student_assistant/core/models/course_model.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/data/apis/courses_api_service.dart';
 
 class CoursesRepoImp {
   CoursesApiService coursesApiService;
 
   CoursesRepoImp({required this.coursesApiService});
+  final email = SharedPrefs.getUserEmail();
 
   Future<ApiResult<bool>> checkRepeatedCourse(
     String courseName,
     int semesterIndex,
   ) async {
-    final email = SharedPrefs.getUserEmail();
     try {
       final result = await coursesApiService
           .checkIfCourseExistsInPreviousSemesters(
@@ -35,7 +35,6 @@ class CoursesRepoImp {
     required int semesterIndex,
     required bool isRepeated,
   }) async {
-    final email = SharedPrefs.getUserEmail();
     try {
       final response = await coursesApiService.addCourse(
         email: email,
@@ -52,27 +51,11 @@ class CoursesRepoImp {
     }
   }
 
-  Future<ApiResult<List<CourseModel>>> getAllCourses(
-    String semesterName,
-  ) async {
-    final email = SharedPrefs.getUserEmail();
-    try {
-      final response = await coursesApiService.getAllCourses(
-        email,
-        semesterName,
-      );
-      return ApiResult.success(response);
-    } catch (error) {
-      return ApiResult.failure(ApiErrorHandler.handle(error));
-    }
-  }
-
   Future<ApiResult<void>> deleteCourses(
     String semesterName,
     List<CourseModel> coursesNames,
     int semesterIndex,
   ) async {
-    final email = SharedPrefs.getUserEmail();
     try {
       final response = await coursesApiService.deleteCourses(
         email,
@@ -96,7 +79,6 @@ class CoursesRepoImp {
     required String oldCourseName,
     required double credits,
   }) async {
-    final email = SharedPrefs.getUserEmail();
     try {
       final response = await coursesApiService.editCourse(
         email: email,

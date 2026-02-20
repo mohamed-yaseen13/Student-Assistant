@@ -1,14 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:student_assistant/core/constants/database_constants.dart';
+import 'package:student_assistant/core/constants/app_constants.dart';
+import 'package:student_assistant/core/helpers/functions.dart';
 import 'package:student_assistant/core/helpers/shared_prefs.dart';
+import 'package:student_assistant/core/models/student_model.dart';
 
 class OtpApiService {
   OtpApiService();
-
-  DocumentReference<Map<String, dynamic>> getEmailRef(String email) =>
-      FirebaseFirestore.instance
-          .collection(DatabaseConstants.emailsCollection)
-          .doc(email);
 
   Future<bool> isOtpCorrect(String email, String otp) async {
     final doc = await getEmailRef(email).get();
@@ -30,5 +27,11 @@ class OtpApiService {
     await deleteOtp(email);
     await SharedPrefs.setIsUserLoggedIn();
     await SharedPrefs.setUserEmail(email);
+    // update the hive box with firebase data in case user is loginning in
+    final doc = await getEmailRef(email).get();
+    final data = doc.data()!;
+    final StudentModel student = StudentModel.fromJson(data);
+    final box = AppConstants.box;
+    await box.put(email, student);
   }
 }

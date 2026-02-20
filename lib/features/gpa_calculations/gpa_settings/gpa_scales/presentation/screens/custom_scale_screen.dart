@@ -4,7 +4,7 @@ import 'package:student_assistant/core/constants/app_constants.dart';
 import 'package:student_assistant/core/helpers/extensions.dart';
 import 'package:student_assistant/core/states/states.dart';
 import 'package:student_assistant/core/widgets/home_app_drawer.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/models/scale_model.dart';
+import 'package:student_assistant/core/models/scale_model.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/presentation/cubits/scales_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/presentation/cubits/scales_state.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/presentation/widgets/custom_scale_form.dart';
@@ -37,7 +37,7 @@ class CustomScaleScreen extends StatelessWidget {
               errorState(
                 context: context,
                 desc: 'Failed to save scale',
-                message: state.apiErrorModel.message!,
+                message: state.apiErrorModel.message,
               );
             case ScalesSaveScaleSuccess _:
               Navigator.of(context, rootNavigator: true).pop();

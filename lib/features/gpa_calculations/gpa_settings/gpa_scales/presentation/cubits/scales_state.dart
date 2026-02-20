@@ -1,5 +1,5 @@
 import 'package:student_assistant/core/api/api_error_model.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/models/scale_model.dart';
+import 'package:student_assistant/core/models/scale_model.dart';
 
 sealed class ScalesState {}
 

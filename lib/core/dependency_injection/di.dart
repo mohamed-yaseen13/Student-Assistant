@@ -11,18 +11,12 @@ import 'package:student_assistant/features/auth/signup/data/repos/signup_repo_im
 import 'package:student_assistant/features/auth/signup/presentation/cubits/signup_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/data/apis/gpa_calculations_api_service.dart';
 import 'package:student_assistant/features/gpa_calculations/data/repos/gpa_calculations_repo_imp.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/data/apis/gpa_data_api_service.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/data/apis/semesters_api_service.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/data/repos/gpa_data_repo_imp.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/data/repos/semesters_repo_imp.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/gpa_data_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/data/apis/courses_api_service.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/data/apis/semester_data_api_service.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/data/repos/courses_repo_imp.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/data/repos/semester_data_repo_imp.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/cubits/courses_cubit.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/cubits/semester_data_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/data/apis/scales_api_service.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/data/repos/scales_repo_imp.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/presentation/cubits/scales_cubit.dart';
@@ -65,15 +59,6 @@ Future<void> setupGetIt() async {
     () => LoginCubit(loginRepoImp: getIt<LoginRepoImp>()),
   );
 
-  // GPA Data
-  getIt.registerLazySingleton<GpaDataApiService>(() => GpaDataApiService());
-  getIt.registerLazySingleton<GpaDataRepoImp>(
-    () => GpaDataRepoImp(gpaDataApiService: getIt<GpaDataApiService>()),
-  );
-  getIt.registerFactory<GpaDataCubit>(
-    () => GpaDataCubit(gpaDataRepoImp: getIt<GpaDataRepoImp>()),
-  );
-
   // Semesters
   getIt.registerLazySingleton<SemestersApiService>(() => SemestersApiService());
   getIt.registerLazySingleton<SemestersRepoImp>(
@@ -81,19 +66,6 @@ Future<void> setupGetIt() async {
   );
   getIt.registerFactory<SemestersCubit>(
     () => SemestersCubit(semestersRepoImp: getIt<SemestersRepoImp>()),
-  );
-
-  // Semester Data
-  getIt.registerLazySingleton<SemesterDataApiService>(
-    () => SemesterDataApiService(),
-  );
-  getIt.registerLazySingleton<SemesterDataRepoImp>(
-    () => SemesterDataRepoImp(
-      semesterDataApiService: getIt<SemesterDataApiService>(),
-    ),
-  );
-  getIt.registerFactory<SemesterDataCubit>(
-    () => SemesterDataCubit(semesterDataRepoImp: getIt<SemesterDataRepoImp>()),
   );
 
   // Courses

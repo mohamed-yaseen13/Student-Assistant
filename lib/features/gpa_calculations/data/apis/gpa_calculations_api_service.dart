@@ -1,27 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:student_assistant/core/constants/database_constants.dart';
+import 'package:student_assistant/core/constants/app_constants.dart';
+import 'package:student_assistant/core/helpers/functions.dart';
 import 'package:student_assistant/core/helpers/grade.dart';
-import 'package:student_assistant/features/auth/signup/models/student_model.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/models/semester_model.dart';
+import 'package:student_assistant/core/models/semester_model.dart';
 
 class GpaCalculationsApiService {
   GpaCalculationsApiService();
-
-  DocumentReference<Map<String, dynamic>> getEmailRef(String email) =>
-      FirebaseFirestore.instance
-          .collection(DatabaseConstants.emailsCollection)
-          .doc(email);
-
-  Future<List<SemesterModel>> getOrderedSemesters(String email) async {
-    final doc = await getEmailRef(email).get();
-    final semestersRaw = doc.data()?['semesters'];
-    if (semestersRaw == null || semestersRaw is! Map) return [];
-    final list = semestersRaw.values
-        .map((e) => SemesterModel.fromJson(Map<String, dynamic>.from(e)))
-        .toList();
-    list.sort((a, b) => a.index.compareTo(b.index));
-    return list;
-  }
 
   Future<void> calculateGpaAndCgpa(String email) async {
     double totalCredits = 0.0;
@@ -29,10 +13,9 @@ class GpaCalculationsApiService {
     double cgpaPointsChanged = 0.0;
     double cgpaCredits = 0.0;
 
-    final doc = await getEmailRef(email).get();
-    final student = StudentModel.fromJson(doc.data()!);
-
-    final semestersList = await getOrderedSemesters(email);
+    final box = AppConstants.box;
+    final student = box.values.first;
+    final semestersList = student.semesters.values.toList();
     final Map<String, SemesterModel> updatedSemesters = {};
 
     for (int s = 0; s < semestersList.length; s++) {
@@ -117,6 +100,17 @@ class GpaCalculationsApiService {
     final finalCgpa = lastSemester != null
         ? updatedSemesters[lastSemester.name]!.cgpaChanged
         : 0.0;
+
+    // update the hive box data
+    await box.put(
+      email,
+      student.copyWith(
+        cgpa: double.parse(finalCgpa.toStringAsFixed(2)),
+        totalCredits: totalCredits,
+        semesters: updatedSemesters,
+      ),
+    );
+    // update the firestore data
     await getEmailRef(email).set(
       student
           .copyWith(

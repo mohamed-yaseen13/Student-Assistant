@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:student_assistant/core/constants/app_constants.dart';
 import 'package:student_assistant/core/helpers/spacing.dart';
+import 'package:student_assistant/core/models/student_model.dart';
 import 'package:student_assistant/core/widgets/data_container.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/cubits/semester_data_cubit.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/cubits/semester_data_state.dart';
 
 class SemesterDataContainer extends StatelessWidget {
-  const SemesterDataContainer({super.key});
+  final String semesterName;
+
+  const SemesterDataContainer({super.key, required this.semesterName});
 
   @override
   Widget build(BuildContext context) {
@@ -24,49 +26,35 @@ class SemesterDataContainer extends StatelessWidget {
           Text('Max GPA you can get', style: TextStyle(fontSize: 16.sp)),
         ],
       ),
-      rightColumn: BlocBuilder<SemesterDataCubit, SemesterDataState>(
-        buildWhen: (previous, current) =>
-            current is SemesterDataLoading ||
-            current is SemesterDataSuccess ||
-            current is SemesterDataError,
-        builder: (context, state) {
-          if (state is SemesterDataLoading) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (state is SemesterDataSuccess) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '${state.semesterDataModel.attemptedCredits}',
-                  style: TextStyle(fontSize: 18.sp),
-                ),
-                verticalSpace(12),
-                Text(
-                  '${state.semesterDataModel.earnedCredits}',
-                  style: TextStyle(fontSize: 18.sp, color: Colors.green),
-                ),
-                verticalSpace(12),
-                Text(
-                  state.semesterDataModel.gpa.toStringAsFixed(2),
-                  style: TextStyle(fontSize: 18.sp),
-                ),
-                verticalSpace(12),
-                Text(
-                  state.semesterDataModel.maxGpa.toStringAsFixed(2),
-                  style: TextStyle(fontSize: 18.sp),
-                ),
-              ],
-            );
-          }
-          if (state is SemesterDataError) {
-            return Center(
-              child: Text(
-                state.apiErrorModel.message ?? 'Failed to get your GPA Data',
+      rightColumn: ValueListenableBuilder(
+        valueListenable: AppConstants.box.listenable(),
+        builder: (context, Box<StudentModel> box, _) {
+          final semester =
+              AppConstants.box.values.first.semesters[semesterName]!;
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '${semester.attemptedCredits}',
+                style: TextStyle(fontSize: 18.sp),
               ),
-            );
-          }
-          return const SizedBox.shrink();
+              verticalSpace(12),
+              Text(
+                '${semester.earnedCredits}',
+                style: TextStyle(fontSize: 18.sp, color: Colors.green),
+              ),
+              verticalSpace(12),
+              Text(
+                semester.gpa.toStringAsFixed(2),
+                style: TextStyle(fontSize: 18.sp),
+              ),
+              verticalSpace(12),
+              Text(
+                semester.maxGpa.toStringAsFixed(2),
+                style: TextStyle(fontSize: 18.sp),
+              ),
+            ],
+          );
         },
       ),
     );

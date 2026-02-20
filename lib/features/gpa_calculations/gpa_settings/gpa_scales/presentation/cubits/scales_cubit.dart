@@ -1,23 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:student_assistant/core/api/api_result.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/data/repos/scales_repo_imp.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/models/scale_model.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/presentation/cubits/scales_state.dart';
 
 class ScalesCubit extends Cubit<ScalesState> {
   final ScalesRepoImp scalesRepoImp;
 
   ScalesCubit({required this.scalesRepoImp}) : super(ScalesInitial());
-
-  void getAllScales() async {
-    emit(ScalesGetAllScalesLoading());
-    final result = await scalesRepoImp.getAllScales();
-    if (result is Success<List<ScaleModel>>) {
-      emit(ScalesGetAllScalesSuccess(scales: result.data));
-    } else if (result is Failure<List<ScaleModel>>) {
-      emit(ScalesGetAllScalesError(apiErrorModel: result.apiErrorModel));
-    }
-  }
 
   void saveScale({
     required String title,

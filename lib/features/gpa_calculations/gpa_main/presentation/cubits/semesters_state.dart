@@ -1,6 +1,5 @@
 import 'package:student_assistant/core/api/api_error_model.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/models/searched_course_model.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/models/semester_model.dart';
 
 sealed class SemestersState {}
 
@@ -14,19 +13,6 @@ class SemestersAddSemesterSuccess extends SemestersState {}
 class SemestersAddSemesterError extends SemestersState {
   final ApiErrorModel apiErrorModel;
   SemestersAddSemesterError({required this.apiErrorModel});
-}
-
-// Get All Semesters
-class SemestersGetAllSemestersLoading extends SemestersState {}
-
-class SemestersGetAllSemestersSuccess extends SemestersState {
-  final List<SemesterModel> semesters;
-  SemestersGetAllSemestersSuccess({required this.semesters});
-}
-
-class SemestersGetAllSemestersError extends SemestersState {
-  final ApiErrorModel apiErrorModel;
-  SemestersGetAllSemestersError({required this.apiErrorModel});
 }
 
 // Delete Semester

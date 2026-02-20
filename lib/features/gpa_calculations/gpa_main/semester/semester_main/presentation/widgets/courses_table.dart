@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:student_assistant/core/constants/app_constants.dart';
 import 'package:student_assistant/core/dialogs/delete_dialog.dart';
 import 'package:student_assistant/core/helpers/spacing.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/models/course_model.dart';
+import 'package:student_assistant/core/models/course_model.dart';
+import 'package:student_assistant/core/models/student_model.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/widgets/delete_button.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/cubits/courses_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/cubits/courses_state.dart';
@@ -83,60 +86,51 @@ class _CoursesTableState extends State<CoursesTable> {
                     });
                   }
                 },
-                child: BlocBuilder<CoursesCubit, CoursesState>(
-                  buildWhen: (previous, current) =>
-                      current is CoursesGetAllCoursesLoading ||
-                      current is CoursesGetAllCoursesSuccess ||
-                      current is CoursesGetAllCoursesError,
-                  builder: (context, state) {
-                    if (state is CoursesGetAllCoursesLoading) {
-                      return const Center(child: CircularProgressIndicator());
-                    }
-                    if (state is CoursesGetAllCoursesSuccess) {
-                      return ListView.separated(
-                        physics: ScrollPhysics(parent: BouncingScrollPhysics()),
-                        itemCount: state.courses.length,
-                        separatorBuilder: (_, _) => verticalSpace(8),
-                        itemBuilder: (context, index) {
-                          final course = state.courses[index];
-                          return CourseRow(
-                            index: index,
-                            semesterIndex: widget.semesterIndex,
-                            course: state.courses[index],
-                            semesterName: widget.semesterName,
-                            isSelected: selectedCourses.any(
-                              (c) => c.name == course.name,
-                            ),
-                            onLongPress: () => toggleSelection(course),
-                            onTap: () {
-                              if (isSelectionMode) {
-                                toggleSelection(course);
-                              }
-                              // else {
-                              // final gpaCubit = context
-                              //      .read<GpaCalculationsCubit>();
-                              // context.pushNamed(
-                              //  AppRoutes.sectionMainScreen,
-                              //  arguments: {
-                              //    'gpaCubit': gpaCubit,
-                              //    ''
-                              //  }
-                              // )
-                              //}
-                            },
-                          );
-                        },
-                      );
-                    }
-                    if (state is CoursesGetAllCoursesError) {
-                      return Center(
-                        child: Text(
-                          state.apiErrorModel.message ??
-                              'Failed to get your semesters',
-                        ),
-                      );
-                    }
-                    return const SizedBox.shrink();
+                child: ValueListenableBuilder(
+                  valueListenable: AppConstants.box.listenable(),
+                  builder: (context, Box<StudentModel> box, _) {
+                    final courses = AppConstants
+                        .box
+                        .values
+                        .first
+                        .semesters[widget.semesterName]!
+                        .courses
+                        .values
+                        .toList();
+                    return ListView.separated(
+                      physics: ScrollPhysics(parent: BouncingScrollPhysics()),
+                      itemCount: courses.length,
+                      separatorBuilder: (_, _) => verticalSpace(8),
+                      itemBuilder: (context, index) {
+                        final course = courses[index];
+                        return CourseRow(
+                          index: index,
+                          semesterIndex: widget.semesterIndex,
+                          course: courses[index],
+                          semesterName: widget.semesterName,
+                          isSelected: selectedCourses.any(
+                            (c) => c.name == course.name,
+                          ),
+                          onLongPress: () => toggleSelection(course),
+                          onTap: () {
+                            if (isSelectionMode) {
+                              toggleSelection(course);
+                            }
+                            // else {
+                            // final gpaCubit = context
+                            //      .read<GpaCalculationsCubit>();
+                            // context.pushNamed(
+                            //  AppRoutes.sectionMainScreen,
+                            //  arguments: {
+                            //    'gpaCubit': gpaCubit,
+                            //    ''
+                            //  }
+                            // )
+                            //}
+                          },
+                        );
+                      },
+                    );
                   },
                 ),
               ),

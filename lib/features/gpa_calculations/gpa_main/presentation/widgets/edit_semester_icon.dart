@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:student_assistant/core/dialogs/delete_dialog.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/edit_semester_bottom_sheet.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/models/semester_model.dart';
+import 'package:student_assistant/core/models/semester_model.dart';
 
 class EditSemesterIcon extends StatelessWidget {
   final SemesterModel semester;

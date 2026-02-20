@@ -2,7 +2,7 @@ import 'package:student_assistant/core/api/api_error_handler.dart';
 import 'package:student_assistant/core/api/api_result.dart';
 import 'package:student_assistant/core/helpers/shared_prefs.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/data/apis/scales_api_service.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/models/scale_model.dart';
+import 'package:student_assistant/core/models/scale_model.dart';
 
 class ScalesRepoImp {
   final ScalesApiService scalesApiService;
@@ -10,15 +10,6 @@ class ScalesRepoImp {
   ScalesRepoImp({required this.scalesApiService});
 
   final String email = SharedPrefs.getUserEmail();
-
-  Future<ApiResult<List<ScaleModel>>> getAllScales() async {
-    try {
-      final response = await scalesApiService.getAllScales(email);
-      return ApiResult.success(response);
-    } catch (error) {
-      return ApiResult.failure(ApiErrorHandler.handle(error));
-    }
-  }
 
   Future<ApiResult<void>> saveScale({
     required String title,

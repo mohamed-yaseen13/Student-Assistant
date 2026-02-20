@@ -1,16 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:student_assistant/core/constants/database_constants.dart';
+import 'package:student_assistant/core/helpers/functions.dart';
 import 'package:student_assistant/core/services/send_email_otp.dart';
 
 class LoginApiService {
   final SendEmailOtp sendEmailOtp;
 
   LoginApiService({required this.sendEmailOtp});
-
-  DocumentReference<Map<String, dynamic>> getEmailRef(String email) =>
-      FirebaseFirestore.instance
-          .collection(DatabaseConstants.emailsCollection)
-          .doc(email);
 
   Future<bool> checkIfEmailExist(String email) async {
     final doc = await getEmailRef(email).get();

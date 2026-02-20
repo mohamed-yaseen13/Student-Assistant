@@ -5,15 +5,12 @@ import 'package:student_assistant/core/helpers/spacing.dart';
 import 'package:student_assistant/core/states/states.dart';
 import 'package:student_assistant/core/style/app_text_styles.dart';
 import 'package:student_assistant/core/widgets/home_app_drawer.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/gpa_data_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_state.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/add_semester_button.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/gpa_data_container.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/search_for_course_bar.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/semesters_table.dart';
-import 'package:student_assistant/features/gpa_calculations/presentation/cubits/gpa_calculations_cubit.dart';
-import 'package:student_assistant/features/gpa_calculations/presentation/cubits/gpa_calculations_state.dart';
 import 'package:student_assistant/features/gpa_calculations/presentation/widgets/gpa_bottom_navigation_bar.dart';
 
 class GpaMainScreen extends StatelessWidget {
@@ -29,61 +26,33 @@ class GpaMainScreen extends StatelessWidget {
         ),
       ),
       drawer: HomeAppDrawer(selectedRoute: HomeDrawerEnum.gpa),
-      body: MultiBlocListener(
-        listeners: [
-          BlocListener<GpaCalculationsCubit, GpaCalculationsState>(
-            listener: (context, state) {
-              if (state is GpaCalculationsSuccess) {
-                context.read<SemestersCubit>().getAllSemesters();
-                context.read<GpaDataCubit>().getGpaData();
-              }
-            },
-          ),
-          BlocListener<SemestersCubit, SemestersState>(
-            listener: (context, state) {
-              if (state is SemestersEditSemesterNameSuccess) {
-                context.read<SemestersCubit>().getAllSemesters();
-              }
-            },
-          ),
-        ],
-        child: BlocConsumer<SemestersCubit, SemestersState>(
-          listenWhen: (previous, current) =>
-              current is SemestersAddSemesterLoading ||
-              current is SemestersAddSemesterSuccess ||
-              current is SemestersAddSemesterError,
-          listener: (context, state) {
-            switch (state) {
-              case SemestersAddSemesterLoading _:
-                loadingState(context: context);
-              case SemestersAddSemesterSuccess _:
-                Navigator.of(context, rootNavigator: true).pop();
-                context.read<SemestersCubit>().getAllSemesters();
-              case SemestersAddSemesterError _:
-                Navigator.of(context, rootNavigator: true).pop();
-                errorState(
-                  context: context,
-                  desc: 'Failed To Add Semester',
-                  message: state.apiErrorModel.message!,
-                );
-              default:
-                null;
-            }
-          },
-          builder: (context, state) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                verticalSpace(8),
-                SearchForCourseBar(),
-                verticalSpace(12),
-                GpaDataContainer(),
-                verticalSpace(12),
-                Expanded(child: SemestersTable()),
-              ],
-            );
-          },
-        ),
+      body: BlocConsumer<SemestersCubit, SemestersState>(
+        listenWhen: (previous, current) => current is SemestersAddSemesterError,
+        listener: (context, state) {
+          switch (state) {
+            case SemestersAddSemesterError _:
+              errorState(
+                context: context,
+                desc: 'Failed To Add Semester',
+                message: state.apiErrorModel.message,
+              );
+            default:
+              null;
+          }
+        },
+        builder: (context, state) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              verticalSpace(8),
+              SearchForCourseBar(),
+              verticalSpace(12),
+              GpaDataContainer(),
+              verticalSpace(12),
+              Expanded(child: SemestersTable()),
+            ],
+          );
+        },
       ),
       bottomNavigationBar: GpaBottomNavigationBar(
         selectedScreen: GpaBottomNavigationBarEnum.main,

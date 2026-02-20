@@ -1,16 +1,31 @@
-import 'package:student_assistant/features/gpa_calculations/gpa_main/models/course_model.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:student_assistant/core/models/course_model.dart';
 
-class SemesterModel {
+part 'semester_model.g.dart';
+
+@HiveType(typeId: 3)
+class SemesterModel extends HiveObject {
+  @HiveField(0)
   String name;
+  @HiveField(1)
   int index;
+  @HiveField(2)
   double gpa;
+  @HiveField(3)
   double maxGpa;
+  @HiveField(4)
   Map<String, CourseModel> courses;
+  @HiveField(5)
   double cgpaOriginal;
+  @HiveField(6)
   double cgpaChanged;
+  @HiveField(7)
   double attemptedCredits;
+  @HiveField(8)
   double earnedCredits;
+  @HiveField(9)
   String note;
+  @HiveField(10)
   int repeatedCourses;
 
   SemesterModel({
@@ -26,19 +41,6 @@ class SemesterModel {
     this.note = '',
     this.repeatedCourses = 0,
   });
-
-  Map<String, dynamic> toMap() {
-    return {
-      'name': name,
-      'index': index,
-      'gpa': gpa,
-      'maxGpa': maxGpa,
-      'cgpaOriginal': cgpaOriginal,
-      'cgpaChanged': cgpaChanged,
-      'courses': courses.map((key, course) => MapEntry(key, course.toMap())),
-      'repeatedCourses': repeatedCourses,
-    };
-  }
 
   Map<String, dynamic> toJson() => {
     'name': name,

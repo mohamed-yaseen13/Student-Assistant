@@ -1,12 +1,22 @@
-import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/models/semester_model.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_settings/gpa_scales/models/scale_model.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:student_assistant/core/models/semester_model.dart';
+import 'package:student_assistant/core/models/scale_model.dart';
 
-class StudentModel {
+part 'student_model.g.dart';
+
+@HiveType(typeId: 4)
+class StudentModel extends HiveObject {
+  @HiveField(0)
   String name;
+  @HiveField(1)
   double cgpa;
+  @HiveField(2)
   double totalCredits;
+  @HiveField(3)
   double maxCgpa;
+  @HiveField(4)
   Map<String, SemesterModel> semesters;
+  @HiveField(5)
   Map<String, ScaleModel> scales;
 
   StudentModel({

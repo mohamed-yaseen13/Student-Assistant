@@ -7,9 +7,17 @@ class OtpRepoImp {
 
   OtpRepoImp({required this.otpApiService});
 
-  Future<ApiResult<void>> verifyOtp(String email, String otp) async {
+  Future<ApiResult<void>> verifyOtp(
+    String email,
+    String otp, {
+    bool? isLoggingIn = false,
+  }) async {
     try {
-      final response = await otpApiService.verifyOtp(email, otp);
+      final response = await otpApiService.verifyOtp(
+        email,
+        otp,
+        isLoggingIn: isLoggingIn,
+      );
       return ApiResult.success(response);
     } catch (error) {
       return ApiResult.failure(ApiErrorHandler.handle(error));

@@ -10,9 +10,7 @@ class SignupCubit extends Cubit<SignupState> {
 
   void signup(String email, String username) async {
     emit(SignupLoading());
-
-    ApiResult<void> result = await signupRepoImp.signup(email, username);
-
+    final result = await signupRepoImp.signup(email, username);
     if (result is Success<void>) {
       emit(SignupSuccess(email: email));
     } else if (result is Failure<void>) {

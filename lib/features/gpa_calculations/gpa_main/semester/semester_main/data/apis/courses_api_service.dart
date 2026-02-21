@@ -8,11 +8,11 @@ import 'package:student_assistant/core/models/semester_model.dart';
 class CoursesApiService {
   CoursesApiService();
 
-  Future<bool> checkIfCourseExistsInPreviousSemesters(
+  bool checkIfCourseExistsInPreviousSemesters(
     String email,
     String courseName,
     int semesterIndex,
-  ) async {
+  ) {
     final box = AppConstants.box;
     final student = box.values.first;
     final semesters = student.semesters.values.toList();
@@ -111,8 +111,7 @@ class CoursesApiService {
     updatedSemesters[semesterName] = currentSemester.copyWith(
       courses: updatedCourses,
     );
-    final updatedStudent = student.copyWith(semesters: updatedSemesters);
-    await box.put(email, updatedStudent);
+    await box.put(email, student.copyWith(semesters: updatedSemesters));
     // add the new course to firestore
     await docRef.update({
       'semesters.$semesterName.courses.$courseName': newCourse.toJson(),

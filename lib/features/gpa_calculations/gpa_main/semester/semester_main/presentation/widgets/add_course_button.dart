@@ -40,7 +40,7 @@ class AddCourseButton extends StatelessWidget {
             ),
           );
           if (result == null) return;
-          final bool existsBefore = await coursesCubit.checkRepeatedCourse(
+          final bool existsBefore = coursesCubit.checkRepeatedCourse(
             result['name'],
             semesterIndex,
           );

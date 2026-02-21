@@ -8,12 +8,10 @@ class LoginLoading extends LoginState {}
 
 class LoginSuccess extends LoginState {
   final String email;
-
   LoginSuccess({required this.email});
 }
 
 class LoginError extends LoginState {
   final ApiErrorModel apiErrorModel;
-
   LoginError({required this.apiErrorModel});
 }

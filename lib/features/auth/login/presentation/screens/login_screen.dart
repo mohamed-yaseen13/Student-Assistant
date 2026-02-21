@@ -21,28 +21,25 @@ class LoginScreen extends StatelessWidget {
           switch (state) {
             case LoginLoading _:
               return loadingState(context: context);
-
             case LoginError _:
               Navigator.of(context, rootNavigator: true).pop();
               return errorState(
                 context: context,
-                desc: 'Signup Failed',
+                desc: 'Login Failed',
                 message: state.apiErrorModel.message,
               );
-
             case LoginSuccess _:
               Navigator.of(context, rootNavigator: true).pop();
-              context.pushReplacementNamed(
+              context.pushNamed(
                 AppRoutes.otpScreen,
-                arguments: {'email': state.email},
+                arguments: {'email': state.email, 'isLoggingIn': true},
               );
-
             default:
               return;
           }
         },
         builder: (context, state) {
-          return LoginView();
+          return const LoginView();
         },
       ),
     );

@@ -8,12 +8,10 @@ class SignupLoading extends SignupState {}
 
 class SignupSuccess extends SignupState {
   final String email;
-
   SignupSuccess({required this.email});
 }
 
 class SignupError extends SignupState {
   final ApiErrorModel apiErrorModel;
-
   SignupError({required this.apiErrorModel});
 }

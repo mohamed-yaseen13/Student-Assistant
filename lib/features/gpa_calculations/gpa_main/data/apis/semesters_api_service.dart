@@ -24,9 +24,8 @@ class SemestersApiService {
     // update the semesters and student model
     final updatedSemesters = Map<String, SemesterModel>.from(student.semesters);
     updatedSemesters[semesterName] = newSemester;
-    final updatedStudent = student.copyWith(semesters: updatedSemesters);
     // update the hive box of student locally
-    await box.put(email, updatedStudent);
+    await box.put(email, student.copyWith(semesters: updatedSemesters));
     // update the firestore database
     await getEmailRef(
       email,
@@ -95,8 +94,7 @@ class SemestersApiService {
       await docRef.update({'semesters.${semester.name}': FieldValue.delete()});
     }
     // update the local database
-    final updatedStudent = student.copyWith(semesters: updatedSemesters);
-    await box.put(email, updatedStudent);
+    await box.put(email, student.copyWith(semesters: updatedSemesters));
   }
 
   List<SemesterModel> searchForCourse(String email, String searchName) {
@@ -128,10 +126,10 @@ class SemestersApiService {
     final oldSemester = student.semesters[oldSemesterName]!;
     final updatedSemesters = Map<String, SemesterModel>.from(student.semesters);
     updatedSemesters.remove(oldSemesterName);
+
     final updatedSemester = oldSemester.copyWith(name: newSemesterName);
     updatedSemesters[newSemesterName] = updatedSemester;
-    final updatedStudent = student.copyWith(semesters: updatedSemesters);
-    await box.put(email, updatedStudent);
+    await box.put(email, student.copyWith(semesters: updatedSemesters));
     // update the data on firestore
     await getEmailRef(email).update({
       'semesters.$newSemesterName': updatedSemester.toJson(),

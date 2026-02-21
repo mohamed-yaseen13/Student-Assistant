@@ -48,7 +48,7 @@ class EditCourseIcon extends StatelessWidget {
             ),
           );
           if (result != null) {
-            final bool existsBefore = await coursesCubit.checkRepeatedCourse(
+            final bool existsBefore = coursesCubit.checkRepeatedCourse(
               result['name'],
               semesterIndex,
             );

@@ -10,6 +10,5 @@ class GpaCalculationsSuccess extends GpaCalculationsState {}
 
 class GpaCalculationsError extends GpaCalculationsState {
   final ApiErrorModel apiErrorModel;
-
   GpaCalculationsError({required this.apiErrorModel});
 }

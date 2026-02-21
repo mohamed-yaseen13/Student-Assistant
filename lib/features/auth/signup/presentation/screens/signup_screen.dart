@@ -21,7 +21,6 @@ class SignupScreen extends StatelessWidget {
           switch (state) {
             case SignupLoading _:
               return loadingState(context: context);
-
             case SignupError _:
               Navigator.of(context, rootNavigator: true).pop();
               return errorState(
@@ -29,20 +28,18 @@ class SignupScreen extends StatelessWidget {
                 desc: 'Signup Failed',
                 message: state.apiErrorModel.message,
               );
-
             case SignupSuccess _:
               Navigator.of(context, rootNavigator: true).pop();
-              context.pushReplacementNamed(
+              context.pushNamed(
                 AppRoutes.otpScreen,
                 arguments: {'email': state.email},
               );
-
             default:
               return;
           }
         },
         builder: (context, state) {
-          return SignupView();
+          return const SignupView();
         },
       ),
     );

@@ -16,10 +16,9 @@ class SignupApiService {
 
   Future<void> saveOtpToDatabase(String email, String otp) async {
     final expiresAt = DateTime.now().add(const Duration(minutes: 1));
-    await getEmailRef(email).set({
-      'otp': otp,
-      "expiresAt": Timestamp.fromDate(expiresAt),
-    }, SetOptions(merge: true));
+    await getEmailRef(
+      email,
+    ).set({'otp': otp, "expiresAt": Timestamp.fromDate(expiresAt)});
   }
 
   Future<void> saveStudentToDatabase(String email, String username) async {
@@ -28,11 +27,10 @@ class SignupApiService {
       scales: {AppConstants.defaultScale.title: AppConstants.defaultScale},
     );
     // firebase database
-    final studentMap = {
+    await getEmailRef(email).set({
       ...student.toJson(),
       'createdAt': FieldValue.serverTimestamp(),
-    };
-    await getEmailRef(email).set(studentMap, SetOptions(merge: true));
+    }, SetOptions(merge: true));
     // local database
     final box = AppConstants.box;
     await box.put(email, student);

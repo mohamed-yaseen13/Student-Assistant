@@ -10,17 +10,13 @@ class CoursesRepoImp {
   CoursesRepoImp({required this.coursesApiService});
   final email = SharedPrefs.getUserEmail();
 
-  Future<ApiResult<bool>> checkRepeatedCourse(
-    String courseName,
-    int semesterIndex,
-  ) async {
+  ApiResult<bool> checkRepeatedCourse(String courseName, int semesterIndex) {
     try {
-      final result = await coursesApiService
-          .checkIfCourseExistsInPreviousSemesters(
-            email,
-            courseName,
-            semesterIndex,
-          );
+      final result = coursesApiService.checkIfCourseExistsInPreviousSemesters(
+        email,
+        courseName,
+        semesterIndex,
+      );
       return ApiResult.success(result);
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler.handle(e));

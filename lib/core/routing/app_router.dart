@@ -44,11 +44,12 @@ class AppRouter {
       // OTP
       case AppRoutes.otpScreen:
         final args = settings.arguments as Map<String, dynamic>;
-        final email = args['email'];
+        final email = args['email'] as String;
+        final isLoggingIn = args['isLoggingIn'] as bool?;
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) => getIt<OtpCubit>(),
-            child: OtpScreen(email: email!),
+            child: OtpScreen(email: email, isLoggingIn: isLoggingIn),
           ),
           settings: settings,
         );

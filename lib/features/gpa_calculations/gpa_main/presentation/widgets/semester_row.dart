@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_assistant/core/style/app_colors.dart';
 import 'package:student_assistant/core/models/semester_model.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/edit_semester_icon.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/semester_cgpa.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/semester_gpa.dart';
 
 class SemesterRow extends StatelessWidget {
   final int index;
@@ -61,22 +63,8 @@ class SemesterRow extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            Expanded(
-              flex: 6,
-              child: Text(
-                '${semester.gpa}',
-                style: TextStyle(fontSize: 16.sp),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Expanded(
-              flex: 6,
-              child: Text(
-                '${semester.cgpaChanged}',
-                style: TextStyle(fontSize: 16.sp),
-                textAlign: TextAlign.center,
-              ),
-            ),
+            Expanded(flex: 6, child: SemesterGpa(semester: semester)),
+            Expanded(flex: 6, child: SemesterCgpa(semester: semester)),
             Expanded(flex: 2, child: EditSemesterIcon(semester: semester)),
           ],
         ),

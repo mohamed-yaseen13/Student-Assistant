@@ -7,8 +7,9 @@ import 'package:student_assistant/features/auth/otp/presentation/widgets/otp_for
 
 class OtpView extends StatelessWidget {
   final String email;
+  final bool? isLoggingIn;
 
-  const OtpView({super.key, required this.email});
+  const OtpView({super.key, required this.email, this.isLoggingIn});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +36,7 @@ class OtpView extends StatelessWidget {
                       verticalSpace(32),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16.w),
-                        child: OtpForm(email: email),
+                        child: OtpForm(email: email, isLoggingIn: isLoggingIn),
                       ),
                       verticalSpace(24),
                       TextButton(

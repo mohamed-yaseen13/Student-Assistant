@@ -10,8 +10,9 @@ import 'package:student_assistant/features/auth/otp/presentation/cubits/otp_cubi
 
 class OtpForm extends StatefulWidget {
   final String email;
+  final bool? isLoggingIn;
 
-  const OtpForm({super.key, required this.email});
+  const OtpForm({super.key, required this.email, this.isLoggingIn});
 
   @override
   State<OtpForm> createState() => _OtpFormState();
@@ -63,7 +64,11 @@ class _OtpFormState extends State<OtpForm> {
               desc: 'Verify Code',
               descStyle: AppTextStyles.whiteColor16FontSize,
               onPressed: () {
-                context.read<OtpCubit>().verifyOtp(widget.email, otp);
+                context.read<OtpCubit>().verifyOtp(
+                  widget.email,
+                  otp,
+                  isLoggingIn: widget.isLoggingIn,
+                );
               },
               backgroundColor: AppColors.mainOrange,
             ),

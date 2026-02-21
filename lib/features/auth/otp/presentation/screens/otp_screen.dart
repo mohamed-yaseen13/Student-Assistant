@@ -10,8 +10,9 @@ import 'package:student_assistant/features/auth/otp/presentation/views/otp_view.
 
 class OtpScreen extends StatelessWidget {
   final String email;
+  final bool? isLoggingIn;
 
-  const OtpScreen({super.key, required this.email});
+  const OtpScreen({super.key, required this.email, this.isLoggingIn});
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +24,9 @@ class OtpScreen extends StatelessWidget {
           switch (state) {
             case OtpLoading _:
               return loadingState(context: context);
-
             case OtpSuccess _:
               Navigator.of(context, rootNavigator: true).pop();
               context.pushReplacementNamed(AppRoutes.homeMainScreen);
-
             case OtpError _:
               Navigator.of(context, rootNavigator: true).pop();
               errorState(
@@ -35,13 +34,12 @@ class OtpScreen extends StatelessWidget {
                 desc: "Error",
                 message: state.apiErrorModel.message,
               );
-
             default:
               return;
           }
         },
         builder: (context, state) {
-          return OtpView(email: email);
+          return OtpView(email: email, isLoggingIn: isLoggingIn);
         },
       ),
     );

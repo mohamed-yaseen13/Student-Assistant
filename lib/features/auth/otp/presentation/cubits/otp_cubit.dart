@@ -8,11 +8,13 @@ class OtpCubit extends Cubit<OtpState> {
 
   OtpCubit({required this.otpRepoImp}) : super(OtpInitial());
 
-  void verifyOtp(String email, String otp) async {
+  void verifyOtp(String email, String otp, {bool? isLoggingIn = false}) async {
     emit(OtpLoading());
-
-    ApiResult<void> result = await otpRepoImp.verifyOtp(email, otp);
-
+    final result = await otpRepoImp.verifyOtp(
+      email,
+      otp,
+      isLoggingIn: isLoggingIn,
+    );
     if (result is Success<void>) {
       emit(OtpSuccess());
     } else if (result is Failure<void>) {

@@ -34,7 +34,7 @@ class LoginView extends StatelessWidget {
                       verticalSpace(32),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16.w),
-                        child: LoginForm(),
+                        child: const LoginForm(),
                       ),
                       verticalSpace(16),
                       Row(

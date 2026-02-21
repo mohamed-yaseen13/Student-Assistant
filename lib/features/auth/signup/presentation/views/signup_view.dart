@@ -34,7 +34,7 @@ class SignupView extends StatelessWidget {
                       verticalSpace(32),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16.w),
-                        child: SignupForm(),
+                        child: const SignupForm(),
                       ),
                       verticalSpace(16),
                       Row(

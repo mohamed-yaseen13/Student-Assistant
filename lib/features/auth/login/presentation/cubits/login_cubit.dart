@@ -10,9 +10,7 @@ class LoginCubit extends Cubit<LoginState> {
 
   void login(String email) async {
     emit(LoginLoading());
-
-    ApiResult<void> result = await loginRepoImp.login(email);
-
+    final result = await loginRepoImp.login(email);
     if (result is Success<void>) {
       emit(LoginSuccess(email: email));
     } else if (result is Failure<void>) {

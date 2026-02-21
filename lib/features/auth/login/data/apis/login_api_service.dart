@@ -14,10 +14,9 @@ class LoginApiService {
 
   Future<void> saveOtpToDatabase(String email, String otp) async {
     final expiresAt = DateTime.now().add(const Duration(minutes: 1));
-    await getEmailRef(email).set({
-      'otp': otp,
-      "expiresAt": Timestamp.fromDate(expiresAt),
-    }, SetOptions(merge: true));
+    await getEmailRef(
+      email,
+    ).update({'otp': otp, "expiresAt": Timestamp.fromDate(expiresAt)});
   }
 
   Future<void> login(String email) async {

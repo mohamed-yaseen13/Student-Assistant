@@ -9,8 +9,8 @@ class CoursesCubit extends Cubit<CoursesState> {
 
   CoursesCubit({required this.coursesRepoImp}) : super(CoursesInitial());
 
-  Future<bool> checkRepeatedCourse(String courseName, int semesterIndex) async {
-    final result = await coursesRepoImp.checkRepeatedCourse(
+  bool checkRepeatedCourse(String courseName, int semesterIndex) {
+    final result = coursesRepoImp.checkRepeatedCourse(
       courseName,
       semesterIndex,
     );

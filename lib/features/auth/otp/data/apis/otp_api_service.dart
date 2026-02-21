@@ -21,17 +21,23 @@ class OtpApiService {
     ).update({'otp': FieldValue.delete(), 'expiresAt': FieldValue.delete()});
   }
 
-  Future<void> verifyOtp(String email, String otp) async {
+  Future<void> verifyOtp(
+    String email,
+    String otp, {
+    bool? isLoggingIn = false,
+  }) async {
     final bool isCorrect = await isOtpCorrect(email, otp);
     if (!isCorrect) throw Exception('OTP is incorrect');
     await deleteOtp(email);
     await SharedPrefs.setIsUserLoggedIn();
     await SharedPrefs.setUserEmail(email);
-    // update the hive box with firebase data in case user is loginning in
-    final doc = await getEmailRef(email).get();
-    final data = doc.data()!;
-    final StudentModel student = StudentModel.fromJson(data);
-    final box = AppConstants.box;
-    await box.put(email, student);
+    // update the hive box with firebase data in case user is logging in
+    if (isLoggingIn != null && isLoggingIn == true) {
+      final doc = await getEmailRef(email).get();
+      final data = doc.data()!;
+      final StudentModel student = StudentModel.fromJson(data);
+      final box = AppConstants.box;
+      await box.put(email, student);
+    }
   }
 }

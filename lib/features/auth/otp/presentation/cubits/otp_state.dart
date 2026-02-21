@@ -10,6 +10,5 @@ class OtpSuccess extends OtpState {}
 
 class OtpError extends OtpState {
   final ApiErrorModel apiErrorModel;
-
   OtpError({required this.apiErrorModel});
 }

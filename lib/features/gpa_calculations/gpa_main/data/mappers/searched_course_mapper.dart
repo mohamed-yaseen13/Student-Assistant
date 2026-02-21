@@ -1,4 +1,4 @@
-import 'package:student_assistant/features/gpa_calculations/gpa_main/models/searched_course_model.dart';
+import 'package:student_assistant/core/models/searched_course_model.dart';
 import 'package:student_assistant/core/models/semester_model.dart';
 
 class SearchedCourseMapper {

@@ -21,6 +21,9 @@ class AppRoutes {
   static const String semesterNotesScreen = 'semesterNotesScreen';
   static const String semesterScenariosScreen = 'semesterScenariosScreen';
 
+  // Course
+  static const String courseScreen = 'courseScreen';
+
   // Pomodoro
   static const String pomodoroTimerScreen = 'pomodoroTimerScreen';
 

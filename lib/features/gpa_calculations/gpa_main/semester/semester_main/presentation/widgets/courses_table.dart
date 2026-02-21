@@ -4,10 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:student_assistant/core/constants/app_constants.dart';
 import 'package:student_assistant/core/dialogs/delete_dialog.dart';
+import 'package:student_assistant/core/helpers/extensions.dart';
 import 'package:student_assistant/core/helpers/spacing.dart';
 import 'package:student_assistant/core/models/course_model.dart';
 import 'package:student_assistant/core/models/student_model.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/widgets/delete_button.dart';
+import 'package:student_assistant/core/routing/app_routes.dart';
+import 'package:student_assistant/core/widgets/delete_button.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/cubits/courses_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/cubits/courses_state.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/widgets/course_row.dart';
@@ -115,18 +117,15 @@ class _CoursesTableState extends State<CoursesTable> {
                           onTap: () {
                             if (isSelectionMode) {
                               toggleSelection(course);
+                            } else {
+                              context.pushNamed(
+                                AppRoutes.courseScreen,
+                                arguments: {
+                                  'semesterName': widget.semesterName,
+                                  'courseName': course.name,
+                                },
+                              );
                             }
-                            // else {
-                            // final gpaCubit = context
-                            //      .read<GpaCalculationsCubit>();
-                            // context.pushNamed(
-                            //  AppRoutes.sectionMainScreen,
-                            //  arguments: {
-                            //    'gpaCubit': gpaCubit,
-                            //    ''
-                            //  }
-                            // )
-                            //}
                           },
                         );
                       },

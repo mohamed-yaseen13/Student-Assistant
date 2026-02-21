@@ -11,7 +11,7 @@ import 'package:student_assistant/core/routing/app_routes.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_state.dart';
 import 'package:student_assistant/core/models/semester_model.dart';
-import 'package:student_assistant/features/gpa_calculations/gpa_main/widgets/delete_button.dart';
+import 'package:student_assistant/core/widgets/delete_button.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/semester_row.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/widgets/semesters_table_header.dart';
 import 'package:student_assistant/features/gpa_calculations/presentation/cubits/gpa_calculations_cubit.dart';

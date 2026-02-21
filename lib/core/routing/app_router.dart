@@ -11,6 +11,7 @@ import 'package:student_assistant/features/auth/signup/presentation/screens/sign
 import 'package:student_assistant/features/calendar/presentation/screens/calendar_screen.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/screens/gpa_main_screen.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/course/presentation/screens/course_screen.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/cubits/courses_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/screens/semester_screen.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_notes/presentation/screens/semester_notes_screen.dart';
@@ -129,6 +130,13 @@ class AppRouter {
           settings: settings,
         );
       // Course
+      case AppRoutes.courseScreen:
+        final args = settings.arguments as Map<String, dynamic>;
+        final courseName = args['courseName'] as String;
+        return MaterialPageRoute(
+          builder: (_) => CourseScreen(courseName: courseName),
+          settings: settings,
+        );
       // Semester Scenarios
       case AppRoutes.semesterScenariosScreen:
         final args = settings.arguments as Map<String, dynamic>;

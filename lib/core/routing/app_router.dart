@@ -11,6 +11,7 @@ import 'package:student_assistant/features/auth/signup/presentation/screens/sign
 import 'package:student_assistant/features/calendar/presentation/screens/calendar_screen.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/screens/gpa_main_screen.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/course/presentation/cubit/sections_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/course/presentation/screens/course_screen.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/cubits/courses_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/screens/semester_screen.dart';
@@ -91,10 +92,8 @@ class AppRouter {
       // GPA Main
       case AppRoutes.gpaMainScreen:
         return MaterialPageRoute(
-          builder: (_) => MultiBlocProvider(
-            providers: [
-              BlocProvider(create: (context) => getIt<SemestersCubit>()),
-            ],
+          builder: (_) => BlocProvider(
+            create: (context) => getIt<SemestersCubit>(),
             child: GpaMainScreen(),
           ),
           settings: settings,
@@ -118,10 +117,8 @@ class AppRouter {
         final semesterName = args['semesterName'] as String;
         final semesterIndex = args['semesterIndex'] as int;
         return MaterialPageRoute(
-          builder: (_) => MultiBlocProvider(
-            providers: [
-              BlocProvider(create: (context) => getIt<CoursesCubit>()),
-            ],
+          builder: (_) => BlocProvider(
+            create: (context) => getIt<CoursesCubit>(),
             child: SemesterScreen(
               semesterName: semesterName,
               semesterIndex: semesterIndex,
@@ -133,8 +130,15 @@ class AppRouter {
       case AppRoutes.courseScreen:
         final args = settings.arguments as Map<String, dynamic>;
         final courseName = args['courseName'] as String;
+        final semesterName = args['semesterName'] as String;
         return MaterialPageRoute(
-          builder: (_) => CourseScreen(courseName: courseName),
+          builder: (_) => BlocProvider(
+            create: (context) => getIt<SectionsCubit>(),
+            child: CourseScreen(
+              courseName: courseName,
+              semesterName: semesterName,
+            ),
+          ),
           settings: settings,
         );
       // Semester Scenarios

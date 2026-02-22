@@ -14,6 +14,9 @@ import 'package:student_assistant/features/gpa_calculations/data/repos/gpa_calcu
 import 'package:student_assistant/features/gpa_calculations/gpa_main/data/apis/semesters_api_service.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/data/repos/semesters_repo_imp.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/presentation/cubits/semesters_cubit.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/course/data/apis/sections_api_service.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/course/data/repos/sections_repo_imp.dart';
+import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/course/presentation/cubit/sections_cubit.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/data/apis/courses_api_service.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/data/repos/courses_repo_imp.dart';
 import 'package:student_assistant/features/gpa_calculations/gpa_main/semester/semester_main/presentation/cubits/courses_cubit.dart';
@@ -75,6 +78,15 @@ Future<void> setupGetIt() async {
   );
   getIt.registerFactory<CoursesCubit>(
     () => CoursesCubit(coursesRepoImp: getIt<CoursesRepoImp>()),
+  );
+
+  // Sections
+  getIt.registerLazySingleton<SectionsApiService>(() => SectionsApiService());
+  getIt.registerLazySingleton<SectionsRepoImp>(
+    () => SectionsRepoImp(sectionsApiService: getIt<SectionsApiService>()),
+  );
+  getIt.registerFactory<SectionsCubit>(
+    () => SectionsCubit(sectionsRepoImp: getIt<SectionsRepoImp>()),
   );
 
   // Gpa Calculations
